@@ -1,4 +1,13 @@
-.classpath
-.apk
-.class
-.jar
+*.classpath
+*.apk
+*.class
+*.jar
+*.dex
+*.cache
+*.ap_
+*.properties
+*.txt
+*.prefs
+*.project
+bin/*
+gen/*
