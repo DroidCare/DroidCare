@@ -1,0 +1,191 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent" >
+	<RelativeLayout
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:paddingBottom="@dimen/activity_vertical_margin"
+	    android:paddingLeft="@dimen/activity_horizontal_margin"
+	    android:paddingRight="@dimen/activity_horizontal_margin"
+	    android:paddingTop="@dimen/activity_vertical_margin"
+	    tools:context="com.droidcare.RegisterActivity" >
+	
+	    <TextView
+	        android:id="@+id/app_name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/app_name" />
+	
+	    <TextView
+	        android:id="@+id/passport_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/passport_field"
+	        android:layout_below="@id/app_name"
+	        android:text="@string/LabelText_passport" />
+	
+	    <EditText
+	        android:id="@id/passport_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/app_name"
+	        android:layout_toRightOf="@id/passport_label"
+	        android:inputType="text" />
+	
+	    <TextView
+	        android:id="@+id/name_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/name_field"
+	        android:layout_below="@id/passport_field"
+	        android:text="@string/LabelText_Name" />
+	
+	    <EditText
+	        android:id="@id/name_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/passport_field"
+	        android:layout_toRightOf="@id/name_label"
+	        android:inputType="text" />
+	
+	    <TextView
+	        android:id="@+id/address_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/address_field"
+	        android:layout_below="@id/name_field"
+	        android:text="@string/LabelText_address" />
+	
+	    <EditText
+	        android:id="@id/address_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/name_field"
+	        android:layout_toRightOf="@id/address_label"
+	        android:inputType="text" />
+	
+	    <TextView
+	        android:id="@+id/email_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/email_field"
+	        android:layout_below="@id/address_field"
+	        android:text="@string/LabelText_Email" />
+	
+	    <EditText
+	        android:id="@id/email_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/address_field"
+	        android:layout_toRightOf="@id/email_label"
+	        android:inputType="textEmailAddress" />
+	
+	    <TextView
+	        android:id="@+id/dob_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/email_field"
+	        android:layout_alignBaseline="@+id/dob_field"
+	        android:text="@string/LabelText_dob" />
+	    
+	    <Button
+	        android:id="@id/dob_field"
+	        android:layout_below="@id/email_field"
+	        android:layout_alignParentRight="true"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/dob_label"
+			android:drawableLeft="@drawable/ic_action_go_to_today"
+			android:onClick="pickDateBtn"
+			android:paddingTop="0dp"
+			android:paddingBottom="0dp"
+			android:text="@string/dob_field"
+			android:gravity="left|center_vertical" />
+	    
+	    <TextView
+	        android:id="@+id/password_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/password_field"
+	        android:text="@string/LabelText_Password" />
+	
+	    <EditText
+	        android:id="@id/password_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/nationality_field"
+	        android:layout_toRightOf="@id/password_label"
+	        android:inputType="textPassword" />
+	
+	    <TextView
+	        android:id="@+id/confirm_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignBaseline="@+id/confirm_field"
+	        android:layout_below="@id/password_field"
+	        android:text="@string/LabelText_Confirm"
+	        android:textSize="12sp" />
+	
+	    <EditText
+	        android:id="@id/confirm_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/password_field"
+	        android:layout_toRightOf="@id/confirm_label"
+	        android:inputType="textPassword" />
+	
+	    <Button
+	        android:id="@+id/register_btn"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_below="@id/confirm_field"
+	        android:onClick="doRegisterUser"
+	        android:text="@string/ButtonText_Register" />
+	
+	    <LinearLayout
+	        android:id="@+id/register_messages"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_below="@id/register_btn"
+	        android:orientation="vertical" >
+	    </LinearLayout>
+	
+	    <Spinner
+	        android:id="@+id/gender_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@id/dob_field"
+	        android:layout_toRightOf="@+id/gender_label"
+	        android:entries="@array/GenderField_values" />
+	
+	    <TextView
+	        android:id="@+id/nationality_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignTop="@id/nationality_field"
+	        android:layout_alignBottom="@id/nationality_field"
+	        android:gravity="center_vertical"
+	        android:text="@string/LabelText_nationality" />
+	
+	    <Spinner
+	        android:id="@id/nationality_field"
+	        android:layout_width="fill_parent"
+	        android:layout_height="wrap_content"
+	        android:layout_toRightOf="@id/nationality_label"
+	        android:layout_below="@id/gender_field"
+	        android:entries="@array/Nationality_values" />
+	
+	    <TextView
+	        android:id="@id/gender_label"
+	        android:layout_width="100dp"
+	        android:layout_height="wrap_content"
+	        android:layout_alignTop="@id/gender_field"
+	        android:layout_alignBottom="@id/gender_field"
+	        android:gravity="center_vertical"
+	        android:text="@string/LabelText_gender" />
+	
+	</RelativeLayout>
+</ScrollView>

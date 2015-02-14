@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">DroidCare</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="ButtonText_Login">Login</string>
+    <string name="ButtonText_Register">Register</string>
+    <string name="title_activity_login">Login</string>
+    <string name="LabelText_Email">E-mail</string>
+    <string name="LabelText_Password">Password</string>
+    <string name="title_activity_register">Register</string>
+    <string name="LabelText_Name">Full name</string>
+    <string name="LabelText_Confirm">Confirm Password</string>
+    <string name="LabelText_passport">Passport No.</string>
+    <string name="LabelText_address">Address</string>
+    <string name="LabelText_dob">Date of birth</string>
+    <string name="ButtonText_dob">Input</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <string name="LabelText_gender">Gender</string>
+    <string name="dob_field">Pick a date:</string>
+    <string-array name="GenderField_values">
+        <item></item>
+        <item>Male</item>
+        <item>Female</item>
+        <item>Undefined</item>
+    </string-array>
+    <string name="LabelText_nationality">Nationality</string>
+    <string-array name="Nationality_values">
+        <item></item>
+        <item>Indonesian</item>
+        <item>Singaporean</item>
+        <item>Thailand</item>
+        <item>Malaysian</item>
+        <item>Vietnamese</item>
+    </string-array>
+
+</resources>
