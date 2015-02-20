@@ -1,7 +1,6 @@
 package com.droidcare;
 
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -41,26 +40,18 @@ public class LoginActivity extends Activity {
 		data.put("email",  email_field.getText().toString());
 		data.put("password",  password_field.getText().toString());
 		
-		SimpleAsyncHttpPost httpPostRequest = new SimpleAsyncHttpPost(data, 1000);
-		
-		String responseText = ""; // response are in JSON string
-		try {
-			responseText = httpPostRequest.execute("http://dc.kenrick95.org/user/login").get();
-		} catch (InterruptedException e) {
-		} catch (ExecutionException e) {
-		}
+		String responseText = new HttpPostRequest(data).send(Global.USER_LOGIN_URL);
 
 		int status = -1;
-		JSONArray messages;
 		try {
 			JSONObject response = new JSONObject(responseText);
 			
 			status = response.getInt("status");
-			messages = response.getJSONArray("message");
+			JSONArray messages = response.getJSONArray("message");
 			switch(status) {
 			
 			case 0:
-				SharedPreferences settings = getSharedPreferences("DroidCare", 0);
+				SharedPreferences settings = getSharedPreferences(Global.APP_NAME, 0);
 				SharedPreferences.Editor editor = settings.edit();
 				
 				// Clear previous session id

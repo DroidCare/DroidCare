@@ -52,12 +52,6 @@ public class TitleActivity extends Activity {
     }
     
     @Override
-    public void onPause() {
-    	super.onPause();
-    	Log.d("TitleActivity", "onPause() triggered");
-    }
-    
-    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
     	super.onActivityResult(requestCode, resultCode, data);
     	
@@ -80,4 +74,11 @@ public class TitleActivity extends Activity {
     		break;
     	}
 	}
+    
+    @Override
+    public void onResume() {
+    	super.onResume();
+    	
+    	Global.init(this);
+    }
 }

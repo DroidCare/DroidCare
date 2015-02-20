@@ -1,7 +1,6 @@
 package com.droidcare;
 
 import java.util.HashMap;
-import java.util.concurrent.ExecutionException;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -71,23 +70,14 @@ public class RegisterActivity extends Activity {
 			data.put("nationality", nationality_field.getSelectedItem().toString());
 			data.put("date_of_birth", dob_field.getText().toString());
 			
-			SimpleAsyncHttpPost httpPostRequest = new SimpleAsyncHttpPost(data, 1000);
-			
-			String responseText = "";
-			
-			try {
-				responseText = httpPostRequest.execute("http://dc.kenrick95.org/user/register").get();
-			} catch (InterruptedException e) {
-			} catch (ExecutionException e) {
-			}
+			String responseText = new HttpPostRequest(data).send(Global.USER_REGISTER_URL);
 			
 			int status = -1;
-			JSONArray messages;
 			try {
 				JSONObject response = new JSONObject(responseText);
 				
 				status = response.getInt("status");
-				messages = response.getJSONArray("message");
+				JSONArray messages = response.getJSONArray("message");
 				
 				switch(status) {
 				
