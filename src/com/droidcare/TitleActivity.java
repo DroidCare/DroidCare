@@ -28,6 +28,8 @@ public class TitleActivity extends Activity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_title);
+        
+        Global.init(this);
     }
 
     @Override
