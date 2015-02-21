@@ -1,7 +1,6 @@
 *.classpath
 *.apk
 *.class
-*.jar
 *.dex
 *.cache
 *.ap_
