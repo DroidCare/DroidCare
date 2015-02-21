@@ -7,17 +7,16 @@ import org.json.JSONObject;
 
 import android.content.Context;
 import android.content.SharedPreferences;
-import android.util.Log;
 
 public class Global {
 	public static String APP_NAME = "DroidCare";
-	public static String BASE_URL = "https://dc-kenrick95.rhcloud.com";
-	public static String USER_URL = BASE_URL + "/user";
+	public static String BASE_URL = "https://dc-kenrick95.rhcloud.com/";
+	public static String USER_URL = BASE_URL + "user/";
 	
-	public static String USER_LOGIN_URL = USER_URL + "/login";
-	public static String USER_REGISTER_URL = USER_URL + "/register";
-	public static String USER_UPDATE_URL = USER_URL + "/update";
-	public static String USER_LOGOUT_URL = USER_URL + "/logout";
+	public static String USER_LOGIN_URL = USER_URL + "login";
+	public static String USER_REGISTER_URL = USER_URL + "register";
+	public static String USER_UPDATE_URL = USER_URL + "update";
+	public static String USER_LOGOUT_URL = USER_URL + "logout";
 	
 	private static User user = null;
 	private static SharedPreferences settings = null;
@@ -41,16 +40,9 @@ public class Global {
 		return settings.edit().clear().commit();
 	}
 	
-	public static User getUser(){
-		if(user != null){
-			return user;
-		}
-		
-		String session_id = getStringPrefs("session_id");
-		Log.d("session_id", "=" + session_id);
-		
+	public static void fetchUserDetails(){
 		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("session_id", session_id);
+		data.put("session_id", getStringPrefs("session_id"));
 		
 		String responseText = new HttpPostRequest(data).send(USER_URL);
 		
@@ -79,18 +71,25 @@ public class Global {
 						dateOfBirth, type);
 				
 				break;
+		
+		// Immediately clears everything 
+		// if status != 0
+		// OR
+		// an exception is caught
 			default:
 				// session_id expired
 				clearPrefs();
 				user = null;
 				break;
 			}
-		// Do nothing on exception
+		// Clear session_id on exception
 		} catch (JSONException e) {
 			clearPrefs();
 			user = null;
 		}
-		
+	}
+	
+	public static User getUser(){
 		return user;
 	}
 }

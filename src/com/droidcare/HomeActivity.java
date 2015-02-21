@@ -24,8 +24,7 @@ public class HomeActivity extends Activity {
 		
 		// Else, welcome user
 		TextView welcomeLabel = (TextView) findViewById(R.id.welcome_label);
-		Log.d("User's full name", Global.getUser().getFullName());
-		// welcomeLabel.setText("Hello, " + Global.getUser().getFullName());
+		welcomeLabel.setText("Hello, " + Global.getUser().getFullName());
 	}
 
 	@Override
