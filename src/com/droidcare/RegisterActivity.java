@@ -60,48 +60,51 @@ public class RegisterActivity extends Activity {
 		String password = password_field.getText().toString();
 		String confirm  = confirm_field.getText().toString();
 		
-		if(password.equals(confirm)) {
-			data.put("passport_number", passport_field.getText().toString());
-			data.put("full_name", name_field.getText().toString());
-			data.put("email", email_field.getText().toString());
-			data.put("password", password_field.getText().toString());
-			data.put("address", address_field.getText().toString());
-			data.put("gender", gender_field.getSelectedItem().toString());
-			data.put("nationality", nationality_field.getSelectedItem().toString());
-			data.put("date_of_birth", dob_field.getText().toString());
-			
-			String responseText = new HttpPostRequest(data).send(Global.USER_REGISTER_URL);
-			
-			int status = -1;
-			try {
-				JSONObject response = new JSONObject(responseText);
-				
-				status = response.getInt("status");
-				JSONArray messages = response.getJSONArray("message");
-				
-				switch(status) {
-				
-				case 0:
-					Intent result = new Intent();
-					setResult(Activity.RESULT_OK, result);
-					finish();
-					
-					break;
-				default:
-					register_messages.removeAllViews();
-					for(int i = 0, size = messages.length(); i < size; ++i){
-						TextView message = new TextView(this);
-						message.setText("\uu2022 " + messages.getString(i));
-						message.setLayoutParams(new LayoutParams
-								(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-						register_messages.addView(message);
-					}
-					break;
-				}
-			} catch (JSONException e) {
-			}
-		} else {
+		data.put("passport_number", passport_field.getText().toString());
+		data.put("full_name", name_field.getText().toString());
+		data.put("email", email_field.getText().toString());
+		data.put("password", password_field.getText().toString());
+		data.put("address", address_field.getText().toString());
+		data.put("gender", gender_field.getSelectedItem().toString());
+		data.put("nationality", nationality_field.getSelectedItem().toString());
+		data.put("date_of_birth", dob_field.getText().toString());
+
+		if(!password.equals(confirm)){
 			register_status.setText("Password and confirm password mismatch!");
+			
+			view.setEnabled(true);
+			return;
+		}
+		
+		String responseText = new HttpPostRequest(data).send(Global.USER_REGISTER_URL);
+		
+		int status = -1;
+		try {
+			JSONObject response = new JSONObject(responseText);
+			
+			status = response.getInt("status");
+			JSONArray messages = response.getJSONArray("message");
+			
+			switch(status) {
+			
+			case 0:
+				Intent result = new Intent();
+				setResult(Activity.RESULT_OK, result);
+				finish();
+				
+				break;
+			default:
+				register_messages.removeAllViews();
+				for(int i = 0, size = messages.length(); i < size; ++i){
+					TextView message = new TextView(this);
+					message.setText("\uu2022 " + messages.getString(i));
+					message.setLayoutParams(new LayoutParams
+							(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+					register_messages.addView(message);
+				}
+				break;
+			}
+		} catch (JSONException e) {
 		}
 		
 		view.setEnabled(true);

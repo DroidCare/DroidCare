@@ -165,8 +165,7 @@
 	        android:id="@+id/nationality_label"
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
-	        android:layout_alignTop="@id/nationality_field"
-	        android:layout_alignBottom="@id/nationality_field"
+	        android:layout_alignBaseline="@id/nationality_field"
 	        android:gravity="center_vertical"
 	        android:text="@string/LabelText_nationality" />
 	
@@ -182,8 +181,7 @@
 	        android:id="@id/gender_label"
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
-	        android:layout_alignTop="@id/gender_field"
-	        android:layout_alignBottom="@id/gender_field"
+	        android:layout_alignBaseline="@id/gender_field"
 	        android:gravity="center_vertical"
 	        android:text="@string/LabelText_gender" />
 	

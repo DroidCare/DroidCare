@@ -23,10 +23,11 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
+import android.util.Log;
 
 public class HttpPostRequest{
 	private HashMap<String, String> data;
-	public static int CONNECTION_TIMEOUT = 1000;
+	public static int CONNECTION_TIMEOUT = 10000;
 	
 	private class SimpleAsyncHttpPost extends AsyncTask<String, Integer, String> {
 		private HashMap<String, String> data;
@@ -41,6 +42,7 @@ public class HttpPostRequest{
 		protected String doInBackground(String... params) { // ASSUMING params[0] IS THE URL
 			String responseText = "";
 			
+			Log.d("params[]", params[0]);
 			HttpPost httpPost = new HttpPost(params[0]);
 			httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
 			httpPost.setHeader("charset", "UTF-8");
@@ -77,19 +79,6 @@ public class HttpPostRequest{
 	
 	public HttpPostRequest(HashMap<String, String> data){
 		this.data = data;
-	}
-	
-	public String send(String url, int timeout){
-		try {
-			return new SimpleAsyncHttpPost(data, timeout)
-					.execute(url)
-					.get();
-		// Do nothing on exception
-		} catch (InterruptedException e) {
-		} catch (ExecutionException e) {
-		}
-		
-		return "";
 	}
 	
 	public String send(String url){

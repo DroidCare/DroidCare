@@ -1,6 +1,8 @@
 package com.droidcare;
 
 import java.util.HashMap;
+import java.util.Iterator;
+
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -9,7 +11,7 @@ import android.content.SharedPreferences;
 
 public class Global {
 	public static String APP_NAME = "DroidCare";
-	public static String BASE_URL = "https://dc.kenrick95.org";
+	public static String BASE_URL = "https://dc-kenrick95.rhcloud.com";
 	public static String USER_URL = BASE_URL + "/user";
 	
 	public static String USER_LOGIN_URL = USER_URL + "/login";

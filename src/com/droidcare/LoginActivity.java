@@ -41,21 +41,20 @@ public class LoginActivity extends Activity {
 		data.put("password",  password_field.getText().toString());
 		
 		String responseText = new HttpPostRequest(data).send(Global.USER_LOGIN_URL);
-
+		Log.d("responseText", "=" + responseText);
+		
 		int status = -1;
 		try {
 			JSONObject response = new JSONObject(responseText);
 			
 			status = response.getInt("status");
 			JSONArray messages = response.getJSONArray("message");
+			
 			switch(status) {
 			
 			case 0:
 				SharedPreferences settings = getSharedPreferences(Global.APP_NAME, 0);
 				SharedPreferences.Editor editor = settings.edit();
-				
-				// Clear previous session id
-				editor.clear();
 				
 				// for status = 0, message[0] contains session_id
 				editor.putString("session_id", messages.getString(0));
@@ -85,6 +84,12 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
+		
+		// If user is logged in before AND session_id hasn't expired
+		if(Global.getUser() != null){
+			Intent intent = new Intent(this, HomeActivity.class);
+			startActivity(intent);
+		}
 		
 		login_messages = (LinearLayout) findViewById(R.id.login_messages);
 	}
