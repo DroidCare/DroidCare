@@ -80,6 +80,7 @@ public class LoginActivity extends Activity {
 		setContentView(R.layout.activity_login);
 		
 		// If user is logged in before AND session_id hasn't expired
+		Global.fetchUserDetails();
 		if(Global.getUser() != null){
 			Intent intent = new Intent(this, HomeActivity.class);
 			startActivity(intent);

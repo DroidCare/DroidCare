@@ -14,6 +14,8 @@ public class HomeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
+		// If user is logged in before AND session_id hasn't expired
+		Global.fetchUserDetails();
 		if(Global.getUser() == null){
 			Log.d("Global.getUser()", "== null");
 			
