@@ -8,7 +8,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -52,13 +51,8 @@ public class LoginActivity extends Activity {
 			
 			switch(status) {
 			
-			case 0:
-				SharedPreferences settings = getSharedPreferences(Global.APP_NAME, 0);
-				SharedPreferences.Editor editor = settings.edit();
-				
-				// for status = 0, message[0] contains session_id
-				editor.putString("session_id", messages.getString(0));
-				editor.commit();
+			case 0:				
+				Global.putStringPrefs("session_id", messages.getString(0));
 				
 				Intent intent = new Intent(this, HomeActivity.class);
 				startActivity(intent);

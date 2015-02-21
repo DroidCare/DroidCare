@@ -23,7 +23,6 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.util.EntityUtils;
 
 import android.os.AsyncTask;
-import android.util.Log;
 
 public class HttpPostRequest{
 	private HashMap<String, String> data;
@@ -42,7 +41,6 @@ public class HttpPostRequest{
 		protected String doInBackground(String... params) { // ASSUMING params[0] IS THE URL
 			String responseText = "";
 			
-			Log.d("params[]", params[0]);
 			HttpPost httpPost = new HttpPost(params[0]);
 			httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
 			httpPost.setHeader("charset", "UTF-8");

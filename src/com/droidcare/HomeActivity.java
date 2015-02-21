@@ -2,8 +2,10 @@ package com.droidcare;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class HomeActivity extends Activity {
 
@@ -11,6 +13,19 @@ public class HomeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
+		
+		if(Global.getUser() == null){
+			Log.d("Global.getUser()", "== null");
+			
+			// User's session_id has expired 
+			finish();
+			return;
+		}
+		
+		// Else, welcome user
+		TextView welcomeLabel = (TextView) findViewById(R.id.welcome_label);
+		Log.d("User's full name", Global.getUser().getFullName());
+		// welcomeLabel.setText("Hello, " + Global.getUser().getFullName());
 	}
 
 	@Override
