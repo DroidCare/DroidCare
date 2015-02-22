@@ -1,16 +1,33 @@
 package com.droidcare;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.view.LayoutInflater;
+import android.support.v4.app.ListFragment;
 import android.view.View;
-import android.view.ViewGroup;
+import java.util.ArrayList;
+import java.util.List;
+import android.widget.ListView;
+import android.widget.Toast;
 
-public class PendingAppointmentsList extends Fragment {
+public class PendingAppointmentsList extends ListFragment {
+	private List<Appointment> upcomingAppointmentList;
+	private AppointmentListAdapter mAdapter;
+	
 	@Override
-	public View onCreateView (LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-		View rootView = inflater.inflate(R.layout.pending_appointments_list_fragment, container, false);
+	public void onCreate (Bundle savedInstanceState) {
+		super.onCreate(savedInstanceState);
 		
-		return rootView;
+		this.upcomingAppointmentList = new ArrayList<Appointment>();
+		this.upcomingAppointmentList.add(new Appointment());
+		this.upcomingAppointmentList.add(new Appointment());
+		this.upcomingAppointmentList.add(new Appointment());
+		
+		mAdapter = new AppointmentListAdapter(getActivity(), this.upcomingAppointmentList);
+		setListAdapter(mAdapter);
+	}
+	
+	@Override
+	public void onListItemClick(ListView l, View v, int position, long id) {
+		super.onListItemClick(l, v, position, id);
+		Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_SHORT).show();
 	}
 }
