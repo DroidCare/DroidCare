@@ -8,6 +8,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,7 +32,7 @@ public class LoginActivity extends Activity {
 		login_status.setText("Authenticating user ...");
 		login_messages.addView(login_status);
 		
-		HashMap<String, String> data = new HashMap<String, String>();
+		final HashMap<String, String> data = new HashMap<String, String>();
 		
 		EditText email_field = (EditText) findViewById(R.id.email_field);
 		EditText password_field = (EditText) findViewById(R.id.password_field);
@@ -39,39 +40,60 @@ public class LoginActivity extends Activity {
 		data.put("email",  email_field.getText().toString());
 		data.put("password",  password_field.getText().toString());
 		
-		String responseText = new HttpPostRequest(data).send(Global.USER_LOGIN_URL);
-		Log.d("responseText", "=" + responseText);
-		
-		int status = -1;
-		try {
-			JSONObject response = new JSONObject(responseText);
+		// Not a good nor bad practice
+		// nevertheless, a clever workaround
+		new AsyncTask<Void, Void, String>(){
+			private View view;
+			private LinearLayout login_messages;
 			
-			status = response.getInt("status");
-			JSONArray messages = response.getJSONArray("message");
-			
-			switch(status) {
-			
-			case 0:				
-				Global.putStringPrefs("session_id", messages.getString(0));
-				
-				Intent intent = new Intent(this, HomeActivity.class);
-				startActivity(intent);
-				break;
-			default:
-				login_messages.removeAllViews();
-				for(int i = 0, size = messages.length(); i < size; ++i){
-					TextView login_message = new TextView(this);
-					login_message.setText("\u2022 " + messages.getString(i));
-					login_message.setLayoutParams(new LayoutParams
-							(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-					login_messages.addView(login_message);
-				}
-				break;
+			public AsyncTask<Void, Void, String> init(View view, LinearLayout login_messages) {
+				this.view = view;
+				this.login_messages = login_messages;
+				return this;
 			}
-		} catch (JSONException e) {
-		}
-		
-		view.setEnabled(true);
+			
+			@Override
+			protected String doInBackground(Void... params) {
+				return new HttpPostRequest(data).send(Global.USER_LOGIN_URL);
+			}
+			
+			@Override
+			protected void onPostExecute(String result) {
+				int status = -1;
+				try {
+					JSONObject response = new JSONObject(result);
+					JSONArray messages = response.getJSONArray("message");
+					
+					status = response.getInt("status");
+					Log.d("status", "=" + status);
+					
+					switch(status){
+					
+					case 0:
+						Global.putStringPrefs("session_id", messages.getString(0));
+						
+						Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+						startActivity(intent);
+						return;
+					default:
+						login_messages.removeAllViews();
+						for(int i = 0, size = messages.length(); i < size; ++i){
+							TextView message = new TextView(LoginActivity.this);
+							message.setText("\uu2022 " + messages.getString(i));
+							message.setLayoutParams(new LayoutParams
+									(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+							login_messages.addView(message);
+						}
+						
+						break;
+					}
+				// Do nothing on exception
+				} catch (JSONException e) {
+				}
+				
+				view.setEnabled(true);
+			}
+		}.init(view, login_messages).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 	
 	@Override
@@ -85,6 +107,10 @@ public class LoginActivity extends Activity {
 			Intent intent = new Intent(this, HomeActivity.class);
 			startActivity(intent);
 		}
+		
+		// FOR THE SAKE OF DEBUGGING, PLS
+		((EditText) findViewById(R.id.email_field)).setText("kenrick95@gmail.com");
+		((EditText) findViewById(R.id.password_field)).setText("123456");
 		
 		login_messages = (LinearLayout) findViewById(R.id.login_messages);
 	}
