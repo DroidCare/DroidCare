@@ -27,8 +27,8 @@
         <activity
             android:name=".LoginActivity"
             android:label="@string/title_activity_login"
-            android:parentActivityName=".TitleActivity"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:parentActivityName=".TitleActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.TitleActivity" />
@@ -36,8 +36,8 @@
         <activity
             android:name=".RegisterActivity"
             android:label="@string/title_activity_register"
-            android:parentActivityName=".TitleActivity"
-            android:noHistory="true" >
+            android:noHistory="true"
+            android:parentActivityName=".TitleActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.TitleActivity" />
@@ -45,6 +45,10 @@
         <activity
             android:name=".HomeActivity"
             android:label="@string/title_activity_home" >
+        </activity>
+        <activity
+            android:name=".EditProfileActivity"
+            android:label="@string/title_activity_edit_profile" >
         </activity>
     </application>
 

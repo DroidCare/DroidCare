@@ -16,16 +16,19 @@
     <string name="LabelText_address">Address</string>
     <string name="LabelText_dob">Date of birth</string>
     <string name="ButtonText_dob">Input</string>
-    <string name="title_activity_home">HomeActivity</string>
+    <string name="title_activity_home">Home</string>
     <string name="LabelText_gender">Gender</string>
     <string name="dob_field">Pick a date:</string>
+
     <string-array name="GenderField_values">
         <item></item>
         <item>Male</item>
         <item>Female</item>
         <item>Undefined</item>
     </string-array>
+
     <string name="LabelText_nationality">Nationality</string>
+
     <string-array name="Nationality_values">
         <item></item>
         <item>Indonesian</item>
@@ -34,10 +37,12 @@
         <item>Malaysian</item>
         <item>Vietnamese</item>
     </string-array>
+
     <string name="upcoming_appointment_list_fragment">Upcoming Appointment List</string>
     <string name="pending_appointment_list_fragment">Pending Appointment List</string>
     <string name="action_logout">Logout</string>
     <string name="action_overflow">Settings</string>
     <string name="action_EditProfile">Edit Profile</string>
+    <string name="title_activity_edit_profile">Edit Profile</string>
 
 </resources>
