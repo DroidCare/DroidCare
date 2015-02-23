@@ -28,7 +28,7 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 		LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		
 		if (convertView == null) {
-			viewToUse = mInflater.inflate(R.layout.appointment_item, parent);
+			viewToUse = mInflater.inflate(R.layout.appointment_item, parent, false);
 			holder = new ViewHolder();
 			holder.titleText = (TextView) viewToUse.findViewById(R.id.appointment_item_textview);
 		}
