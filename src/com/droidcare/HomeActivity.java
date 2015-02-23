@@ -86,11 +86,19 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		switch(item.getItemId()){
 		
 		case R.id.action_logout:
-			final ProgressDialog progressDialog = ProgressDialog.show(this, "Logging out ...", "Please wait!", true);
+			ProgressDialog progressDialog = ProgressDialog.show(this, "Logging out ...", "Please wait!", true);
 			
 			// Do this in async task
 			// to prevent blocking in main UI thread
 			new AsyncTask<Void, Void, Void>(){
+				private ProgressDialog progressDialog;
+				
+				// Clever workaround
+// http://stackoverflow.com/questions/5107158/how-to-pass-parameters-to-anonymous-class/12206542#12206542
+				private AsyncTask<Void, Void, Void> init(ProgressDialog progressDialog) {
+					this.progressDialog = progressDialog;
+					return this;
+				}
 				
 				@Override
 				protected Void doInBackground(Void... params) {
@@ -103,7 +111,8 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 				protected void onPostExecute(Void result) {
 					progressDialog.dismiss();
 				}
-			}.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+			}.init(progressDialog).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+			
 			return true;
 		case R.id.action_settings:
 			return true;
