@@ -101,13 +101,6 @@ public class LoginActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
 		
-		// If user is logged in before AND session_id hasn't expired
-		Global.fetchUserDetails();
-		if(Global.getUser() != null){
-			Intent intent = new Intent(this, HomeActivity.class);
-			startActivity(intent);
-		}
-		
 		// FOR THE SAKE OF DEBUGGING, PLS
 		((EditText) findViewById(R.id.email_field)).setText("kenrick95@gmail.com");
 		((EditText) findViewById(R.id.password_field)).setText("123456");

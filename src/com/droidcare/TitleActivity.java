@@ -4,11 +4,13 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 
 
 public class TitleActivity extends Activity {
@@ -20,8 +22,29 @@ public class TitleActivity extends Activity {
 	}
 	
 	public void gotoLoginActivity(View view) {
-		Intent intent = new Intent(this, LoginActivity.class);
-		startActivity(intent);
+		view.setEnabled(false);
+		((Button) view).setText("Logging in ...");
+		
+		new AsyncTask<Void, Void, Void>(){
+
+			private AsyncTask<Void, Void, Void> init(){
+				return this;
+			}
+			
+			@Override
+			protected Void doInBackground(Void... params) {
+				// If user is logged in before AND session_id hasn't expired
+				Global.fetchUserDetails();
+				if(Global.getUser() != null){
+					Intent intent = new Intent(TitleActivity.this, HomeActivity.class);
+					startActivity(intent);
+				} else{
+					Intent intent = new Intent(TitleActivity.this, LoginActivity.class);
+					startActivity(intent);
+				}
+				return null;
+			}
+		}.init().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 	
     @Override
