@@ -29,7 +29,7 @@ public class Global {
 	}
 	
 	public static String getStringPrefs(String key){
-		return settings.getString(key, null);
+		return settings.getString(key, "");
 	}
 	
 	public static boolean putStringPrefs(String key, String value){
@@ -41,8 +41,14 @@ public class Global {
 	}
 	
 	public static void fetchUserDetails(){
+		String session_id = getStringPrefs("session_id");
+		if(session_id.isEmpty()){ // If no session_id
+			user = null;
+			return;
+		}
+		
 		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("session_id", getStringPrefs("session_id"));
+		data.put("session_id", session_id);
 		
 		String responseText = new HttpPostRequest(data).send(USER_URL);
 		
@@ -89,7 +95,11 @@ public class Global {
 		}
 	}
 	
-	public static User getUser(){
+	public static User getUser() {
 		return user;
+	}
+	
+	public static void clearUser() {
+		user = null;
 	}
 }
