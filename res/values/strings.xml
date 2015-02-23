@@ -37,5 +37,7 @@
     <string name="upcoming_appointment_list_fragment">Upcoming Appointment List</string>
     <string name="pending_appointment_list_fragment">Pending Appointment List</string>
     <string name="action_logout">Logout</string>
+    <string name="action_overflow">Settings</string>
+    <string name="action_EditProfile">Edit Profile</string>
 
 </resources>

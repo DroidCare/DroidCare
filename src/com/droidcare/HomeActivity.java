@@ -83,6 +83,9 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			return true;
 		case R.id.action_settings:
 			return true;
+		case R.id.action_EditProfile:
+			Log.d("onOptionsItemSelected()", "action_EditProfile selected");
+			return true;
 		default:
 			return super.onOptionsItemSelected(item);
 		}
