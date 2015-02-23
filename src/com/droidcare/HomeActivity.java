@@ -1,8 +1,15 @@
 package com.droidcare;
 
+import java.util.HashMap;
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
+import android.app.ProgressDialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -79,7 +86,24 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		switch(item.getItemId()){
 		
 		case R.id.action_logout:
-			doLogout();
+			final ProgressDialog progressDialog = ProgressDialog.show(this, "Logging out ...", "Please wait!", true);
+			
+			// Do this in async task
+			// to prevent blocking in main UI thread
+			new AsyncTask<Void, Void, Void>(){
+				
+				@Override
+				protected Void doInBackground(Void... params) {
+					doLogout();
+					Log.d("Track", "after doLogout()");
+					return null;
+				}
+				
+				@Override
+				protected void onPostExecute(Void result) {
+					progressDialog.dismiss();
+				}
+			}.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 			return true;
 		case R.id.action_settings:
 			return true;
@@ -103,9 +127,35 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	public void onTabUnselected (Tab tab, FragmentTransaction ft) {}
 	
 	private void doLogout() {
+		HashMap<String, String> data = new HashMap<String, String>();
+		data.put("session_id", Global.getStringPrefs("session_id"));
+		
+		int status = -1;
+		String responseText = new HttpPostRequest(data).send(Global.USER_LOGOUT_URL);
+		try {
+			JSONObject response = new JSONObject(responseText);
+			
+			status = response.getInt("status");
+			JSONArray messages = response.getJSONArray("message");
+			
+			switch(status){
+			
+			case 0:
+				Log.d("Log out", "Successful!");
+				break;
+			default:
+				Log.d("Log out", "Unsuccessful!");
+				break;
+			}
+		// Always do nothing on exception
+		} catch (JSONException e) {
+			Log.d("Log out", "Caught in JSONException!");
+		}
+		
 		Global.clearPrefs();
 		Global.clearUser();
 		
-		finish();
+//		progressDialog.dismiss();
+		HomeActivity.this.finish();
 	}
 }

@@ -82,7 +82,8 @@ public class HttpPostRequest{
 	public String send(String url){
 		try {
 			return new SimpleAsyncHttpPost(data, CONNECTION_TIMEOUT)
-					.execute(url)
+					.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url)
+//					.execute(url)
 					.get();
 		// Do nothing on exception
 		} catch (InterruptedException e) {
