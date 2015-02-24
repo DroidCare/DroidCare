@@ -9,6 +9,7 @@ import android.app.ActionBar;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
@@ -117,7 +118,8 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		case R.id.action_settings:
 			return true;
 		case R.id.action_EditProfile:
-			Log.d("onOptionsItemSelected()", "action_EditProfile selected");
+			Intent intent = new Intent(this, EditProfileActivity.class);
+			startActivity(intent);
 			return true;
 		default:
 			return super.onOptionsItemSelected(item);

@@ -2,6 +2,7 @@ package com.droidcare;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -23,11 +24,16 @@ public class TitleActivity extends Activity {
 	
 	public void gotoLoginActivity(View view) {
 		view.setEnabled(false);
-		((Button) view).setText("Logging in ...");
+		ProgressDialog progressDialog = ProgressDialog
+				.show(this, "Loggin in ...", "Please wait!", true);
 		
 		new AsyncTask<Void, Void, Void>(){
-
-			private AsyncTask<Void, Void, Void> init(){
+			private View btn;
+			private ProgressDialog progressDialog;
+			
+			public AsyncTask<Void, Void, Void> init(View btn, ProgressDialog progressDialog) {
+				this.btn = btn;
+				this.progressDialog = progressDialog;
 				return this;
 			}
 			
@@ -44,7 +50,13 @@ public class TitleActivity extends Activity {
 				}
 				return null;
 			}
-		}.init().executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+			
+			@Override
+			protected void onPostExecute(Void result){
+				btn.setEnabled(true);
+				progressDialog.dismiss();
+			}
+		}.init(view, progressDialog).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 	}
 	
     @Override

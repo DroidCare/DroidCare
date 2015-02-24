@@ -44,5 +44,7 @@
     <string name="action_overflow">Settings</string>
     <string name="action_EditProfile">Edit Profile</string>
     <string name="title_activity_edit_profile">Edit Profile</string>
+    <string name="LabelText_OldPassword">Old Password</string>
+    <string name="update_btn">Update Profile</string>
 
 </resources>

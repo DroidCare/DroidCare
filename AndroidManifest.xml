@@ -48,7 +48,11 @@
         </activity>
         <activity
             android:name=".EditProfileActivity"
-            android:label="@string/title_activity_edit_profile" >
+            android:label="@string/title_activity_edit_profile"
+            android:parentActivityName=".HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.droidcare.HomeActivity" />
         </activity>
     </application>
 
