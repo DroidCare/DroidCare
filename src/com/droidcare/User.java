@@ -1,6 +1,8 @@
 package com.droidcare;
 
 public class User{
+	private int		id;
+	
 	private String	email,
 					fullName,
 					address,
@@ -15,9 +17,10 @@ public class User{
 	public User(){}
 	
 	// Lengthy constructor
-	public User(String email, String fullName, String address
+	public User(int id, String email, String fullName, String address
 			, char gender, String passportNumber, String nationality
 			, String dateOfBirth, String type){
+		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
@@ -28,9 +31,10 @@ public class User{
 		this.type = type;
 	}
 	
-	public void setData(String email, String fullName, String address
+	public void setData(int id, String email, String fullName, String address
 			, char gender, String passportNumber, String nationality
 			, String dateOfBirth, String type){
+		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
@@ -86,5 +90,9 @@ public class User{
 	
 	public char getGender(){
 		return gender;
+	}
+	
+	public int getId(){
+		return id;
 	}
 }

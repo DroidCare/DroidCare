@@ -62,6 +62,8 @@ public class Global {
 			case 0:
 				JSONObject params = response.getJSONObject("message");
 				
+				int		id = params.getInt("id");
+				
 				String	email = params.getString("email"),
 						fullName = params.getString("full_name"),
 						address = params.getString("address"),
@@ -72,7 +74,7 @@ public class Global {
 				
 				char	gender = params.getString("gender").charAt(0);
 				
-				user = new User(email, fullName, address
+				user = new User(id, email, fullName, address
 						, gender, passportNumber, nationality,
 						dateOfBirth, type);
 				

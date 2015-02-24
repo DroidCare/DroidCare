@@ -18,13 +18,11 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_passport" />
-	
 	    <EditText
 	        android:id="@+id/passport_field"
-	        android:inputType="none"
+	        android:inputType="text"
 	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:enabled="false" />
+	        android:layout_height="wrap_content" />
     </LinearLayout>
 	<LinearLayout
         android:layout_width="fill_parent"
@@ -35,13 +33,11 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_Name" />
-	    
 	    <EditText
 	        android:id="@+id/name_field"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:inputType="none"
-	        android:enabled="false" />
+	        android:inputType="text" />
 	</LinearLayout>
 	<LinearLayout
         android:layout_width="fill_parent"
@@ -52,7 +48,6 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_address" />
-	    
 	    <EditText
 	        android:id="@+id/address_field"
 	        android:layout_width="fill_parent"
@@ -69,13 +64,11 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_Email" />
-	    
 	    <EditText
 	        android:id="@+id/email_field"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:inputType="none"
-	        android:enabled="false" />
+	        android:inputType="textEmailAddress" />
 	</LinearLayout>
 	
 	<LinearLayout
@@ -87,12 +80,11 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_dob" />
-	    
 	    <EditText
 	        android:id="@+id/dob_field"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:inputType="none" />
+	        android:inputType="text" />
 	</LinearLayout>
 	
 	<LinearLayout
@@ -104,12 +96,11 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_gender" />
-	    
 	    <EditText
 	        android:id="@+id/gender_field"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:inputType="none" />
+	        android:inputType="text" />
 	</LinearLayout>
 	
 	<LinearLayout
@@ -121,12 +112,11 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_nationality" />
-	    
 	    <EditText
 	        android:id="@+id/nationality_field"
 	        android:layout_width="fill_parent"
 	        android:layout_height="wrap_content"
-	        android:inputType="none" />
+	        android:inputType="text" />
 	</LinearLayout>
 	
 	<LinearLayout
@@ -138,7 +128,6 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_OldPassword" />
-	    
 	    <EditText
 	        android:id="@+id/old_password_field"
 	        android:layout_width="fill_parent"
@@ -155,7 +144,6 @@
 	        android:layout_width="100dp"
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_Password" />
-	    
 	    <EditText
 	        android:id="@+id/password_field"
 	        android:layout_width="fill_parent"
@@ -172,7 +160,6 @@
 	        android:layout_height="wrap_content"
 	        android:text="@string/LabelText_Confirm"
 	        android:textSize="12sp" />
-	    
 	    <EditText
 	        android:id="@+id/confirm_field"
 	        android:layout_width="fill_parent"
@@ -191,7 +178,15 @@
 	        android:id="@+id/update_btn"
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
-	        android:text="@string/update_btn" />
+	        android:text="@string/update_btn"
+	        android:onClick="doUpdateProfile" />
 	</LinearLayout>
 	
+	<LinearLayout
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical"
+	    android:id="@+id/messages_holder" >
+	    
+	</LinearLayout>
 </LinearLayout>

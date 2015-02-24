@@ -25,7 +25,7 @@ public class TitleActivity extends Activity {
 	public void gotoLoginActivity(View view) {
 		view.setEnabled(false);
 		ProgressDialog progressDialog = ProgressDialog
-				.show(this, "Loggin in ...", "Please wait!", true);
+				.show(this, "Logging in ...", "Please wait!", true);
 		
 		new AsyncTask<Void, Void, Void>(){
 			private View btn;
