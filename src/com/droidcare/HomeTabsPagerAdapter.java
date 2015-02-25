@@ -4,6 +4,15 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * 
+ * This class is responsible for handling switching between tabs and determines what
+ * to be displayed inside the selected tabs
+ *
+ */
+
 public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
 	private final int NO_OF_TABS = 2;
 	

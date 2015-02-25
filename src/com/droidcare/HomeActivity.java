@@ -39,11 +39,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			return;
 		}
 		
-		// Else, welcome user
-		//TextView welcomeLabel = (TextView) findViewById(R.id.welcome_label);
-		//welcomeLabel.setText("Hello, " + Global.getUser().getFullName());
-		
-		// Initialization
+		// List Fragment Initialization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
 		mAdapter = new HomeTabsPagerAdapter(getSupportFragmentManager());
@@ -57,7 +53,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			Tab t = actionBar.newTab().setText(n).setTabListener(this);
 			actionBar.addTab(t);
 		}
-				
+			
 		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
 			@Override
 			public void onPageSelected(int position) {
@@ -71,14 +67,26 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			public void onPageScrollStateChanged(int arg0) {}
 		});
 	}
-
+	
+	// Swipe view listener
+	@Override
+	public void onTabSelected (Tab tab, FragmentTransaction ft) {
+		viewPager.setCurrentItem(tab.getPosition());
+	}
+	
+	@Override
+	public void onTabReselected (Tab tab, FragmentTransaction ft) {}
+	
+	@Override
+	public void onTabUnselected (Tab tab, FragmentTransaction ft) {}
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
 		getMenuInflater().inflate(R.menu.home, menu);
 		return true;
 	}
-
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -95,7 +103,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 				private ProgressDialog progressDialog;
 				
 				// Clever workaround
-// http://stackoverflow.com/questions/5107158/how-to-pass-parameters-to-anonymous-class/12206542#12206542
+				// http://stackoverflow.com/questions/5107158/how-to-pass-parameters-to-anonymous-class/12206542#12206542
 				private AsyncTask<Void, Void, Void> init(ProgressDialog progressDialog) {
 					this.progressDialog = progressDialog;
 					return this;
@@ -115,28 +123,21 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			}.init(progressDialog).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
 			
 			return true;
+			
 		case R.id.action_settings:
 			return true;
+			
 		case R.id.action_EditProfile:
 			Intent intent = new Intent(this, EditProfileActivity.class);
 			startActivity(intent);
 			return true;
+			
 		default:
 			return super.onOptionsItemSelected(item);
 		}
 	}
 	
-	@Override
-	public void onTabSelected (Tab tab, FragmentTransaction ft) {
-		viewPager.setCurrentItem(tab.getPosition());
-	}
-	
-	@Override
-	public void onTabReselected (Tab tab, FragmentTransaction ft) {}
-	
-	@Override
-	public void onTabUnselected (Tab tab, FragmentTransaction ft) {}
-	
+	// Logout mechanism
 	private void doLogout() {
 		HashMap<String, String> data = new HashMap<String, String>();
 		data.put("session_id", Global.getStringPrefs("session_id"));
@@ -163,10 +164,11 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			Log.d("Log out", "Caught in JSONException!");
 		}
 		
+		// Clearing session
 		Global.clearPrefs();
 		Global.clearUser();
 		
-//		progressDialog.dismiss();
+		// progressDialog.dismiss();
 		HomeActivity.this.finish();
 	}
 }

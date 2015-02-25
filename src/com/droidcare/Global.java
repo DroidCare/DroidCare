@@ -21,6 +21,8 @@ public class Global {
 	private static User user = null;
 	private static SharedPreferences settings = null;
 	
+	private static AppointmentManager appointmentManager = null;
+	
 	public static void init(Context context){
 		// Make sure that SharedPreferences is initialized only once
 		if(settings == null){
@@ -40,6 +42,9 @@ public class Global {
 		return settings.edit().clear().commit();
 	}
 	
+	/**
+	 * User's details includes appointments associated to this user
+	 */
 	public static void fetchUserDetails(){
 		String session_id = getStringPrefs("session_id");
 		if(session_id.isEmpty()){ // If no session_id
@@ -78,6 +83,9 @@ public class Global {
 						, gender, passportNumber, nationality,
 						dateOfBirth, type);
 				
+				// RETRIEVE ALL APPOINTMENTS AND ADD IT TO APPOINTMENTMANAGER
+				appointmentManager = new AppointmentManager();
+				
 				break;
 		
 		// Immediately clears everything 
@@ -103,5 +111,13 @@ public class Global {
 	
 	public static void clearUser() {
 		user = null;
+	}
+	
+	public static AppointmentManager getAppointmentManager() {
+		return appointmentManager;
+	}
+	
+	public static void clearAppointmentManager() {
+		appointmentManager = null;
 	}
 }

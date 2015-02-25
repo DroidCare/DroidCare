@@ -10,6 +10,15 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * 
+ * This adapter class is responsible for retrieving data from an ArrayList object
+ * and transforming the data into items inside the ListFragment
+ *
+ */
+
 public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 	private Context context;
 	
