@@ -1,6 +1,8 @@
 package com.droidcare;
 
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
+import java.util.Locale;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -17,6 +19,9 @@ public class Global {
 	public static String USER_REGISTER_URL = USER_URL + "register";
 	public static String USER_UPDATE_URL = USER_URL + "update";
 	public static String USER_LOGOUT_URL = USER_URL + "logout";
+	
+	public static String DATE_FORMAT = "yyyy-MM-dd HH-mm-ss";
+	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 	
 	private static User user = null;
 	private static SharedPreferences settings = null;

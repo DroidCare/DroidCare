@@ -168,7 +168,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		Global.clearPrefs();
 		Global.clearUser();
 		
-		// progressDialog.dismiss();
 		HomeActivity.this.finish();
 	}
 }
