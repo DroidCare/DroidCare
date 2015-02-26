@@ -14,6 +14,7 @@ public class Global {
 	public static String APP_NAME = "DroidCare";
 	public static String BASE_URL = "https://dc-kenrick95.rhcloud.com/";
 	public static String USER_URL = BASE_URL + "user/";
+	public static String APPOINTMENT_URL = BASE_URL + "appointment/";
 	
 	public static String USER_LOGIN_URL = USER_URL + "login";
 	public static String USER_REGISTER_URL = USER_URL + "register";
@@ -22,6 +23,9 @@ public class Global {
 	
 	public static String DATE_FORMAT = "yyyy-MM-dd HH-mm-ss";
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
+	
+	public static String USER_APPOINTMENT_URL = APPOINTMENT_URL + "user";
+	public static String GET_APPOINTMENT_ATTACH_URL = APPOINTMENT_URL + "attachment/";
 	
 	private static User user = null;
 	private static SharedPreferences settings = null;
