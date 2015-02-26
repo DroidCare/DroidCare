@@ -43,7 +43,7 @@ public class HttpPostRequest{
 			
 			HttpPost httpPost = new HttpPost(params[0]);
 			httpPost.setHeader("Content-Type", "application/x-www-form-urlencoded");
-			httpPost.setHeader("charset", "UTF-8");
+			httpPost.setHeader("Accept-Charset", "utf-8");
 			
 			List<NameValuePair> pairs = new ArrayList<NameValuePair>();
 			for(Iterator<String> it = data.keySet().iterator(); it.hasNext(); ) {
