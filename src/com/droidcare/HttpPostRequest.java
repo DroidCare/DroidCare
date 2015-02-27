@@ -28,7 +28,7 @@ public class HttpPostRequest{
 	private HashMap<String, String> data;
 	public static int CONNECTION_TIMEOUT = 10000;
 	
-	private class SimpleAsyncHttpPost extends AsyncTask<String, Integer, String> {
+	private class SimpleAsyncHttpPost extends AsyncTask<String, Void, String> {
 		private HashMap<String, String> data;
 		private int timeoutConnection;
 		
@@ -83,7 +83,6 @@ public class HttpPostRequest{
 		try {
 			return new SimpleAsyncHttpPost(data, CONNECTION_TIMEOUT)
 					.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR, url)
-//					.execute(url)
 					.get();
 		// Do nothing on exception
 		} catch (InterruptedException e) {
