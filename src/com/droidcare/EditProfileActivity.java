@@ -48,7 +48,7 @@ public class EditProfileActivity extends Activity {
 			
 			data.put("id", "" + id);
 			data.put("email", email);
-			data.put("password", new_pw);
+			data.put("password", new_pw.isEmpty() ? old_pw : new_pw);
 			data.put("full_name", fullName);
 			data.put("address", address);
 			data.put("gender", gender);
