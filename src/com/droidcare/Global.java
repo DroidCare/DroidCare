@@ -11,6 +11,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 public class Global {
+	
+	/*
+	 * Constants for URLs.
+	 */
 	public static String APP_NAME = "DroidCare";
 	public static String BASE_URL = "https://dc-kenrick95.rhcloud.com/";
 	public static String USER_URL = BASE_URL + "user/";
@@ -20,17 +24,21 @@ public class Global {
 	public static String USER_REGISTER_URL = USER_URL + "register";
 	public static String USER_UPDATE_URL = USER_URL + "update";
 	public static String USER_LOGOUT_URL = USER_URL + "logout";
-	
-	public static String DATE_FORMAT = "yyyy-MM-dd HH-mm-ss";
-	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
-	
+
 	public static String USER_APPOINTMENT_URL = APPOINTMENT_URL + "user";
 	public static String GET_APPOINTMENT_ATTACH_URL = APPOINTMENT_URL + "attachment/";
 	
-	private static User user = null;
+	/*
+	 * Date format used in back-end PHP.
+	 */
+	public static String DATE_FORMAT = "yyyy-MM-dd HH-mm-ss";
+	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
+	
 	private static SharedPreferences settings = null;
+	private static User user = null;
 	
 	private static AppointmentManager appointmentManager = null;
+	private static UserManager userManager = UserManager.getInstance();
 	
 	public static void init(Context context){
 		// Make sure that SharedPreferences is initialized only once
@@ -39,6 +47,10 @@ public class Global {
 		}
 	}
 	
+	/**
+	 * @param key The key.
+	 * @return The value if key exists. Else, an empty string.
+	 */
 	public static String getStringPrefs(String key){
 		return settings.getString(key, "");
 	}
