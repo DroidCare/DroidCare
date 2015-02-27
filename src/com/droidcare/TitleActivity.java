@@ -23,40 +23,8 @@ public class TitleActivity extends Activity {
 	}
 	
 	public void gotoLoginActivity(View view) {
-		view.setEnabled(false);
-		ProgressDialog progressDialog = ProgressDialog
-				.show(this, "Logging in ...", "Please wait!", true);
-		
-		new AsyncTask<Void, Void, Void>(){
-			private View btn;
-			private ProgressDialog progressDialog;
-			
-			public AsyncTask<Void, Void, Void> init(View btn, ProgressDialog progressDialog) {
-				this.btn = btn;
-				this.progressDialog = progressDialog;
-				return this;
-			}
-			
-			@Override
-			protected Void doInBackground(Void... params) {
-				// If user is logged in before AND session_id hasn't expired
-				Global.fetchUserDetails();
-				if(Global.getUser() != null){
-					Intent intent = new Intent(TitleActivity.this, HomeActivity.class);
-					startActivity(intent);
-				} else{
-					Intent intent = new Intent(TitleActivity.this, LoginActivity.class);
-					startActivity(intent);
-				}
-				return null;
-			}
-			
-			@Override
-			protected void onPostExecute(Void result){
-				btn.setEnabled(true);
-				progressDialog.dismiss();
-			}
-		}.init(view, progressDialog).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		Intent intent = new Intent(this, LoginActivity.class);
+		startActivity(intent);
 	}
 	
     @Override
@@ -100,7 +68,8 @@ public class TitleActivity extends Activity {
 						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
-								// Do nothing
+								// Close dialog
+								dialog.dismiss();
 							}
 						})
 						.setIcon(android.R.drawable.ic_dialog_info)
@@ -113,7 +82,5 @@ public class TitleActivity extends Activity {
     @Override
     public void onResume() {
     	super.onResume();
-    	
-    	Global.init(this);
     }
 }

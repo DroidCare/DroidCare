@@ -47,4 +47,23 @@ public class AppSession {
 	public int getInt(String key) {
 		return settings.getInt(key, 0);
 	}
+	
+	/**
+	 * @return Returns <i>true</i> if successful.
+	 */
+	public boolean clearAll() {
+		return settings.edit().clear().commit();
+	}
+	
+	/**
+	 * @param key The key.
+	 * @return Returns <i>true</i> if successful.
+	 */
+	public boolean clear(String key) {
+		return settings.edit().remove(key).commit();
+	}
+	
+	public boolean contains(String key) {
+		return settings.contains(key);
+	}
 }

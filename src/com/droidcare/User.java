@@ -9,7 +9,8 @@ public class User{
 					passportNumber,
 					nationality,
 					dateOfBirth,
-					type;
+					type,
+					sessionId;
 	
 	private char gender;
 	
@@ -94,5 +95,13 @@ public class User{
 	
 	public int getId(){
 		return id;
+	}
+	
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+	
+	public String getSessionId() {
+		return sessionId;
 	}
 }

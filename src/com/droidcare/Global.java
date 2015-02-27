@@ -34,104 +34,26 @@ public class Global {
 	public static String DATE_FORMAT = "yyyy-MM-dd HH-mm-ss";
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 	
-	private static SharedPreferences settings = null;
-	private static User user = null;
-	
 	private static AppointmentManager appointmentManager = null;
-	private static UserManager userManager = UserManager.getInstance();
 	
-	public static void init(Context context){
-		// Make sure that SharedPreferences is initialized only once
-		if(settings == null){
-			settings = context.getSharedPreferences(APP_NAME, Context.MODE_PRIVATE);
-		}
-	}
+	private static UserManager userManager;
+	private static AppSession appSession;
 	
-	/**
-	 * @param key The key.
-	 * @return The value if key exists. Else, an empty string.
-	 */
-	public static String getStringPrefs(String key){
-		return settings.getString(key, "");
-	}
-	
-	public static boolean putStringPrefs(String key, String value){
-		return settings.edit().putString(key, value).commit();
-	}
-	
-	public static boolean clearPrefs(){
-		return settings.edit().clear().commit();
-	}
-	
-	/**
-	 * User's details includes appointments associated to this user
-	 */
-	public static void fetchUserDetails(){
-		String session_id = getStringPrefs("session_id");
-		if(session_id.isEmpty()){ // If no session_id
-			user = null;
-			return;
-		}
+	public static void init(Context context) {
+		UserManager.init(context);
+		AppSession.init(context);
 		
-		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("session_id", session_id);
-		
-		String responseText = new HttpPostRequest(data).send(USER_URL);
-		
-		int status = -1;
-		try {
-			JSONObject response = new JSONObject(responseText);
-			
-			status = response.getInt("status");
-			switch(status){
-				
-			case 0:
-				JSONObject params = response.getJSONObject("message");
-				
-				int		id = params.getInt("id");
-				
-				String	email = params.getString("email"),
-						fullName = params.getString("full_name"),
-						address = params.getString("address"),
-						passportNumber = params.getString("passport_number"),
-						nationality = params.getString("nationality"),
-						dateOfBirth = params.getString("date_of_birth"),
-						type = params.getString("type");
-				
-				char	gender = params.getString("gender").charAt(0);
-				
-				user = new User(id, email, fullName, address
-						, gender, passportNumber, nationality,
-						dateOfBirth, type);
-				
-				// RETRIEVE ALL APPOINTMENTS AND ADD IT TO APPOINTMENTMANAGER
-				appointmentManager = new AppointmentManager();
-				
-				break;
-		
-		// Immediately clears everything 
-		// if status != 0
-		// OR
-		// an exception is caught
-			default:
-				// session_id expired
-				clearPrefs();
-				user = null;
-				break;
-			}
-		// Clear session_id on exception
-		} catch (JSONException e) {
-			clearPrefs();
-			user = null;
-		}
+		userManager	= UserManager.getInstance();
+		appSession	= AppSession.getInstance();
+		appointmentManager = new AppointmentManager();
 	}
 	
-	public static User getUser() {
-		return user;
+	public static AppSession getAppSession() {
+		return appSession;
 	}
 	
-	public static void clearUser() {
-		user = null;
+	public static UserManager getUserManager() {
+		return userManager;
 	}
 	
 	public static AppointmentManager getAppointmentManager() {

@@ -24,20 +24,14 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	private ActionBar actionBar;
 	private String[] tabs = {"Upcoming", "Pending"};
 	
+	private User user;
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
 		
-		// If user is logged in before AND session_id hasn't expired
-		Global.fetchUserDetails();
-		if(Global.getUser() == null){
-			Log.d("Global.getUser()", "== null");
-			
-			// User's session_id has expired 
-			finish();
-			return;
-		}
+		user = Global.getUserManager().getUser();
 		
 		// List Fragment Initialization
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -112,7 +106,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 				@Override
 				protected Void doInBackground(Void... params) {
 					doLogout();
-					Log.d("Track", "after doLogout()");
 					return null;
 				}
 				
@@ -121,7 +114,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 					progressDialog.dismiss();
 				}
 			}.init(progressDialog).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-			
 			return true;
 			
 		case R.id.action_settings:
@@ -140,7 +132,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	// Logout mechanism
 	private void doLogout() {
 		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("session_id", Global.getStringPrefs("session_id"));
+		data.put("session_id", Global.getAppSession().getString("session_id"));
 		
 		int status = -1;
 		String responseText = new HttpPostRequest(data).send(Global.USER_LOGOUT_URL);
@@ -159,15 +151,18 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 				Log.d("Log out", "Unsuccessful!");
 				break;
 			}
+		
 		// Always do nothing on exception
 		} catch (JSONException e) {
-			Log.d("Log out", "Caught in JSONException!");
 		}
 		
-		// Clearing session
-		Global.clearPrefs();
-		Global.clearUser();
-		Global.clearAppointmentManager();
+		// Either user successfully or unsuccessfully logout,
+		// clear all session data
+		Global.getUserManager().removeUser();
+		Global.getAppSession().clearAll();
+		
+		// This need some work
+		// Global.clearAppointmentManager();
 		
 		HomeActivity.this.finish();
 	}

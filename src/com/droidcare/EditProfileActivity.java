@@ -33,7 +33,7 @@ public class EditProfileActivity extends Activity {
 		if(!old_pw.isEmpty() || (!old_pw.isEmpty() && !new_pw.isEmpty()
 				&& !new_cpw.isEmpty())){
 			
-			int id = Global.getUser().getId();
+			int id = Global.getUserManager().getUser().getId();
 			
 			String
 				passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
@@ -48,14 +48,14 @@ public class EditProfileActivity extends Activity {
 			
 			data.put("id", "" + id);
 			data.put("email", email);
-			data.put("password", new_pw.isEmpty() ? old_pw : new_pw);
+			data.put("password", new_pw.isEmpty() ? old_pw : new_pw); // If user does not change his old password
 			data.put("full_name", fullName);
 			data.put("address", address);
 			data.put("gender", gender);
 			data.put("passport_number", passportNumber);
 			data.put("nationality", nationality);
 			data.put("date_of_birth", dateOfBirth);
-			data.put("session_id", Global.getStringPrefs("session_id"));
+			data.put("session_id", Global.getAppSession().getString("session_id"));
 			
 			view.setEnabled(false);
 			ProgressDialog pd = ProgressDialog
@@ -91,12 +91,12 @@ public class EditProfileActivity extends Activity {
 						JSONObject response = new JSONObject(result);
 						JSONArray messages = response.getJSONArray("message");
 						
-						status = response.getInt("status");
+						status = response.getInt("status") == 0							// Server response OK
+								&& Global.getUserManager().fetchUserDetails() ? 0 : -1;	// Successfully fetch user's details
+						
 						switch(status){
 						
-						case 0:
-							Global.fetchUserDetails();
-							
+						case 0:							
 							pd.dismiss();
 							new AlertDialog.Builder(EditProfileActivity.this)
 									.setIcon(android.R.drawable.ic_dialog_info)
@@ -109,10 +109,9 @@ public class EditProfileActivity extends Activity {
 											EditProfileActivity.this.finish();
 										}
 									}).show();
-							return;
+							break;
 						default:
 							pd.dismiss();
-							
 							for(int i = 0, size = messages.length(); i < size; ++i){
 								TextView textView = new TextView(EditProfileActivity.this);
 								textView.setLayoutParams(
@@ -120,15 +119,12 @@ public class EditProfileActivity extends Activity {
 								textView.setText(messages.getString(i));
 								mh.addView(textView);
 							}
-							
 							break;
 						}
-					
-					// Dismiss progress dialog
 					} catch (JSONException e) {
-						pd.dismiss();
 					}
-					
+
+					pd.dismiss();
 					view.setEnabled(true);
 				}
 				
@@ -154,28 +150,23 @@ public class EditProfileActivity extends Activity {
 			((EditText) findViewById(id)).setKeyListener(null);
 		}
 		
-		((EditText) findViewById(R.id.passport_field))
-				.setText(Global.getUser().getPassportNumber());
-		((EditText) findViewById(R.id.name_field))
-				.setText(Global.getUser().getFullName());
-		((EditText) findViewById(R.id.address_field))
-				.setText(Global.getUser().getAddress());
-		((EditText) findViewById(R.id.email_field))
-				.setText(Global.getUser().getEmail());
-		((EditText) findViewById(R.id.dob_field))
-				.setText(Global.getUser().getDateOfBirth());
-		((EditText) findViewById(R.id.nationality_field))
-				.setText(Global.getUser().getNationality());
+		User user = Global.getUserManager().getUser();
+		
+		((EditText) findViewById(R.id.passport_field)).setText(user.getPassportNumber());
+		((EditText) findViewById(R.id.name_field)).setText(user.getFullName());
+		((EditText) findViewById(R.id.address_field)).setText(user.getAddress());
+		((EditText) findViewById(R.id.email_field)).setText(user.getEmail());
+		((EditText) findViewById(R.id.dob_field)).setText(user.getDateOfBirth());
+		((EditText) findViewById(R.id.nationality_field)).setText(user.getNationality());
 
-		switch(Global.getUser().getGender()){
+		switch(user.getGender()){
 		
 		case 'M': case 'm':
-			((EditText) findViewById(R.id.gender_field))
-					.setText("Male");
+			((EditText) findViewById(R.id.gender_field)).setText("Male");
 			break;
+		
 		case 'F': case 'f':
-			((EditText) findViewById(R.id.gender_field))
-					.setText("Female");
+			((EditText) findViewById(R.id.gender_field)).setText("Female");
 			break;
 		}
 		

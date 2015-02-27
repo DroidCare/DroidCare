@@ -5,6 +5,8 @@ import java.util.HashMap;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.content.Context;
+
 public class UserManager {
 	
 	// Force singleton
@@ -15,6 +17,12 @@ public class UserManager {
 	private UserManager() {
 		this.user = null;
 	}
+	
+	/**
+	 * This method may be useless for now.
+	 * @param context Android context.
+	 */
+	public static void init(Context context) {}
 	
 	public static UserManager getInstance() {
 		return instance;
@@ -27,7 +35,7 @@ public class UserManager {
 	/**
 	 * Call this method when user is logging out from the app.
 	 */
-	public void clearUser() {
+	public void removeUser() {
 		user = null;
 	}
 	
@@ -36,7 +44,7 @@ public class UserManager {
 	 * @return Returns <i>true</i> if manager successfully obtained user's details.
 	 */
 	public boolean fetchUserDetails() {
-		String session_id = Global.getStringPrefs("session_id");
+		String session_id = Global.getAppSession().getString("session_id");
 		if(session_id.isEmpty()){
 			// Unsuccessful
 			return false;
