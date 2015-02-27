@@ -3,22 +3,12 @@ package com.droidcare;
 import java.util.ArrayList;
 
 public class AppointmentManager {
-	private ArrayList<Appointment> allAppointments;
 	private ArrayList<Appointment> upcomingAppointments;
 	private ArrayList<Appointment> pendingAppointments;
 	
 	public AppointmentManager () {
-		this.allAppointments = new ArrayList<Appointment> ();
 		this.upcomingAppointments = new ArrayList<Appointment> ();
 		this.pendingAppointments = new ArrayList<Appointment> ();
-	}
-	
-	public void addAppointment (Appointment appointment) {
-		this.allAppointments.add(appointment);
-	}
-	
-	public ArrayList<Appointment> getAllAppointments () {
-		return this.allAppointments;
 	}
 	
 	public void addUpcomingAppointment (Appointment appointment) {
@@ -35,10 +25,6 @@ public class AppointmentManager {
 	
 	public ArrayList<Appointment> getPendingAppointments () {
 		return this.pendingAppointments;
-	}
-	
-	public void clearAllAppointments () {
-		this.allAppointments.clear();
 	}
 	
 	public void clearUpcomingAppointments () {

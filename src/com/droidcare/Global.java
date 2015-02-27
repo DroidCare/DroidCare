@@ -127,6 +127,8 @@ public class Global {
 	}
 	
 	public static void clearAppointmentManager() {
+		appointmentManager.clearPendingAppointments();
+		appointmentManager.clearUpcomingAppointments();
 		appointmentManager = null;
 	}
 }

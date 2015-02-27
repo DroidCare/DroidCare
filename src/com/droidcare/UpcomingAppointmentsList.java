@@ -1,5 +1,6 @@
 package com.droidcare;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
@@ -27,8 +28,8 @@ public class UpcomingAppointmentsList extends ListFragment {
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Get the upcoming appointment list from the Global AppointmentManager 
-		this.upcomingAppointmentList = Global.getAppointmentManager().getPendingAppointments();
+		// Get the upcoming appointment list from the Global AppointmentManager
+		this.refreshUpcomingAppointmentList();
 		mAdapter = new AppointmentListAdapter(getActivity(), this.upcomingAppointmentList);
 		setListAdapter(mAdapter);
 	}
@@ -36,6 +37,17 @@ public class UpcomingAppointmentsList extends ListFragment {
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		Toast.makeText(getActivity(), "Clicked!", Toast.LENGTH_SHORT).show();
+
+		// Creating a new intent
+		Intent intent = new Intent(getActivity().getApplicationContext(), AppointmentDetailedActivity.class);
+		Appointment a = this.upcomingAppointmentList.get(position);
+		intent.putExtra("appointment", a);
+		startActivity(intent);
+	}
+	
+	// CALL THIS WHENEVER A CHANGE IS MADE IN THE APPOINTMENT LIST!!
+	// Add the new Appointment object to the list in AppointmentManager
+	public void refreshUpcomingAppointmentList () {
+		this.upcomingAppointmentList = Global.getAppointmentManager().getUpcomingAppointments();
 	}
 }

@@ -167,6 +167,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		// Clearing session
 		Global.clearPrefs();
 		Global.clearUser();
+		Global.clearAppointmentManager();
 		
 		HomeActivity.this.finish();
 	}
