@@ -13,8 +13,12 @@ import android.support.v4.app.FragmentPagerAdapter;
  *
  */
 
+/*
+ * @pciang: Hi, can I be your co-author? :)
+ */
+
 public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
-	private final int NO_OF_TABS = 2;
+	private final int NO_OF_TABS = 3;
 	
 	public HomeTabsPagerAdapter (FragmentManager fm) {
 		super(fm);
@@ -23,10 +27,13 @@ public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
 	@Override
 	public Fragment getItem (int index) {
 		switch (index) {
+		
 		case 0:
 			return new UpcomingAppointmentsList();
 		case 1:
 			return new PendingAppointmentsList();
+		case 2:
+			return new RejectedAppointmentList();
 		}
 		
 		return null;

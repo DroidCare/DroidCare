@@ -14,10 +14,12 @@ public class AppointmentManager {
 	
 	private ArrayList<Appointment> upcomingAppointments;
 	private ArrayList<Appointment> pendingAppointments;
+	private ArrayList<Appointment> rejectedAppointments;
 	
 	private AppointmentManager () {
-		this.upcomingAppointments = new ArrayList<Appointment> ();
-		this.pendingAppointments = new ArrayList<Appointment> ();
+		upcomingAppointments = new ArrayList<Appointment>();
+		pendingAppointments = new ArrayList<Appointment>();
+		rejectedAppointments = new ArrayList<Appointment>();
 	}
 	
 	public static AppointmentManager getInstance() {
@@ -89,26 +91,38 @@ public class AppointmentManager {
 	}
 	
 	public void addUpcomingAppointment (Appointment appointment) {
-		this.upcomingAppointments.add(appointment);
+		upcomingAppointments.add(appointment);
 	}
 	
 	public ArrayList<Appointment> getUpcomingAppointments () {
-		return this.upcomingAppointments;
+		return upcomingAppointments;
 	}
 	
 	public void addPendingAppointment (Appointment appointment) {
-		this.pendingAppointments.add(appointment);
+		pendingAppointments.add(appointment);
 	}
 	
 	public ArrayList<Appointment> getPendingAppointments () {
-		return this.pendingAppointments;
+		return pendingAppointments;
+	}
+	
+	public void addRejectedAppointment(Appointment appointment) {
+		rejectedAppointments.add(appointment);
+	}
+	
+	public ArrayList<Appointment> getRejectedAppointments() {
+		return rejectedAppointments;
 	}
 	
 	public void clearUpcomingAppointments () {
-		this.upcomingAppointments.clear();
+		upcomingAppointments.clear();
 	}
 	
 	public void clearPendingAppointments () {
-		this.pendingAppointments.clear();
+		pendingAppointments.clear();
+	}
+	
+	public void clearRejectedAppointments() {
+		rejectedAppointments.clear();
 	}
 }
