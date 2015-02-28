@@ -44,14 +44,14 @@ public class UserManager {
 	 * @return Returns <i>true</i> if manager successfully obtained user's details.
 	 */
 	public boolean fetchUserDetails() {
-		String session_id = Global.getAppSession().getString("session_id");
-		if(session_id.isEmpty()){
+		String sessionId = Global.getAppSession().getString("session_id");
+		if(sessionId == null){
 			// Unsuccessful
 			return false;
 		}
 
 		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("session_id", session_id);
+		data.put("session_id", sessionId);
 		
 		String responseText = new HttpPostRequest(data).send(Global.USER_URL);
 		
@@ -83,9 +83,7 @@ public class UserManager {
 				
 				return true;
 		
-		// Do nothing on exception
-		// and
-		// status != 0
+		// Do nothing on exception and status != 0
 			default:
 				break;
 			}

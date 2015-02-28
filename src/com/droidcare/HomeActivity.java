@@ -32,6 +32,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		setContentView(R.layout.activity_home);
 		
 		user = Global.getUserManager().getUser();
+		Log.d("session_id", "=" + Global.getAppSession().getString("session_id"));
 		
 		// List Fragment Initialization
 		viewPager = (ViewPager) findViewById(R.id.pager);

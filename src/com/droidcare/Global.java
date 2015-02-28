@@ -34,10 +34,9 @@ public class Global {
 	public static String DATE_FORMAT = "yyyy-MM-dd HH-mm-ss";
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 	
-	private static AppointmentManager appointmentManager = null;
-	
-	private static UserManager userManager;
 	private static AppSession appSession;
+	private static UserManager userManager;
+	private static AppointmentManager appointmentManager;
 	
 	public static void init(Context context) {
 		UserManager.init(context);
@@ -45,7 +44,7 @@ public class Global {
 		
 		userManager	= UserManager.getInstance();
 		appSession	= AppSession.getInstance();
-		appointmentManager = new AppointmentManager();
+		appointmentManager = AppointmentManager.getInstance();
 	}
 	
 	public static AppSession getAppSession() {
