@@ -134,11 +134,8 @@ public class Appointment implements Parcelable{
 		this.dateTimeMillis = in.readLong();
 		this.healthIssue = in.readString();
 		this.referrerName = in.readString();
-		this.referrerClinic = in.readString();
-		
-		// @edocsss take care of this
+		this.referrerClinic = in.readString();		
 		this.type = in.readInt();
-		
 		this.attachmentPath = in.readString();
 	}
 	
@@ -156,11 +153,8 @@ public class Appointment implements Parcelable{
 		dest.writeLong(this.dateTimeMillis);
 		dest.writeString(this.healthIssue);
 		dest.writeString(this.referrerName);
-		dest.writeString(this.referrerClinic);
-		
-		// @edocsss take care of this
+		dest.writeString(this.referrerClinic);		
 		dest.writeInt(this.type);
-		
 		dest.writeString(this.attachmentPath);
 	}
 	

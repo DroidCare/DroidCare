@@ -29,9 +29,9 @@ public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
 		switch (index) {
 		
 		case 0:
-			return new UpcomingAppointmentsList();
+			return new UpcomingAppointmentList();
 		case 1:
-			return new PendingAppointmentsList();
+			return new PendingAppointmentList();
 		case 2:
 			return new RejectedAppointmentList();
 		}

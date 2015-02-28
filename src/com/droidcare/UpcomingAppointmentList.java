@@ -15,39 +15,39 @@ import android.widget.Toast;
  * 
  * @author Edwin Candinegara
  * 
- * This class is a list fragment subclass which holds and shows all appointments with the "Pending" status.
+ * This class is a list fragment subclass which holds and shows all appointments with the "Upcoming" status.
  * Clicking on one item of this list will bring User to the corresponding details of the appointment.
  *
  */
 
-public class PendingAppointmentsList extends ListFragment {
-	private ArrayList<Appointment> pendingAppointmentList;
+public class UpcomingAppointmentList extends ListFragment {
+	private ArrayList<Appointment> upcomingAppointmentList;
 	private AppointmentListAdapter mAdapter;
 	
 	@Override
 	public void onCreate (Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		// Get the pending appointment list from the Global AppointmentManager
-		this.refreshPendingAppointmentList();
-		mAdapter = new AppointmentListAdapter(getActivity(), this.pendingAppointmentList);
+		// Get the upcoming appointment list from the Global AppointmentManager
+		this.fetchList();
+		mAdapter = new AppointmentListAdapter(getActivity(), this.upcomingAppointmentList);
 		setListAdapter(mAdapter);
 	}
 	
 	@Override
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
-		
+
 		// Creating a new intent
 		Intent intent = new Intent(getActivity().getApplicationContext(), AppointmentDetailedActivity.class);
-		Appointment a = this.pendingAppointmentList.get(position);
+		Appointment a = this.upcomingAppointmentList.get(position);
 		intent.putExtra("appointment", a);
 		startActivity(intent);
 	}
 	
 	// CALL THIS WHENEVER A CHANGE IS MADE IN THE APPOINTMENT LIST!!
 	// Add the new Appointment object to the list in AppointmentManager
-	public void refreshPendingAppointmentList () {
-		this.pendingAppointmentList = Global.getAppointmentManager().getPendingAppointments();
+	public void fetchList () {
+		this.upcomingAppointmentList = Global.getAppointmentManager().getUpcomingAppointments();
 	}
 }

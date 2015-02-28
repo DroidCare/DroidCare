@@ -19,7 +19,7 @@ public class RejectedAppointmentList extends ListFragment {
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		fetch();
+		this.fetchList();
 		mAdapter = new AppointmentListAdapter(getActivity(), this.appointmentList);
 		setListAdapter(mAdapter);
 	}
@@ -33,8 +33,9 @@ public class RejectedAppointmentList extends ListFragment {
 	
 	/**
 	 * FOR THE SAKE OF @pciang FINGERS, PLEASE HAVE A SHORTER METHOD NAME
+	 * Use a more "descriptive" word please -___-
 	 */
-	public void fetch() {
+	public void fetchList() {
 		appointmentList = Global.getAppointmentManager().getRejectedAppointments();
 	}
 }

@@ -32,17 +32,24 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 	}
 	
 	public View getView (int position, View convertView, ViewGroup parent) {
+		// Getting the corresponding appointment based on the position on the list
+		Appointment appointment = (Appointment) getItem(position);
+		
 		ViewHolder holder = null;
 		View viewToUse = null;
 		LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		
 		if (convertView == null) {
+			// The view layout for each list item
 			viewToUse = mInflater.inflate(R.layout.appointment_list_item, parent, false);
 			holder = new ViewHolder();
+			
+			// Take all views needed to be customized here
 			holder.titleText = (TextView) viewToUse.findViewById(R.id.appointment_list_item_textview);
 		}
 		
-		holder.titleText.setText("TESTING");
+		// Customize the view based on each appointment details
+		holder.titleText.setText(appointment.getId());
 		return viewToUse;
 	}
 }
