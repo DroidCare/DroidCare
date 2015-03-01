@@ -28,6 +28,7 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 	}
 	
 	private class ViewHolder {
+		// ALL VIEWS THAT NEED TO BE CUSTOMIZED ARE PUT HERE
 		TextView titleText;
 	}
 	
@@ -36,20 +37,25 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 		Appointment appointment = (Appointment) getItem(position);
 		
 		ViewHolder holder = null;
-		View viewToUse = null;
 		LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
 		
 		if (convertView == null) {
 			// The view layout for each list item
-			viewToUse = mInflater.inflate(R.layout.appointment_list_item, parent, false);
+			convertView = mInflater.inflate(R.layout.appointment_list_item, parent, false);
 			holder = new ViewHolder();
 			
 			// Take all views needed to be customized here
-			holder.titleText = (TextView) viewToUse.findViewById(R.id.appointment_list_item_textview);
+			holder.titleText = (TextView) convertView.findViewById(R.id.appointment_list_item_textview);
+			convertView.setTag(holder);
+		} else {
+			holder = (ViewHolder) convertView.getTag();
 		}
 		
-		// Customize the view based on each appointment details
-		holder.titleText.setText("" + appointment.getId());
-		return viewToUse;
+		if (appointment != null) {
+			// Customize the view based on each appointment details
+			holder.titleText.setText("" + appointment.getId());
+		}
+		
+		return convertView;
 	}
 }
