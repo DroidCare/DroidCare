@@ -7,10 +7,6 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
-/*
- * Hi @edocsss, you can be my co-author here! :v
- */
-
 public class RejectedAppointmentList extends ListFragment {
 	private ArrayList<Appointment> appointmentList;
 	private AppointmentListAdapter mAdapter;

@@ -55,8 +55,11 @@
                 android:value="com.droidcare.HomeActivity" />
         </activity>
         <activity
-            android:name=".AppointmentDetailedActivity"
-            android:label="@string/title_activity_appointment_detailed" >
+            android:name=".AppointmentDetailsActivity"
+            android:label="@string/title_activity_appointment_details" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.droidcare.HomeActivity" />
         </activity>
     </application>
 

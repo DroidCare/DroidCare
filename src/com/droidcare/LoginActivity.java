@@ -83,6 +83,8 @@ public class LoginActivity extends Activity {
 						pd.dismiss();
 						
 						Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+						
+						LoginActivity.this.finish();
 						startActivity(intent);
 						return;
 					default:

@@ -13,17 +13,17 @@ public class Appointment implements Parcelable{
 	/**
 	 * Appointment status.
 	 */
-	public static int	PENDING = 0,
-						ACCEPTED = 1,
-						REJECTED = 2,
-						FINISHED = 3;
+	public static final int	PENDING = 0,
+							ACCEPTED = 1,
+							REJECTED = 2,
+							FINISHED = 3;
 	
 	/**
 	 * Appointment type.
 	 */
-	public static int	FOLLOW_UP = 0xA0000000,
-						REFERRAL = 0xA0000001,
-						NORMAL = 0xA0000002;
+	public static final int	FOLLOW_UP = 0xA0000000,
+							REFERRAL = 0xA0000001,
+							NORMAL = 0xA0000002;
 	
 	private int	id,
 				patientId,

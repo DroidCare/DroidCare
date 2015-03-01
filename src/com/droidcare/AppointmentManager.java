@@ -7,6 +7,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 public class AppointmentManager {
 	
 	// Force singleton
@@ -74,9 +76,22 @@ public class AppointmentManager {
 							, attachmentPaths, type, referrerName, referrerClinic
 							, previousId, remarks, status);
 					
-					/*
-					 * @pciang will continue from here!
-					 */
+					Log.d("appointment.getType()", "=" + appointment.getStatus());
+					switch(appointment.getStatus()) {
+					
+					case Appointment.PENDING:
+						pendingAppointments.add(appointment);
+						break;
+					case Appointment.ACCEPTED:
+						upcomingAppointments.add(appointment);
+						break;
+					case Appointment.REJECTED:
+						rejectedAppointments.add(appointment);
+						break;
+					
+					default:
+						break;
+					}
 				}
 				break;
 				

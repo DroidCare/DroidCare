@@ -49,7 +49,7 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 		}
 		
 		// Customize the view based on each appointment details
-		holder.titleText.setText(appointment.getId());
+		holder.titleText.setText("" + appointment.getId());
 		return viewToUse;
 	}
 }

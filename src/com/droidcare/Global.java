@@ -31,7 +31,7 @@ public class Global {
 	/*
 	 * Date format used in back-end PHP.
 	 */
-	public static String DATE_FORMAT = "yyyy-MM-dd HH-mm-ss";
+	public static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 	
 	private static AppSession appSession;
