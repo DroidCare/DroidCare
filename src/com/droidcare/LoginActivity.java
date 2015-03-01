@@ -80,6 +80,8 @@ public class LoginActivity extends Activity {
 						Global.getAppSession().putString("session_id", messages.getString(0));
 						Global.getUserManager().fetchUserDetails();
 						
+						pd.dismiss();
+						
 						Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
 						startActivity(intent);
 						return;
@@ -98,7 +100,7 @@ public class LoginActivity extends Activity {
 				// Do nothing on exception
 				} catch (JSONException e) {
 				}
-				
+
 				pd.dismiss();
 				view.setEnabled(true);
 			}
@@ -126,7 +128,8 @@ public class LoginActivity extends Activity {
 			protected Integer doInBackground(Void... params) {
 				String sessionId = Global.getAppSession().getString("session_id");
 				return sessionId != null && !sessionId.isEmpty()
-						&& Global.getUserManager().fetchUserDetails() ? 1 : 0;
+						&& Global.getUserManager().fetchUserDetails()
+						&& Global.getAppointmentManager().fetchAppointmentList() ? 1 : 0;
 			}
 			
 			@Override
