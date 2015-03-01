@@ -32,7 +32,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		setContentView(R.layout.activity_home);
 		
 		user = Global.getUserManager().getUser();
-		Log.d("session_id", "=" + Global.getAppSession().getString("session_id"));
 		
 		// List Fragment Initialization
 		viewPager = (ViewPager) findViewById(R.id.pager);
@@ -161,9 +160,9 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		// clear all session data
 		Global.getUserManager().removeUser();
 		Global.getAppSession().clearAll();
-		
-		// This need some work
-		// Global.clearAppointmentManager();
+		Global.getAppointmentManager().clearPendingAppointments();
+		Global.getAppointmentManager().clearRejectedAppointments();
+		Global.getAppointmentManager().clearUpcomingAppointments();
 		
 		HomeActivity.this.finish();
 	}

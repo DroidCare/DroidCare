@@ -58,10 +58,4 @@ public class Global {
 	public static AppointmentManager getAppointmentManager() {
 		return appointmentManager;
 	}
-	
-	public static void clearAppointmentManager() {
-		appointmentManager.clearPendingAppointments();
-		appointmentManager.clearUpcomingAppointments();
-		appointmentManager = null;
-	}
 }

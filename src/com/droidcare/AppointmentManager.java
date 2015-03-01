@@ -10,7 +10,6 @@ import org.json.JSONObject;
 import android.util.Log;
 
 public class AppointmentManager {
-	
 	// Force singleton
 	private static AppointmentManager instance = new AppointmentManager();
 	
@@ -33,6 +32,8 @@ public class AppointmentManager {
 	 * @return Returns <i>true</i> if manager successfully obtained list of appointments.
 	 */
 	public boolean fetchAppointmentList() {
+		Log.i("CALLED", "AppointmentManager.fetchAppointmentList()");
+		
 		String sessionId = Global.getAppSession().getString("session_id");
 		if(sessionId == null) {
 			// Unsuccessful
@@ -83,6 +84,7 @@ public class AppointmentManager {
 						pendingAppointments.add(appointment);
 						break;
 					case Appointment.ACCEPTED:
+						Log.i("upcomingAppointment", "" + id);
 						upcomingAppointments.add(appointment);
 						break;
 					case Appointment.REJECTED:
@@ -93,7 +95,8 @@ public class AppointmentManager {
 						break;
 					}
 				}
-				break;
+				
+				return true;
 				
 		// Do nothing on exception and status != 0
 			default:

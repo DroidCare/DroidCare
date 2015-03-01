@@ -80,6 +80,10 @@ public class LoginActivity extends Activity {
 						Global.getAppSession().putString("session_id", messages.getString(0));
 						Global.getUserManager().fetchUserDetails();
 						
+						Log.d("LoginActivity", "Fetching appointment list.");
+						Global.getAppointmentManager().fetchAppointmentList();
+						Log.d("LoginActivity", "Appointment list fetched.");
+						
 						pd.dismiss();
 						
 						Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
@@ -129,6 +133,7 @@ public class LoginActivity extends Activity {
 			@Override
 			protected Integer doInBackground(Void... params) {
 				String sessionId = Global.getAppSession().getString("session_id");
+				
 				return sessionId != null && !sessionId.isEmpty()
 						&& Global.getUserManager().fetchUserDetails()
 						&& Global.getAppointmentManager().fetchAppointmentList() ? 1 : 0;
