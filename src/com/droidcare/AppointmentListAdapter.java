@@ -31,6 +31,7 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 		TextView titleText;
 	}
 	
+	@Override
 	public View getView (int position, View convertView, ViewGroup parent) {
 		// Getting the corresponding appointment based on the position on the list
 		Appointment appointment = (Appointment) getItem(position);
