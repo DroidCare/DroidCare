@@ -16,3 +16,5 @@ ic_launcher-web.png
 lib/*
 *.gradle
 *.iml
+.idea/
+lint.xml
