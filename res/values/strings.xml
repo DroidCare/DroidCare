@@ -47,5 +47,9 @@
     <string name="LabelText_OldPassword">Old Password</string>
     <string name="update_btn">Update Profile</string>
     <string name="title_activity_appointment_details">Appointment Details</string>
+    <string name="LabelText_Consultant">Consultant\'s Name</string>
+    <string name="LabelText_dateTime">Date and Time</string>
+    <string name="LabelText_healthIssue">Health Issue</string>
+    <string name="LabelText_appointmentStatus">Status</string>
 
 </resources>
