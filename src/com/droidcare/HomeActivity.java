@@ -6,13 +6,17 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.ActionBar;
+import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentActivity;
@@ -165,5 +169,54 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		Global.getAppointmentManager().clearUpcomingAppointments();
 		
 		HomeActivity.this.finish();
+	}
+	
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+		switch(keyCode) {
+		
+		case KeyEvent.KEYCODE_BACK:
+			new AlertDialog.Builder(this)
+					.setTitle("Log out")
+					.setMessage("Are you sure you want to log out?")
+					.setPositiveButton("Log out", new OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+							
+							ProgressDialog pd = ProgressDialog.show(HomeActivity.this, null, "Logging out ...", true);
+							new AsyncTask<Void, Void, Void>() {
+								private ProgressDialog pd;
+								
+								public AsyncTask<Void, Void, Void> init(ProgressDialog pd) {
+									this.pd = pd;
+									return this;
+								}
+								
+								@Override
+								protected Void doInBackground(Void... arg0) {
+									doLogout();
+									return null;
+								}
+								
+								@Override
+								protected void onPostExecute(Void result) {
+									pd.dismiss();
+								}
+								
+							}.init(pd).executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+						}})
+					.setNegativeButton("Cancel", new OnClickListener() {
+
+						@Override
+						public void onClick(DialogInterface dialog, int which) {
+							dialog.dismiss();
+						}})
+					.show();
+			
+			return true;
+		}
+		return super.onKeyDown(keyCode, event);
 	}
 }

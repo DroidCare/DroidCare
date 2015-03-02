@@ -32,8 +32,6 @@ public class AppointmentManager {
 	 * @return Returns <i>true</i> if manager successfully obtained list of appointments.
 	 */
 	public boolean fetchAppointmentList() {
-		Log.i("CALLED", "AppointmentManager.fetchAppointmentList()");
-		
 		String sessionId = Global.getAppSession().getString("session_id");
 		if(sessionId == null) {
 			// Unsuccessful
@@ -77,14 +75,13 @@ public class AppointmentManager {
 							, attachmentPaths, type, referrerName, referrerClinic
 							, previousId, remarks, status);
 					
-					Log.d("appointment.getType()", "=" + appointment.getStatus());
+					// Log.d("appointment.getType()", "=" + appointment.getStatus());
 					switch(appointment.getStatus()) {
 					
 					case Appointment.PENDING:
 						pendingAppointments.add(appointment);
 						break;
 					case Appointment.ACCEPTED:
-						Log.i("upcomingAppointment", "" + id);
 						upcomingAppointments.add(appointment);
 						break;
 					case Appointment.REJECTED:

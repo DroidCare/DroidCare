@@ -35,7 +35,7 @@ public class UpcomingAppointmentList extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 
 		// Creating a new intent
-		Intent intent = new Intent(getActivity().getApplicationContext(), AppointmentDetailsActivity.class);
+		Intent intent = new Intent(getActivity(), AppointmentDetailsActivity.class);
 		Appointment a = this.upcomingAppointmentList.get(position);
 		intent.putExtra("appointment", a);
 		startActivity(intent);

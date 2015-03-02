@@ -79,10 +79,7 @@ public class LoginActivity extends Activity {
 					case 0:
 						Global.getAppSession().putString("session_id", messages.getString(0));
 						Global.getUserManager().fetchUserDetails();
-						
-						Log.d("LoginActivity", "Fetching appointment list.");
 						Global.getAppointmentManager().fetchAppointmentList();
-						Log.d("LoginActivity", "Appointment list fetched.");
 						
 						pd.dismiss();
 						
