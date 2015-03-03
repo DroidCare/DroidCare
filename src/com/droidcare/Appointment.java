@@ -92,9 +92,24 @@ public class Appointment implements Parcelable{
 	public int getPreviousId() {
 		return previousId;
 	}
-	
-	public int getStatus() {
-		return status;
+
+    public int getStatus() {
+        return status;
+    }
+
+	public static String getStatus(int status) {
+        switch(status) {
+            case PENDING:
+                return "pending";
+            case ACCEPTED:
+                return "accepted";
+            case REJECTED:
+                return "rejected";
+            case FINISHED:
+                return "finished";
+            default:
+                return null;
+        }
 	}
 	
 	public long getDateTimeMillis() {
