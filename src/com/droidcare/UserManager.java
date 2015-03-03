@@ -18,12 +18,6 @@ public class UserManager {
 		this.user = null;
 	}
 	
-	/**
-	 * This method may be useless for now.
-	 * @param context Android context.
-	 */
-	public static void init(Context context) {}
-	
 	public static UserManager getInstance() {
 		return instance;
 	}
