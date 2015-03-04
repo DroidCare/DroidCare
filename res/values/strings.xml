@@ -60,5 +60,6 @@
     <string name="title_activity_edit_appointment">EditAppointmentActivity</string>
     <string name="Button_Logout">Log out</string>
     <string name="Button_Cancel">Cancel</string>
+    <string name="appointment_date_field">Date</string>
 
 </resources>

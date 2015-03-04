@@ -12,6 +12,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -20,10 +21,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class EditProfileActivity extends Activity {
-	private LinearLayout messagesHolder;
-
 	public void doUpdateProfile(View view) {
 		String
 			old_pw = ((EditText) findViewById(R.id.old_password_field)).getText().toString(),
@@ -31,7 +31,6 @@ public class EditProfileActivity extends Activity {
 			new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString();
 		
 		if (!old_pw.isEmpty() || (!old_pw.isEmpty() && !new_pw.isEmpty() && !new_cpw.isEmpty())) {
-			
 			int id = Global.getUserManager().getUser().getId();
 			
 			String
@@ -59,19 +58,16 @@ public class EditProfileActivity extends Activity {
 			view.setEnabled(false);
 			ProgressDialog pd = ProgressDialog
 					.show(this, "Updating profile ...", "Please wait!", true);
-			messagesHolder.removeAllViews();
 			
 			new AsyncTask<Void, Void, String>(){
 				private View view;
 				private ProgressDialog pd;
-				private LinearLayout mh;
 				private HashMap<String, String> data;
 				
 				public AsyncTask<Void, Void, String> init(View view, ProgressDialog pd
-						, LinearLayout mh, HashMap<String, String> data){
+						, HashMap<String, String> data){
 					this.view = view;
 					this.pd = pd;
-					this.mh = mh;
 					this.data = data;
 					
 					return this;
@@ -111,24 +107,31 @@ public class EditProfileActivity extends Activity {
 							break;
 						default:
 							pd.dismiss();
+							
+							// DEBUGGING PURPOSE
 							for(int i = 0, size = messages.length(); i < size; ++i){
-								TextView textView = new TextView(EditProfileActivity.this);
-								textView.setLayoutParams(
-										new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-								textView.setText(messages.getString(i));
-								mh.addView(textView);
+								Log.d("EDIT_PROFILE_ACTIVITY", messages.getString(i));
 							}
+							
 							break;
 						}
 					} catch (JSONException e) {
 					}
 
 					pd.dismiss();
+					Toast toast = Toast.makeText(EditProfileActivity.this, "Profile Updated!", Toast.LENGTH_SHORT);
+					toast.show();
 					view.setEnabled(true);
 				}
 				
-			}.init(view, pd, messagesHolder, data)
+			}.init(view, pd, data)
 					.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
+		} else if (old_pw.length() == 0) {
+			Toast toast = Toast.makeText(EditProfileActivity.this, "Please fill in your old password!", Toast.LENGTH_SHORT);
+			toast.show();
+		} else if (!new_cpw.equals(new_pw)) {
+			Toast toast = Toast.makeText(EditProfileActivity.this, "Please confirm your new password!", Toast.LENGTH_SHORT);
+			toast.show();
 		}
 	}
 	
@@ -139,7 +142,6 @@ public class EditProfileActivity extends Activity {
 		
 		// Disable all immutable attributes
 		for(int id: (new int[] {
-				R.id.passport_field,
 				R.id.name_field,
 				R.id.email_field,
 				R.id.dob_field,
@@ -152,10 +154,10 @@ public class EditProfileActivity extends Activity {
 		User user = Global.getUserManager().getUser();
 		
 		((EditText) findViewById(R.id.passport_field)).setText(user.getPassportNumber());
-		((EditText) findViewById(R.id.name_field)).setText(user.getFullName());
+		((TextView) findViewById(R.id.name_field)).setText(user.getFullName());
 		((EditText) findViewById(R.id.address_field)).setText(user.getAddress());
-		((EditText) findViewById(R.id.email_field)).setText(user.getEmail());
-		((EditText) findViewById(R.id.dob_field)).setText(user.getDateOfBirth());
+		((TextView) findViewById(R.id.email_field)).setText(user.getEmail());
+		((TextView) findViewById(R.id.dob_field)).setText(user.getDateOfBirth());
 		((EditText) findViewById(R.id.nationality_field)).setText(user.getNationality());
 
 		switch(user.getGender()){
@@ -168,8 +170,6 @@ public class EditProfileActivity extends Activity {
 			((EditText) findViewById(R.id.gender_field)).setText("Female");
 			break;
 		}
-		
-		messagesHolder = (LinearLayout) findViewById(R.id.messages_holder);
 	}
 
 	@Override
