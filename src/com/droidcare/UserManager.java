@@ -6,6 +6,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.Context;
+import android.util.Pair;
 
 public class UserManager {
 	
@@ -86,4 +87,16 @@ public class UserManager {
 		
 		return false;
 	}
+
+    public User createUser(int id, String email, String fullName, String address
+            , char gender, String passportNumber, String nationality
+            , String dateOfBirth, String type) {
+
+        return user = new User(id, email, fullName, address
+                , gender, passportNumber, nationality, dateOfBirth, type);
+    }
+
+    public User createUser() {
+        return user = new User();
+    }
 }

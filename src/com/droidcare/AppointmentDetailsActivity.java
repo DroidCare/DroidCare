@@ -91,9 +91,7 @@ public class AppointmentDetailsActivity extends Activity {
 		((PatientAppointmentManager) Global.getAppointmentManager()).cancelAppointment(this, appointment);
 		
 		// Go back to the HomeActivity
-		// Intent intent = new Intent(this, HomeActivity.class);
-		// startActivity(intent);
-		super.onBackPressed(); // Go back to HomeActivity (List Fragment)
+        finish();
 	}
 	
 	

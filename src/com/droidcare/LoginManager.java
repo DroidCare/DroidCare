@@ -7,17 +7,13 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-interface OnFinishLoginListener {
-    public abstract void onFinishTask(String responseText);
-}
-
 public class LoginManager {
     public static final int EMAIL_EMPTY = 0xA0000001,
                             PASSWORD_EMPTY = 0xA0000002,
                             PASSWORD_TOO_SHORT = 0xA0000003,
                             VALID_FORM = 0xA0000000;
 
-    public final int minLength = 4;
+    public static final int passwordMinLength = 6;
 
     private static LoginManager instance = new LoginManager();
 
@@ -30,15 +26,19 @@ public class LoginManager {
     public int validateForm(String email, String password) {
         return email == null || email.isEmpty() ? EMAIL_EMPTY
                 : password == null || password.isEmpty() ? PASSWORD_EMPTY
-                : password.length() < minLength ? PASSWORD_TOO_SHORT
+                : password.length() < passwordMinLength ? PASSWORD_TOO_SHORT
                 : VALID_FORM;
     }
 
-    public void doLoginRequest(String email, String password, OnFinishLoginListener onFinishLoginListener) {
+    public interface OnFinishTaskListener {
+        public abstract void onFinishTask(String responseText);
+    }
+
+    public void doLoginRequest(String email, String password, OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("email", email)
                 , new Pair<String, String>("password", password)) {
-            private OnFinishLoginListener listener;
-            public SimpleHttpPost init(OnFinishLoginListener listener) {
+            private OnFinishTaskListener listener;
+            public SimpleHttpPost init(OnFinishTaskListener listener) {
                 this.listener = listener;
                 return this;
             }
@@ -50,10 +50,53 @@ public class LoginManager {
                     JSONArray messages = response.getJSONArray("message");
                     switch(response.getInt("status")) {
                         case 0:
-                            Log.d("UNIT_TEST", "session_id = " + messages.getString(0));
                             Global.getAppSession()
                                     .putString("session_id", messages.getString(0));
-                            break;
+
+                            new SimpleHttpPost(new Pair<String, String>("session_id", Global.getAppSession().getString("session_id"))) {
+                                private OnFinishTaskListener listener;
+                                public SimpleHttpPost init(OnFinishTaskListener listener) {
+                                    this.listener = listener;
+                                    return this;
+                                }
+                                @Override
+                                public void onFinish(String responseText) {
+                                    try {
+                                        JSONObject response = new JSONObject(responseText);
+                                        switch(response.getInt("status")) {
+                                            case 0:
+                                                JSONObject params = response.getJSONObject("message");
+
+                                                int id = params.getInt("id");
+
+                                                String email = params.getString("email"),
+                                                        fullName = params.getString("full_name"),
+                                                        address = params.getString("address"),
+                                                        passportNumber = params.getString("passport_number"),
+                                                        nationality = params.getString("nationality"),
+                                                        dateOfBirth = params.getString("date_of_birth"),
+                                                        type = params.getString("type");
+
+                                                char gender = params.getString("gender").charAt(0);
+
+                                                Global.getUserManager().createUser(id, email, fullName, address
+                                                        , gender, passportNumber, nationality, dateOfBirth, type)
+                                                        .setSessionId(Global.getAppSession().getString("session_id"));
+                                                break;
+
+                                            default:
+                                                break;
+                                        }
+                                    // Do nothing on exception
+                                    } catch (JSONException e) {
+                                    }
+
+                                    listener.onFinishTask(responseText);
+                                }
+                            }.init(listener).send(Global.USER_URL);
+
+                            return;
+
                         default:
                             break;
                     }
@@ -61,17 +104,17 @@ public class LoginManager {
                 } catch (JSONException e) {
                 }
 
-                listener.onFinishTask(responseText);
+                listener.onFinishTask("error");
             }
-        }.init(onFinishLoginListener).send(Global.USER_LOGIN_URL);
+        }.init(onFinishTaskListener).send(Global.USER_LOGIN_URL);
     }
 
-    public void doLogoutRequest(OnFinishLoginListener onFinishLoginListener) {
+    public void doLogoutRequest(OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("session_id"
-//                , Global.getUserManager().getUser().getSessionId())) {
-                , Global.getAppSession().getString("session_id"))) {
-            private OnFinishLoginListener listener;
-            public SimpleHttpPost init(OnFinishLoginListener listener) {
+                , Global.getUserManager().getUser().getSessionId())) {
+//                , Global.getAppSession().getString("session_id"))) {
+            private OnFinishTaskListener listener;
+            public SimpleHttpPost init(OnFinishTaskListener listener) {
                 this.listener = listener;
                 return this;
             }
@@ -87,6 +130,52 @@ public class LoginManager {
 
                 listener.onFinishTask(responseText);
             }
-        }.init(onFinishLoginListener).send(Global.USER_LOGIN_URL);
+        }.init(onFinishTaskListener).send(Global.USER_LOGIN_URL);
+    }
+
+    public void checkLogin(OnFinishTaskListener onFinishTaskListener) {
+        new SimpleHttpPost(new Pair<String, String>("session_id"
+                , Global.getAppSession().getString("session_id"))) {
+            private OnFinishTaskListener listener;
+            public SimpleHttpPost init(OnFinishTaskListener listener) {
+                this.listener = listener;
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            JSONObject params = response.getJSONObject("message");
+
+                            int		id = params.getInt("id");
+
+                            String	email = params.getString("email"),
+                                    fullName = params.getString("full_name"),
+                                    address = params.getString("address"),
+                                    passportNumber = params.getString("passport_number"),
+                                    nationality = params.getString("nationality"),
+                                    dateOfBirth = params.getString("date_of_birth"),
+                                    type = params.getString("type");
+
+                            char	gender = params.getString("gender").charAt(0);
+
+                            Global.getUserManager().createUser(id, email, fullName, address
+                                    , gender, passportNumber, nationality, dateOfBirth, type)
+                                    .setSessionId(Global.getAppSession().getString("session_id"));
+                            break;
+
+                        default:
+                            break;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+
+                listener.onFinishTask(responseText);
+            }
+        }.init(onFinishTaskListener).send(Global.USER_URL);
     }
 }

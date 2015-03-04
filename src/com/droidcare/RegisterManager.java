@@ -2,10 +2,6 @@ package com.droidcare;
 
 import android.util.Pair;
 
-interface OnFinishRegisterListener {
-    public abstract void onFinishRegister(String responseText);
-}
-
 public class RegisterManager {
     private static RegisterManager instance = new RegisterManager();
     public static final int passwordMinLength = 6;
@@ -16,19 +12,23 @@ public class RegisterManager {
         return instance;
     }
 
-    public void registerUser(OnFinishRegisterListener onFinishRegisterListener
+    public interface OnFinishTaskListener {
+        public abstract void onFinishTask(String responseText);
+    }
+
+    public void registerUser(OnFinishTaskListener onFinishTaskListener
             , Pair<String, String>... data) {
         new SimpleHttpPost(data) {
-            private OnFinishRegisterListener listener;
-            public SimpleHttpPost init(OnFinishRegisterListener listener) {
+            private OnFinishTaskListener listener;
+            public SimpleHttpPost init(OnFinishTaskListener listener) {
                 this.listener = listener;
                 return this;
             }
 
             @Override
             public void onFinish(String responseText) {
-                listener.onFinishRegister(responseText);
+                listener.onFinishTask(responseText);
             }
-        }.init(onFinishRegisterListener).send(Global.USER_REGISTER_URL);
+        }.init(onFinishTaskListener).send(Global.USER_REGISTER_URL);
     }
 }

@@ -85,10 +85,9 @@ public abstract class AppointmentManager {
 							, patientId, consultantId, dateTime, patientName, consultantName
 							, healthIssue, attachmentPaths, type, referrerName, referrerClinic
 							, previousId, remarks, status);
-					
-					// Log.d("appointment.getType()", "=" + appointment.getStatus());
+
 					switch(appointment.getStatus()) {
-					
+
 					case Appointment.PENDING:
 						addPendingAppointment(appointment);
 						break;
@@ -101,7 +100,7 @@ public abstract class AppointmentManager {
 					case Appointment.FINISHED:
 						addFinishedAppointment(appointment);
 						break;
-					
+
 					default:
 						break;
 					}

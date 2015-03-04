@@ -1,19 +1,10 @@
 package com.droidcare;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.HashMap;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
-import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,9 +16,17 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Locale;
+
 public class RegisterActivity extends Activity {
 	private LinearLayout registerMessages;
-    private SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("yyyy/MM/dd");
+    private SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
 
 	public void pickDateBtn(View btn) {
 		DialogFragment datePicker = new DatePickerFragment(){
@@ -62,17 +61,6 @@ public class RegisterActivity extends Activity {
         clearMessages();
 		view.setEnabled(false);
 
-		EditText passport_field = (EditText) findViewById(R.id.passport_field);
-		EditText name_field = (EditText) findViewById(R.id.name_field);
-		EditText address_field = (EditText) findViewById(R.id.address_field);
-		EditText email_field = (EditText) findViewById(R.id.email_field);
-		Button dob_field = (Button) findViewById(R.id.dob_field);
-		Spinner gender_field = (Spinner) findViewById(R.id.gender_field);
-		Spinner nationality_field = (Spinner) findViewById(R.id.nationality_field);
-
-		EditText password_field = (EditText) findViewById(R.id.password_field);
-		EditText confirm_field = (EditText) findViewById(R.id.confirm_field);
-
         String  passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
                 fullName = ((EditText) findViewById(R.id.name_field)).getText().toString(),
                 address = ((EditText) findViewById(R.id.address_field)).getText().toString(),
@@ -98,7 +86,7 @@ public class RegisterActivity extends Activity {
             valid = 0;
         }
         try {
-            dateOfBirthFormat.format(dateOfBirthFormat.parse(dateOfBirth)).equals(dateOfBirth);
+            dateOfBirthFormat.format(dateOfBirthFormat.parse(dateOfBirth));
         } catch (ParseException e) {
             putMessage("Please select your date of birth!");
             valid = 0;
@@ -117,40 +105,65 @@ public class RegisterActivity extends Activity {
             putMessage("Confirm password field is empty!");
             valid = 0;
         } if(password != null
-                && password.length() < Global.getRegisterManager().passwordMinLength) {
+                && password.length() < RegisterManager.passwordMinLength) {
             putMessage("Password is too short!");
             valid = 0;
         } if(password != null && confirm != null
-                && password.equals(confirm)) {
+                && !password.equals(confirm)) {
             putMessage("Password and confirm password mismatch!");
             valid = 0;
         }
 
         switch(valid) {
-            // Do nothing
             case 0:
+                view.setEnabled(true);
                 break;
 
             default:
                 ProgressDialog pd = ProgressDialog.show(this, null, "Registering user ...", true);
-                Global.getRegisterManager().registerUser(new OnFinishRegisterListener() {
+                Global.getRegisterManager().registerUser(new RegisterManager.OnFinishTaskListener() {
                     private View btn;
                     private ProgressDialog pd;
 
-                    public OnFinishRegisterListener init(View btn, ProgressDialog pd) {
+                    public RegisterManager.OnFinishTaskListener init(View btn, ProgressDialog pd) {
                         this.btn = btn;
                         this.pd = pd;
                         return this;
                     }
 
                     @Override
-                    public void onFinishRegister(String responseText) {
+                    public void onFinishTask(String responseText) {
                         pd.dismiss();
                         btn.setEnabled(true);
-                        RegisterActivity.this.setResult(Activity.RESULT_OK);
-                        RegisterActivity.this.finish();
+
+                        try {
+                            JSONObject response = new JSONObject(responseText);
+                            JSONArray messages = response.getJSONArray("message");
+                            switch(response.getInt("status")) {
+                                case 0:
+                                    setResult(Activity.RESULT_OK);
+                                    finish();
+                                    break;
+                                default:
+                                    clearMessages();
+                                    for(int i = 0, size = messages.length(); i  < size; ++i) {
+                                        putMessage(messages.getString(i));
+                                    }
+                                    break;
+                            }
+                        // Do nothing on exception
+                        } catch (JSONException e) {
+                        }
+
                     }
-                }.init(view, pd));
+                }.init(view, pd), new Pair<String, String>("passport_number", passportNumber)
+                        , new Pair<String, String>("full_name", fullName)
+                        , new Pair<String, String>("address", address)
+                        , new Pair<String, String>("email", email)
+                        , new Pair<String, String>("date_of_birth", dateOfBirth)
+                        , new Pair<String, String>("gender", gender)
+                        , new Pair<String, String>("nationality", nationality)
+                        , new Pair<String, String>("password", password));
                 break;
         }
     }
