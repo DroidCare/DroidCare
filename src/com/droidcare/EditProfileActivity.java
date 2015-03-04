@@ -1,175 +1,140 @@
 package com.droidcare;
 
-import java.util.HashMap;
+import android.app.Activity;
+import android.app.ProgressDialog;
+import android.os.Bundle;
+import android.util.Pair;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.app.Activity;
-import android.app.AlertDialog;
-import android.app.ProgressDialog;
-import android.content.DialogInterface;
-import android.os.AsyncTask;
-import android.os.Bundle;
-import android.util.Log;
-import android.view.Menu;
-import android.view.MenuItem;
-import android.view.View;
-import android.view.ViewGroup.LayoutParams;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.LinearLayout;
-import android.widget.TextView;
-import android.widget.Toast;
+import java.util.HashMap;
 
 public class EditProfileActivity extends Activity {
-	public void doUpdateProfile(View view) {
-		String
-			old_pw = ((EditText) findViewById(R.id.old_password_field)).getText().toString(),
-			new_pw = ((EditText) findViewById(R.id.password_field)).getText().toString(),
-			new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString();
-		
-		if (!old_pw.isEmpty() || (!old_pw.isEmpty() && !new_pw.isEmpty() && !new_cpw.isEmpty())) {
-			int id = Global.getUserManager().getUser().getId();
-			
-			String
-				passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
-				fullName = ((EditText) findViewById(R.id.name_field)).getText().toString(),
-				address = ((EditText) findViewById(R.id.address_field)).getText().toString(),
-				email = ((EditText) findViewById(R.id.email_field)).getText().toString(),
-				dateOfBirth = ((EditText) findViewById(R.id.dob_field)).getText().toString(),
-				gender = ((EditText) findViewById(R.id.gender_field)).getText().toString(),
-				nationality = ((EditText) findViewById(R.id.nationality_field)).getText().toString();
-			
-			HashMap<String, String> data = new HashMap<String, String>();
-			
-			data.put("id", "" + id);
-			data.put("email", email);
-			data.put("password", new_pw.isEmpty() ? old_pw : new_pw); // If user does not change his old password
-			data.put("full_name", fullName);
-			data.put("address", address);
-			data.put("gender", gender);
-			data.put("passport_number", passportNumber);
-			data.put("nationality", nationality);
-			data.put("date_of_birth", dateOfBirth);
-			data.put("session_id", Global.getAppSession().getString("session_id"));
-			
-			view.setEnabled(false);
-			ProgressDialog pd = ProgressDialog
-					.show(this, "Updating profile ...", "Please wait!", true);
-			
-			new AsyncTask<Void, Void, String>(){
-				private View view;
-				private ProgressDialog pd;
-				private HashMap<String, String> data;
-				
-				public AsyncTask<Void, Void, String> init(View view, ProgressDialog pd
-						, HashMap<String, String> data){
-					this.view = view;
-					this.pd = pd;
-					this.data = data;
-					
-					return this;
-				}
-				
-				@Override
-				protected String doInBackground(Void... params) {
-					return new HttpPostRequest(data).send(Global.USER_UPDATE_URL);
-				}
-				
-				@Override
-				protected void onPostExecute(String result) {
-					
-					int status = -1;
-					try {
-						JSONObject response = new JSONObject(result);
-						JSONArray messages = response.getJSONArray("message");
-						
-						status = response.getInt("status") == 0							// Server response OK
-								&& Global.getUserManager().fetchUserDetails() ? 0 : -1;	// Successfully fetch user's details
-						
-						switch(status){
-						
-						case 0:							
-							pd.dismiss();
-							new AlertDialog.Builder(EditProfileActivity.this)
-									.setIcon(android.R.drawable.ic_dialog_info)
-									.setMessage("Profile successfully updated!")
-									.setTitle("Profile Update")
-									.setNeutralButton("OK", new DialogInterface.OnClickListener() {
-										
-										@Override
-										public void onClick(DialogInterface dialog, int which) {
-											EditProfileActivity.this.finish();
-										}
-									}).show();
-							break;
-						default:
-							pd.dismiss();
-							
-							// DEBUGGING PURPOSE
-							for(int i = 0, size = messages.length(); i < size; ++i){
-								Log.d("EDIT_PROFILE_ACTIVITY", messages.getString(i));
-							}
-							
-							break;
-						}
-					} catch (JSONException e) {
-					}
+    private LinearLayout updateMessages;
+    private HashMap<String, Integer> nationalitySpinner;
 
-					pd.dismiss();
-					Toast toast = Toast.makeText(EditProfileActivity.this, "Profile Updated!", Toast.LENGTH_SHORT);
-					toast.show();
-					view.setEnabled(true);
-				}
-				
-			}.init(view, pd, data)
-					.executeOnExecutor(AsyncTask.THREAD_POOL_EXECUTOR);
-		} else if (old_pw.length() == 0) {
-			Toast toast = Toast.makeText(EditProfileActivity.this, "Please fill in your old password!", Toast.LENGTH_SHORT);
-			toast.show();
-		} else if (!new_cpw.equals(new_pw)) {
-			Toast toast = Toast.makeText(EditProfileActivity.this, "Please confirm your new password!", Toast.LENGTH_SHORT);
-			toast.show();
-		}
-	}
+    public void clearMessages() {
+        updateMessages.removeAllViews();
+    }
+
+    public void putMessage(String message) {
+        TextView textView = new TextView(this);
+        textView.setText(message);
+        textView.setLayoutParams(new ViewGroup.LayoutParams(
+                ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        updateMessages.addView(textView);
+    }
+
+    public void doUpdateProfile(View view) {
+        clearMessages();
+
+        // Mutable
+        String  old_pw = (old_pw = ((EditText) findViewById(R.id.old_password_field)).getText().toString()) == null ? "" : old_pw,
+                new_pw = (new_pw = ((EditText) findViewById(R.id.passport_field)).getText().toString()) == null ? "" : new_pw,
+                new_cpw = (new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString()) == null ? "" : new_cpw,
+                passportNumber = (passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString()) == null ? "" : passportNumber,
+                address = (address = ((EditText) findViewById(R.id.address_field)).getText().toString()) == null ? "" : address,
+                nationality = (nationality = ((Spinner) findViewById(R.id.nationality_field)).getSelectedItem().toString()) == null ? "" : nationality,
+                password = old_pw;
+
+        int valid = 1;
+        if(old_pw.isEmpty()) {
+            valid = 0;
+            putMessage("You must provide your old password!");
+        } if(!new_pw.isEmpty() && !new_cpw.isEmpty()) {
+            if(!new_pw.equals(new_cpw)) {
+                valid = 0;
+                putMessage("New password and confirm password mismatch!");
+            } else {
+                password = new_pw;
+            }
+        } if(passportNumber.isEmpty()) {
+            valid = 0;
+            putMessage("Passport number must not be empty!");
+        } if(address.isEmpty()) {
+            valid = 0;
+            putMessage("Address field must not be empty!");
+        } if(nationality.isEmpty()) {
+            valid = 0;
+            putMessage("Nationality field must not be empty!");
+        }
+
+        ProgressDialog pd = ProgressDialog.show(this, null, "Updating profile ...", true);
+
+        User user = Global.getUserManager().getUser();
+
+        new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())
+                , new Pair<String, String>("email", user.getEmail())
+                , new Pair<String, String>("password", password)
+                , new Pair<String, String>("full_name", user.getFullName())
+                , new Pair<String, String>("address", address)
+                , new Pair<String, String>("gender", user.getGender())
+                , new Pair<String, String>("passport_number", passportNumber)
+                , new Pair<String, String>("nationality", nationality)
+                , new Pair<String, String>("date_of_birth", user.getDateOfBirth())
+                , new Pair<String, String>("session_id", user.getSessionId())) {
+            private ProgressDialog pd;
+            public SimpleHttpPost init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                pd.dismiss();
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            finish();
+                            break;
+                        default:
+                            JSONArray messages = response.getJSONArray("message");
+                            for(int i = 0, size = messages.length(); i < size; ++i) {
+                                putMessage(messages.getString(i));
+                            }
+                            break;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+            }
+        }.init(pd).send(Global.USER_UPDATE_URL);
+    }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
-		
-		// Disable all immutable attributes
-		for(int id: (new int[] {
-				R.id.name_field,
-				R.id.email_field,
-				R.id.dob_field,
-				R.id.gender_field,
-				R.id.nationality_field
-		})){
-			((EditText) findViewById(id)).setKeyListener(null);
-		}
-		
-		User user = Global.getUserManager().getUser();
-		
-		((EditText) findViewById(R.id.passport_field)).setText(user.getPassportNumber());
-		((TextView) findViewById(R.id.name_field)).setText(user.getFullName());
-		((EditText) findViewById(R.id.address_field)).setText(user.getAddress());
-		((TextView) findViewById(R.id.email_field)).setText(user.getEmail());
-		((TextView) findViewById(R.id.dob_field)).setText(user.getDateOfBirth());
-		((EditText) findViewById(R.id.nationality_field)).setText(user.getNationality());
 
-		switch(user.getGender()){
-		
-		case 'M': case 'm':
-			((EditText) findViewById(R.id.gender_field)).setText("Male");
-			break;
-		
-		case 'F': case 'f':
-			((EditText) findViewById(R.id.gender_field)).setText("Female");
-			break;
-		}
+        updateMessages = (LinearLayout) findViewById(R.id.update_messages);
+
+        nationalitySpinner.put("Indonesian", 1);
+        nationalitySpinner.put("Singaporean", 2);
+        nationalitySpinner.put("Thailand", 3);
+        nationalitySpinner.put("Malaysian", 4);
+        nationalitySpinner.put("Vietnamese", 5);
+
+        User user = Global.getUserManager().getUser();
+
+        ((EditText) findViewById(R.id.passport_field)).setText(user.getPassportNumber());
+        ((TextView) findViewById(R.id.name_field)).setText(user.getFullName());
+        ((EditText) findViewById(R.id.address_field)).setText(user.getAddress());
+        ((TextView) findViewById(R.id.email_field)).setText(user.getEmail());
+        ((TextView) findViewById(R.id.dob_field)).setText(user.getDateOfBirth());
+        ((TextView) findViewById(R.id.gender_field)).setText(user.getGender());
+        ((Spinner) findViewById(R.id.nationality_field))
+                .setSelection(nationalitySpinner.get(user.getNationality()));
 	}
 
 	@Override

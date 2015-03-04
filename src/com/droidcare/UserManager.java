@@ -68,9 +68,8 @@ public class UserManager {
 						passportNumber = params.getString("passport_number"),
 						nationality = params.getString("nationality"),
 						dateOfBirth = params.getString("date_of_birth"),
-						type = params.getString("type");
-				
-				char	gender = params.getString("gender").charAt(0);
+						type = params.getString("type"),
+                        gender = params.getString("gender");
 				
 				user = new User(id, email, fullName, address
 						, gender, passportNumber, nationality,
@@ -89,7 +88,7 @@ public class UserManager {
 	}
 
     public User createUser(int id, String email, String fullName, String address
-            , char gender, String passportNumber, String nationality
+            , String gender, String passportNumber, String nationality
             , String dateOfBirth, String type) {
 
         return user = new User(id, email, fullName, address

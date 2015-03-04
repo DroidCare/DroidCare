@@ -75,9 +75,8 @@ public class LoginManager {
                                                         passportNumber = params.getString("passport_number"),
                                                         nationality = params.getString("nationality"),
                                                         dateOfBirth = params.getString("date_of_birth"),
-                                                        type = params.getString("type");
-
-                                                char gender = params.getString("gender").charAt(0);
+                                                        type = params.getString("type"),
+                                                        gender = params.getString("gender");
 
                                                 Global.getUserManager().createUser(id, email, fullName, address
                                                         , gender, passportNumber, nationality, dateOfBirth, type)
@@ -158,9 +157,8 @@ public class LoginManager {
                                     passportNumber = params.getString("passport_number"),
                                     nationality = params.getString("nationality"),
                                     dateOfBirth = params.getString("date_of_birth"),
-                                    type = params.getString("type");
-
-                            char	gender = params.getString("gender").charAt(0);
+                                    type = params.getString("type"),
+                                    gender = params.getString("gender");
 
                             Global.getUserManager().createUser(id, email, fullName, address
                                     , gender, passportNumber, nationality, dateOfBirth, type)

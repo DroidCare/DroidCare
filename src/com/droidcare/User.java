@@ -10,16 +10,15 @@ public class User{
 					nationality,
 					dateOfBirth,
 					type,
-					sessionId;
-	
-	private char gender;
+					sessionId,
+                    gender;
 	
 	// Empty constructor
 	public User(){}
 	
 	// Lengthy constructor
 	public User(int id, String email, String fullName, String address
-			, char gender, String passportNumber, String nationality
+			, String gender, String passportNumber, String nationality
 			, String dateOfBirth, String type){
 		this.id = id;
 		this.email = email;
@@ -33,7 +32,7 @@ public class User{
 	}
 	
 	public void setData(int id, String email, String fullName, String address
-			, char gender, String passportNumber, String nationality
+			, String gender, String passportNumber, String nationality
 			, String dateOfBirth, String type){
 		this.id = id;
 		this.email = email;
@@ -89,7 +88,7 @@ public class User{
 		return type;
 	}
 	
-	public char getGender(){
+	public String getGender(){
 		return gender;
 	}
 	

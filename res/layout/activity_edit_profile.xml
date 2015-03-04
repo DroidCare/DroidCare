@@ -1,218 +1,207 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.droidcare.EditProfileActivity"
-    android:orientation="vertical" >
-
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
     <LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal" >
-        
-	    <TextView
-	        android:id="@+id/passport_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_passport" />
-	    
-	    <EditText
-	        android:id="@+id/passport_field"
-	        android:inputType="text"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" />
-	    
-    </LinearLayout>
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/name_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_Name" />
-	    
-	    <TextView
-	        android:id="@+id/name_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" />
-	</LinearLayout>
-	
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/address_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_address" />
-	    
-	    <EditText
-	        android:id="@+id/address_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:inputType="text" />
-	    
-	</LinearLayout>
-	
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/email_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_Email" />
-	    
-	    <TextView
-	        android:id="@+id/email_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" />
-	    
-	</LinearLayout>
-	
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/dob_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_dob" />
-	    
-	    <TextView
-	        android:id="@+id/dob_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" />
-	    
-	</LinearLayout>
-	
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="7dp"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/gender_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_gender" />
-	    
-	    <TextView
-	        android:id="@+id/gender_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content" />
-	    
-	</LinearLayout>
-	
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/nationality_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_nationality" />
-	    
-	    <Spinner
-                android:id="@+id/nationality_field"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingBottom="@dimen/activity_vertical_margin"
+        android:paddingLeft="@dimen/activity_horizontal_margin"
+        android:paddingRight="@dimen/activity_horizontal_margin"
+        android:paddingTop="@dimen/activity_vertical_margin"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/passport_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_passport" />
+
+            <EditText
+                android:id="@+id/passport_field"
+                android:inputType="text"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+
+        </LinearLayout>
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/name_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_Name" />
+
+            <TextView
+                android:id="@+id/name_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/address_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_address" />
+
+            <EditText
+                android:id="@+id/address_field"
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:entries="@array/Nationality_values" />
-	    
-	</LinearLayout>
-	
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/old_password_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_OldPassword" />
-	    
-	    <EditText
-	        android:id="@+id/old_password_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:inputType="textPassword" />
-	    
-	</LinearLayout>
-	
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/password_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_Password" />
-	    
-	    <EditText
-	        android:id="@+id/password_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:inputType="textPassword" />
-	    
-	</LinearLayout>
-	<LinearLayout
-        android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="15dp"
-        android:orientation="horizontal" >
-	    
-	    <TextView
-	        android:id="@+id/confirm_label"
-	        android:layout_width="125dp"
-	        android:layout_height="wrap_content"
-	        android:text="@string/LabelText_Confirm" />
-	    
-	    <EditText
-	        android:id="@+id/confirm_field"
-	        android:layout_width="fill_parent"
-	        android:layout_height="wrap_content"
-	        android:inputType="textPassword" />
-	    
-	</LinearLayout>
-	<LinearLayout
-	    android:layout_width="fill_parent"
-	    android:layout_height="wrap_content"
-	    android:orientation="horizontal" >
-	    
-	    <View
-	        android:layout_width="0dp"
-	        android:layout_height="0dp"
-	        android:layout_weight="1" />
-	    
-	    <Button
-	        android:id="@+id/update_btn"
-	        android:layout_width="wrap_content"
-	        android:layout_height="wrap_content"
-	        android:text="@string/update_btn"
-	        android:onClick="doUpdateProfile" />
-	    
-	</LinearLayout>
-</LinearLayout>
+                android:inputType="text" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/email_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_Email" />
+
+            <TextView
+                android:id="@+id/email_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/dob_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_dob" />
+            <TextView
+                android:id="@+id/dob_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="7dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/gender_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_gender" />
+            <TextView
+                android:id="@+id/gender_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/nationality_label"
+                android:layout_width="125dp"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:text="@string/LabelText_nationality" />
+            <Spinner
+                    android:id="@+id/nationality_field"
+                    android:layout_width="fill_parent"
+                    android:layout_height="wrap_content"
+                    android:entries="@array/Nationality_values" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+
+            <TextView
+                android:id="@+id/old_password_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_OldPassword" />
+            <EditText
+                android:id="@+id/old_password_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/password_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_Password" />
+            <EditText
+                android:id="@+id/password_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal" >
+            <TextView
+                android:id="@+id/confirm_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_Confirm" />
+            <EditText
+                android:id="@+id/confirm_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:inputType="textPassword" />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal" >
+            <View
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1" />
+            <Button
+                android:id="@+id/update_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/update_btn"
+                android:onClick="doUpdateProfile" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:id="@+id/update_messages" >
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>
