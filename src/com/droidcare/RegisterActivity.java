@@ -1,5 +1,7 @@
 package com.droidcare;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 
 import org.json.JSONArray;
@@ -8,6 +10,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
@@ -23,29 +26,42 @@ import android.widget.Spinner;
 import android.widget.TextView;
 
 public class RegisterActivity extends Activity {
-	private LinearLayout register_messages;
+	private LinearLayout registerMessages;
+    private SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("yyyy/MM/dd");
 
-	public void pickDateBtn(final View btn) {
+	public void pickDateBtn(View btn) {
 		DialogFragment datePicker = new DatePickerFragment(){
+            private View btn;
+            public DatePickerFragment init(View btn){
+                this.btn = btn;
+                return this;
+            }
+
 			@Override
-			public void onDateSet(DatePicker view, int year, int monthOfYear,
-					int dayOfMonth) {
+			public void onDateSet(DatePicker view
+                    , int year, int monthOfYear, int dayOfMonth) {
 				((Button) btn).setText(String.format("%04d/%02d/%02d", year, monthOfYear + 1, dayOfMonth));
 			}
-		};
+		}.init(btn);
 		datePicker.show(getFragmentManager(), "datePicker");
 	}
-	
+
+    private void clearMessages() {
+        registerMessages.removeAllViews();
+    }
+
+    private void putMessage(String message) {
+        TextView textView = new TextView(this);
+        textView.setText("\u2022 " + message);
+        textView.setLayoutParams(
+                new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
+        registerMessages.addView(textView);
+    }
+
 	public void doRegisterUser(View view) {
+        clearMessages();
 		view.setEnabled(false);
-		register_messages.removeAllViews();
-		
-		TextView register_status = new TextView(this);
-		register_status.setText("Registering user ...");
-		register_messages.addView(register_status);
-		
-		HashMap<String, String> data = new HashMap<String, String>();
-		
+
 		EditText passport_field = (EditText) findViewById(R.id.passport_field);
 		EditText name_field = (EditText) findViewById(R.id.name_field);
 		EditText address_field = (EditText) findViewById(R.id.address_field);
@@ -53,69 +69,98 @@ public class RegisterActivity extends Activity {
 		Button dob_field = (Button) findViewById(R.id.dob_field);
 		Spinner gender_field = (Spinner) findViewById(R.id.gender_field);
 		Spinner nationality_field = (Spinner) findViewById(R.id.nationality_field);
-		
+
 		EditText password_field = (EditText) findViewById(R.id.password_field);
 		EditText confirm_field = (EditText) findViewById(R.id.confirm_field);
 
-		String password = password_field.getText().toString();
-		String confirm  = confirm_field.getText().toString();
-		
-		data.put("passport_number", passport_field.getText().toString());
-		data.put("full_name", name_field.getText().toString());
-		data.put("email", email_field.getText().toString());
-		data.put("password", password_field.getText().toString());
-		data.put("address", address_field.getText().toString());
-		data.put("gender", gender_field.getSelectedItem().toString());
-		data.put("nationality", nationality_field.getSelectedItem().toString());
-		data.put("date_of_birth", dob_field.getText().toString());
+        String  passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
+                fullName = ((EditText) findViewById(R.id.name_field)).getText().toString(),
+                address = ((EditText) findViewById(R.id.address_field)).getText().toString(),
+                email = ((EditText) findViewById(R.id.email_field)).getText().toString(),
+                dateOfBirth = ((Button) findViewById(R.id.dob_field)).getText().toString(),
+                gender = ((Spinner) findViewById(R.id.gender_field)).getSelectedItem().toString(),
+                nationality = ((Spinner) findViewById(R.id.nationality_field)).getSelectedItem().toString(),
+                password = ((EditText) findViewById(R.id.password_field)).getText().toString(),
+                confirm = ((EditText) findViewById(R.id.confirm_field)).getText().toString();
 
-		if(!password.equals(confirm)){
-			register_status.setText("Password and confirm password mismatch!");
-			
-			view.setEnabled(true);
-			return;
-		}
-		
-		String responseText = new HttpPostRequest(data).send(Global.USER_REGISTER_URL);
-		
-		int status = -1;
-		try {
-			JSONObject response = new JSONObject(responseText);
-			
-			status = response.getInt("status");
-			JSONArray messages = response.getJSONArray("message");
-			
-			switch(status) {
-			
-			case 0:
-				Intent result = new Intent();
-				setResult(Activity.RESULT_OK, result);
-				finish();
-				
-				break;
-			default:
-				register_messages.removeAllViews();
-				for(int i = 0, size = messages.length(); i < size; ++i){
-					TextView message = new TextView(this);
-					message.setText("\uu2022 " + messages.getString(i));
-					message.setLayoutParams(new LayoutParams
-							(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
-					register_messages.addView(message);
-				}
-				break;
-			}
-		} catch (JSONException e) {
-		}
-		
-		view.setEnabled(true);
-	}
+        int valid = 1;
+        if(passportNumber == null || passportNumber.isEmpty()) {
+            putMessage("Passport number is empty!");
+            valid = 0;
+        } if(fullName == null || fullName.isEmpty()) {
+            putMessage("Full name is empty!");
+            valid = 0;
+        } if(address == null || address.isEmpty()) {
+            putMessage("Address field is empty!");
+            valid = 0;
+        } if(email == null || email.isEmpty()) {
+            putMessage("Email address is empty!");
+            valid = 0;
+        }
+        try {
+            dateOfBirthFormat.format(dateOfBirthFormat.parse(dateOfBirth)).equals(dateOfBirth);
+        } catch (ParseException e) {
+            putMessage("Please select your date of birth!");
+            valid = 0;
+        }
+
+        if(gender == null || gender.isEmpty()) {
+            putMessage("Please select your gender!");
+            valid = 0;
+        } if(nationality == null || nationality.isEmpty()) {
+            putMessage("Please select your nationality!");
+            valid = 0;
+        } if(password == null || password.isEmpty()) {
+            putMessage("Password field is empty!");
+            valid = 0;
+        } if(confirm == null || confirm.isEmpty()) {
+            putMessage("Confirm password field is empty!");
+            valid = 0;
+        } if(password != null
+                && password.length() < Global.getRegisterManager().passwordMinLength) {
+            putMessage("Password is too short!");
+            valid = 0;
+        } if(password != null && confirm != null
+                && password.equals(confirm)) {
+            putMessage("Password and confirm password mismatch!");
+            valid = 0;
+        }
+
+        switch(valid) {
+            // Do nothing
+            case 0:
+                break;
+
+            default:
+                ProgressDialog pd = ProgressDialog.show(this, null, "Registering user ...", true);
+                Global.getRegisterManager().registerUser(new OnFinishRegisterListener() {
+                    private View btn;
+                    private ProgressDialog pd;
+
+                    public OnFinishRegisterListener init(View btn, ProgressDialog pd) {
+                        this.btn = btn;
+                        this.pd = pd;
+                        return this;
+                    }
+
+                    @Override
+                    public void onFinishRegister(String responseText) {
+                        pd.dismiss();
+                        btn.setEnabled(true);
+                        RegisterActivity.this.setResult(Activity.RESULT_OK);
+                        RegisterActivity.this.finish();
+                    }
+                }.init(view, pd));
+                break;
+        }
+    }
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_register);
 		
-		register_messages = (LinearLayout) findViewById(R.id.register_messages);
+		registerMessages = (LinearLayout) findViewById(R.id.register_messages);
 	}
 
 	@Override

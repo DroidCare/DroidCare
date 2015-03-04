@@ -6,6 +6,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -30,29 +31,6 @@ public class TitleActivity extends Activity {
         setContentView(R.layout.activity_title);
         
         Global.init(this);
-
-        ProgressDialog pd = ProgressDialog.show(this, null,"Logging in ...");
-
-        String email = "kenrick95@gmail.com";
-        String password = "123456";
-
-        LoginManager loginManager = Global.getLoginManager();
-        if(loginManager.verifyFields(email, password) == loginManager.VALID_FIELDS) {
-            loginManager.prepareLoginRequest(Global.USER_LOGIN_URL
-                    , new LoginManager.Request("kenrick95@gmail.com", "123456") {
-                private ProgressDialog pd;
-
-                @Override
-                public void onFinish(String responseText) {
-                    pd.dismiss();
-                }
-
-                public LoginManager.Request init(ProgressDialog pd) {
-                    this.pd = pd;
-                    return this;
-                }
-            }.init(pd));
-        }
     }
 
     @Override
@@ -85,7 +63,7 @@ public class TitleActivity extends Activity {
     			new AlertDialog.Builder(this)
 						.setTitle("Registration Success")
 						.setMessage("You have been successfully registered in DroidCare!")
-						.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+						.setPositiveButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
 							@Override
 							public void onClick(DialogInterface dialog, int which) {
 								// Close dialog

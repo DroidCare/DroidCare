@@ -38,14 +38,16 @@ public class Global {
 	private static UserManager userManager;
 	private static AppointmentManager appointmentManager;
     private static LoginManager loginManager;
+    private static RegisterManager registerManager;
 	
 	public static void init(Context context) {
 		AppSession.init(context);
 		
 		userManager	= UserManager.getInstance();
 		appSession	= AppSession.getInstance();
-		appointmentManager = AppointmentManager.getInstance();
+		// appointmentManager = AppointmentManager.getInstance();
         loginManager = LoginManager.getInstance();
+        registerManager = RegisterManager.getInstance();
 	}
 	
 	public static AppSession getAppSession() {
@@ -62,5 +64,9 @@ public class Global {
 
     public static LoginManager getLoginManager() {
         return loginManager;
+    }
+
+    public static RegisterManager getRegisterManager() {
+        return registerManager;
     }
 }
