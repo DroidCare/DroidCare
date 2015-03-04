@@ -30,8 +30,7 @@ public class EditProfileActivity extends Activity {
 			new_pw = ((EditText) findViewById(R.id.password_field)).getText().toString(),
 			new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString();
 		
-		if(!old_pw.isEmpty() || (!old_pw.isEmpty() && !new_pw.isEmpty()
-				&& !new_cpw.isEmpty())){
+		if (!old_pw.isEmpty() || (!old_pw.isEmpty() && !new_pw.isEmpty() && !new_cpw.isEmpty())) {
 			
 			int id = Global.getUserManager().getUser().getId();
 			

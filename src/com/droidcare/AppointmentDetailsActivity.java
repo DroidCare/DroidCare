@@ -14,13 +14,14 @@ import java.util.Date;
 
 public class AppointmentDetailsActivity extends Activity {
 	private Appointment appointment;
+	private String userType = Global.getUserManager().getUser().getType();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
 		// Show two different layouts depending on the user type
-		if (Global.getUserManager().getUser().getType().equalsIgnoreCase("patient")) 
+		if (userType.equalsIgnoreCase("patient")) 
 			setContentView(R.layout.appointment_details_patient_activity);
 		else 
 			setContentView(R.layout.appointment_details_consultant_activity);
@@ -32,24 +33,31 @@ public class AppointmentDetailsActivity extends Activity {
 		TextView textview = (TextView) findViewById(R.id.main_textview);
 		textview.setText("Appointment ID: " + appointment.getId());
 		
-		// Editable appointment only if it is still PENDING
-		if (appointment.getStatus() != Appointment.PENDING) {
+		// PATIENT SPECIFIC
+		if (userType.equalsIgnoreCase("patient") && appointment.getStatus() != Appointment.PENDING) {
 			Button editButton = (Button) findViewById(R.id.editAppointment_button);
 			Button cancelButton = (Button) findViewById(R.id.cancelAppointment_button);
-			editButton.setEnabled(false);
-			cancelButton.setEnabled(false);
+			
+			editButton.setVisibility(View.GONE);
+			cancelButton.setVisibility(View.GONE);
 		}
 		
+		// CONSULTANT SPECIFIC
+		if (userType.equalsIgnoreCase("consultant") && appointment.getStatus() != Appointment.PENDING) {
+			Button acceptButton = (Button) findViewById(R.id.acceptAppointment_button);
+			Button rejectButton = (Button) findViewById(R.id.rejectAppointment_button);
+			
+			acceptButton.setVisibility(View.GONE);
+			rejectButton.setVisibility(View.GONE);
+		}
 		
-		// TODO: NEED TO ADD THE ATTACHMENT IMAGE HERE!
+		// TODO: NEED TO ADD THE ATTACHMENT IMAGE HERE! -> use ImageView
         ((TextView) findViewById(R.id.patient_field)).setText(Global.getUserManager().getUser().getFullName());
         ((TextView) findViewById(R.id.consultant_field)).setText("Dr."); // APPOINTMENT DETAILS MUST CONTAIN THIS!
-        ((TextView) findViewById(R.id.dateTime_field)).setText(Global.dateFormat.format(
-                new Date(appointment.getDateTimeMillis())));
+        ((TextView) findViewById(R.id.dateTime_field)).setText(Global.dateFormat.format(new Date(appointment.getDateTimeMillis())));
         ((TextView) findViewById(R.id.healthIssue_field)).setText(appointment.getHealthIssue());
         ((TextView) findViewById(R.id.remarks_field)).setText(appointment.getRemarks());
-        ((TextView) findViewById(R.id.appointmentStatus_field)).setText(
-                Appointment.getStatus(appointment.getStatus()));
+        ((TextView) findViewById(R.id.appointmentStatus_field)).setText(Appointment.getStatus(appointment.getStatus()));
 	}
 
 	@Override
@@ -71,21 +79,34 @@ public class AppointmentDetailsActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	// PATIENT SPECIFIC METHODS!
 	public void openEditAppointment (View v) {
 		Intent intent = new Intent(this, EditAppointmentActivity.class);
 		intent.putExtra("appointment", appointment);
 		startActivity(intent);
 	}
 	
-	// Specific for patient appointment details only
-	// CALLED ONLY IF THE USER IS A PATIENT
 	public void cancelAppointment (View v) {
 		// CALL PATIENT APPOINTMENT MANAGER TO CANCEL THE APPOINTMENT
-		((PatientAppointmentManager) Global.getAppointmentManager()).cancelAppointment(appointment);
+		((PatientAppointmentManager) Global.getAppointmentManager()).cancelAppointment(this, appointment);
 		
 		// Go back to the HomeActivity
 		// Intent intent = new Intent(this, HomeActivity.class);
 		// startActivity(intent);
 		super.onBackPressed(); // Go back to HomeActivity (List Fragment)
+	}
+	
+	
+	// CONSULTANT SPECIFIC METHODS! 
+	public void acceptAppointment (View v) {
+		((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(this, appointment);
+		
+		// GIVE FEEDBACK HERE
+	}
+	
+	public void rejectAppointment (View v) {
+		((ConsultantAppointmentManager) Global.getAppointmentManager()).rejectAppointment(this, appointment);
+		
+		// GIVE FEEDBACK HERE
 	}
 }

@@ -55,6 +55,8 @@
     <string name="Button_OK">OK</string>
     <string name="Button_Edit_Appointment">Edit Appointment</string>
     <string name="Button_Cancel_Appointment">Cancel Appointment</string>
+    <string name="Button_Accept_Appointment">Accept Appointment</string>
+    <string name="Button_Reject_Appointment">Reject Appointment</string>
     <string name="title_activity_edit_appointment">EditAppointmentActivity</string>
     <string name="Button_Logout">Log out</string>
     <string name="Button_Cancel">Cancel</string>

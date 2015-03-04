@@ -153,6 +153,10 @@ public class Appointment implements Parcelable{
 		return type;
 	}
 	
+	public void setStatus(int status) {
+		this.status = status;
+	}
+	
 	// PARCELABLE IMPLEMENTATION -> provide a way to send an object from one activity / fragment to another
 	public Appointment (Parcel in) {
 		this.id = in.readInt();
