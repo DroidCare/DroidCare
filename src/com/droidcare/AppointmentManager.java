@@ -9,21 +9,30 @@ import org.json.JSONObject;
 
 import android.util.Log;
 
-public class AppointmentManager {
+public abstract class AppointmentManager {
 	// Force singleton
-	private static AppointmentManager instance = new AppointmentManager();
+	// Use polymorphism
+	private static AppointmentManager instance;
 	
-	private ArrayList<Appointment> upcomingAppointments;
+	private ArrayList<Appointment> acceptedAppointments;
 	private ArrayList<Appointment> pendingAppointments;
 	private ArrayList<Appointment> rejectedAppointments;
+	private ArrayList<Appointment> finishedAppointments;
 	
-	private AppointmentManager () {
-		upcomingAppointments = new ArrayList<Appointment>();
+	public AppointmentManager () {
+		acceptedAppointments = new ArrayList<Appointment>();
 		pendingAppointments = new ArrayList<Appointment>();
 		rejectedAppointments = new ArrayList<Appointment>();
+		finishedAppointments = new ArrayList<Appointment>();
 	}
 	
 	public static AppointmentManager getInstance() {
+		if (Global.getUserManager().getUser().getType().equalsIgnoreCase("patient")) {
+			instance = new PatientAppointmentManager();
+		} else {
+			instance = new ConsultantAppointmentManager();
+		}
+		
 		return instance;
 	}
 	
@@ -79,13 +88,16 @@ public class AppointmentManager {
 					switch(appointment.getStatus()) {
 					
 					case Appointment.PENDING:
-						pendingAppointments.add(appointment);
+						addPendingAppointment(appointment);
 						break;
 					case Appointment.ACCEPTED:
-						upcomingAppointments.add(appointment);
+						addAcceptedAppointment(appointment);
 						break;
 					case Appointment.REJECTED:
-						rejectedAppointments.add(appointment);
+						addRejectedAppointment(appointment);
+						break;
+					case Appointment.FINISHED:
+						addFinishedAppointment(appointment);
 						break;
 					
 					default:
@@ -105,12 +117,12 @@ public class AppointmentManager {
 		return false;
 	}
 	
-	public void addUpcomingAppointment (Appointment appointment) {
-		upcomingAppointments.add(appointment);
+	public void addAcceptedAppointment (Appointment appointment) {
+		acceptedAppointments.add(appointment);
 	}
 	
-	public ArrayList<Appointment> getUpcomingAppointments () {
-		return upcomingAppointments;
+	public ArrayList<Appointment> getAcceptedAppointments () {
+		return acceptedAppointments;
 	}
 	
 	public void addPendingAppointment (Appointment appointment) {
@@ -129,8 +141,16 @@ public class AppointmentManager {
 		return rejectedAppointments;
 	}
 	
-	public void clearUpcomingAppointments () {
-		upcomingAppointments.clear();
+	public void addFinishedAppointment(Appointment appointment) {
+		finishedAppointments.add(appointment);
+	}
+	
+	public ArrayList<Appointment> getFinishedAppointments() {
+		return finishedAppointments;
+	}
+	
+	public void clearAcceptedAppointments () {
+		acceptedAppointments.clear();
 	}
 	
 	public void clearPendingAppointments () {
@@ -139,5 +159,9 @@ public class AppointmentManager {
 	
 	public void clearRejectedAppointments() {
 		rejectedAppointments.clear();
+	}
+	
+	public void clearFinishedAppointments() {
+		finishedAppointments.clear();
 	}
 }

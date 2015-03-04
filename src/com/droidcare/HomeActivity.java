@@ -134,6 +134,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	}
 	
 	// Logout mechanism
+	// @pciang: can you also move this logout thing into the login manager as well? Thx!
 	private void doLogout() {
 		HashMap<String, String> data = new HashMap<String, String>();
 		data.put("session_id", Global.getAppSession().getString("session_id"));
@@ -166,7 +167,8 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		Global.getAppSession().clearAll();
 		Global.getAppointmentManager().clearPendingAppointments();
 		Global.getAppointmentManager().clearRejectedAppointments();
-		Global.getAppointmentManager().clearUpcomingAppointments();
+		Global.getAppointmentManager().clearAcceptedAppointments();
+		Global.getAppointmentManager().clearFinishedAppointments();
 		
 		HomeActivity.this.finish();
 	}

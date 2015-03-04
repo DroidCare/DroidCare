@@ -11,13 +11,13 @@ import android.widget.ListView;
  * 
  * @author Edwin Candinegara
  * 
- * This class is a list fragment subclass which holds and shows all appointments with the "Upcoming" status.
+ * This class is a list fragment subclass which holds and shows all appointments with the "Accepted" status.
  * Clicking on one item of this list will bring User to the corresponding details of the appointment.
  *
  */
 
-public class UpcomingAppointmentList extends ListFragment {
-	private ArrayList<Appointment> upcomingAppointmentList;
+public class AcceptedAppointmentList extends ListFragment {
+	private ArrayList<Appointment> acceptedAppointmentList;
 	private AppointmentListAdapter mAdapter;
 	
 	@Override
@@ -26,7 +26,7 @@ public class UpcomingAppointmentList extends ListFragment {
 		
 		// Get the upcoming appointment list from the Global AppointmentManager
 		this.fetchList();
-		mAdapter = new AppointmentListAdapter(getActivity(), this.upcomingAppointmentList);
+		mAdapter = new AppointmentListAdapter(getActivity(), this.acceptedAppointmentList);
 		setListAdapter(mAdapter);
 	}
 	
@@ -36,7 +36,7 @@ public class UpcomingAppointmentList extends ListFragment {
 
 		// Creating a new intent
 		Intent intent = new Intent(getActivity(), AppointmentDetailsActivity.class);
-		Appointment a = this.upcomingAppointmentList.get(position);
+		Appointment a = this.acceptedAppointmentList.get(position);
 		intent.putExtra("appointment", a);
 		startActivity(intent);
 	}
@@ -44,6 +44,6 @@ public class UpcomingAppointmentList extends ListFragment {
 	// CALL THIS WHENEVER A CHANGE IS MADE IN THE APPOINTMENT LIST!!
 	// Add the new Appointment object to the list in AppointmentManager
 	public void fetchList () {
-		this.upcomingAppointmentList = Global.getAppointmentManager().getUpcomingAppointments();
+		this.acceptedAppointmentList = Global.getAppointmentManager().getAcceptedAppointments();
 	}
 }
