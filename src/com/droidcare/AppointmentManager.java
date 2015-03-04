@@ -123,12 +123,20 @@ public abstract class AppointmentManager {
 		acceptedAppointments.add(appointment);
 	}
 	
+	public void removeAcceptedAppointment (Appointment appointment) {
+		acceptedAppointments.remove(appointment);
+	}
+	
 	public ArrayList<Appointment> getAcceptedAppointments () {
 		return acceptedAppointments;
 	}
 	
 	public void addPendingAppointment (Appointment appointment) {
 		pendingAppointments.add(appointment);
+	}
+	
+	public void removePendingAppointment (Appointment appointment) {
+		pendingAppointments.remove(appointment);
 	}
 	
 	public ArrayList<Appointment> getPendingAppointments () {
@@ -139,12 +147,20 @@ public abstract class AppointmentManager {
 		rejectedAppointments.add(appointment);
 	}
 	
+	public void removeRejectedAppointment(Appointment appointment) {
+		rejectedAppointments.remove(appointment);
+	}
+	
 	public ArrayList<Appointment> getRejectedAppointments() {
 		return rejectedAppointments;
 	}
 	
 	public void addFinishedAppointment(Appointment appointment) {
 		finishedAppointments.add(appointment);
+	}
+	
+	public void removeFinishedAppointment(Appointment appointment) {
+		finishedAppointments.remove(appointment);
 	}
 	
 	public ArrayList<Appointment> getFinishedAppointments() {

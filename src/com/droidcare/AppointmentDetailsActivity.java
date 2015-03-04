@@ -25,6 +25,7 @@ public class AppointmentDetailsActivity extends Activity {
 		else 
 			setContentView(R.layout.appointment_details_consultant_activity);
 		
+		// Unpack the parcelled Appointment data
 		Bundle data = getIntent().getExtras();
 		appointment = (Appointment) data.getParcelable("appointment");
 		
@@ -77,7 +78,14 @@ public class AppointmentDetailsActivity extends Activity {
 	}
 	
 	// Specific for patient appointment details only
+	// CALLED ONLY IF THE USER IS A PATIENT
 	public void cancelAppointment (View v) {
 		// CALL PATIENT APPOINTMENT MANAGER TO CANCEL THE APPOINTMENT
+		((PatientAppointmentManager) Global.getAppointmentManager()).cancelAppointment(appointment);
+		
+		// Go back to the HomeActivity
+		// Intent intent = new Intent(this, HomeActivity.class);
+		// startActivity(intent);
+		super.onBackPressed(); // Go back to HomeActivity (List Fragment)
 	}
 }
