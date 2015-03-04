@@ -11,87 +11,93 @@
         android:paddingRight="@dimen/activity_horizontal_margin"
         android:paddingTop="@dimen/activity_vertical_margin"
         android:orientation="vertical" >
-
+        
         <TextView
             android:id="@+id/main_textview"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
             android:text="@string/hello_world" />
+
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp" >
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_Patient" />
 
-            <EditText
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:id="@+id/patient_field" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            android:layout_marginBottom="5dp" >
+            
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
-                android:text="@string/LabelText_Consultant"
-                android:textSize="11sp" />
+                android:text="@string/LabelText_Consultant" />
 
-            <EditText
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:id="@+id/consultant_field" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp" >
 
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_dateTime" />
-            <EditText
+            
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:id="@+id/dateTime_field" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            android:layout_marginBottom="5dp" >
+            
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_healthIssue" />
-            <EditText
+            
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:id="@+id/healthIssue_field" />
         </LinearLayout>
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            android:layout_marginBottom="5dp" >
+            
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="fill_parent"
-                android:layout_marginTop="10dp"
                 android:text="@string/LabelText_remarks" />
-            <EditText
+            
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textMultiLine"
                 android:minLines="8"
                 android:maxLines="8"
                 android:lines="8"
@@ -100,29 +106,37 @@
         <LinearLayout
             android:orientation="horizontal"
             android:layout_width="fill_parent"
-            android:layout_height="wrap_content" >
+            android:layout_height="wrap_content" 
+            android:layout_marginBottom="5dp" >
+            
             <TextView
-                android:layout_width="100dp"
+                android:layout_width="110dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_appointmentStatus" />
-            <EditText
+            
+            <TextView
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"
                 android:id="@+id/appointmentStatus_field" />
         </LinearLayout>
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content">
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1" />
-            <Button
-                android:layout_width="wrap_content"
-                android:minWidth="80dp"
-                android:layout_height="wrap_content"
-                android:text="@string/Button_OK" />
-        </LinearLayout>
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/editAppointment_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="40dp"
+            android:text="@string/Button_Edit_Appointment"
+            android:onClick="openEditAppointment" />
+        
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/cancelAppointment_button"
+            android:layout_gravity="center"
+            android:layout_marginTop="10dp"
+            android:text="@string/Button_Cancel_Appointment"
+            android:onClick="openEditAppointment" />
+
     </LinearLayout>
 </ScrollView>

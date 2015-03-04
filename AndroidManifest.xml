@@ -62,6 +62,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.HomeActivity" />
         </activity>
+        <activity
+            android:name=".EditAppointmentActivity"
+            android:label="@string/title_activity_edit_appointment" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,46 +1,53 @@
 package com.droidcare;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
 import java.util.Date;
 
 public class AppointmentDetailsActivity extends Activity {
+	private Appointment appointment;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.appointment_details_activity);
+		
+		// Show two different layouts depending on the user type
+		if (Global.getUserManager().getUser().getType().equalsIgnoreCase("patient")) 
+			setContentView(R.layout.appointment_details_patient_activity);
+		else 
+			setContentView(R.layout.appointment_details_consultant_activity);
 		
 		Bundle data = getIntent().getExtras();
-		Appointment appointment = (Appointment) data.getParcelable("appointment");
+		appointment = (Appointment) data.getParcelable("appointment");
 		
 		TextView textview = (TextView) findViewById(R.id.main_textview);
 		textview.setText("Appointment ID: " + appointment.getId());
-
-        /*
-            Immutable fields
-         */
-        for(int id: new int[] {R.id.patient_field
-                , R.id.consultant_field
-                , R.id.dateTime_field
-                , R.id.healthIssue_field
-                , R.id.remarks_field
-                , R.id.appointmentStatus_field}) {
-            ((EditText) findViewById(id)).setOnKeyListener(null);
-        }
-
-        ((EditText) findViewById(R.id.patient_field)).setText("John Doe");
-        ((EditText) findViewById(R.id.consultant_field)).setText("Dr. Neo Cortex");
-        ((EditText) findViewById(R.id.dateTime_field)).setText(Global.dateFormat.format(
+		
+		// Editable appointment only if it is still PENDING
+		if (appointment.getStatus() != Appointment.PENDING) {
+			Button editButton = (Button) findViewById(R.id.editAppointment_button);
+			Button cancelButton = (Button) findViewById(R.id.cancelAppointment_button);
+			editButton.setEnabled(false);
+			cancelButton.setEnabled(false);
+		}
+		
+		
+		// TODO: NEED TO ADD THE ATTACHMENT IMAGE HERE!
+        ((TextView) findViewById(R.id.patient_field)).setText(Global.getUserManager().getUser().getFullName());
+        ((TextView) findViewById(R.id.consultant_field)).setText("Dr."); // APPOINTMENT DETAILS MUST CONTAIN THIS!
+        ((TextView) findViewById(R.id.dateTime_field)).setText(Global.dateFormat.format(
                 new Date(appointment.getDateTimeMillis())));
-        ((EditText) findViewById(R.id.healthIssue_field)).setText(appointment.getHealthIssue());
-        ((EditText) findViewById(R.id.remarks_field)).setText(appointment.getRemarks());
-        ((EditText) findViewById(R.id.appointmentStatus_field)).setText(
+        ((TextView) findViewById(R.id.healthIssue_field)).setText(appointment.getHealthIssue());
+        ((TextView) findViewById(R.id.remarks_field)).setText(appointment.getRemarks());
+        ((TextView) findViewById(R.id.appointmentStatus_field)).setText(
                 Appointment.getStatus(appointment.getStatus()));
 	}
 
@@ -61,5 +68,16 @@ public class AppointmentDetailsActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void openEditAppointment (View v) {
+		Intent intent = new Intent(this, EditAppointmentActivity.class);
+		intent.putExtra("appointment", appointment);
+		startActivity(intent);
+	}
+	
+	// Specific for patient appointment details only
+	public void cancelAppointment (View v) {
+		// CALL PATIENT APPOINTMENT MANAGER TO CANCEL THE APPOINTMENT
 	}
 }

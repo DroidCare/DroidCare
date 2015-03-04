@@ -71,6 +71,8 @@ public abstract class AppointmentManager {
 							previousId = param.getInt("previous_id");
 					
 					String	dateTime = param.getString("date_time"),
+							patientName = param.getString("patient_name"),
+							consultantName = param.getString("consultant_name"),
 							healthIssue = param.getString("health_issue"),
 							attachmentPaths = param.getString("attachment_paths"),
 							type = param.getString("type"),
@@ -80,8 +82,8 @@ public abstract class AppointmentManager {
 							status = param.getString("status");
 					
 					Appointment appointment = new Appointment(id
-							, patientId, consultantId, dateTime, healthIssue
-							, attachmentPaths, type, referrerName, referrerClinic
+							, patientId, consultantId, dateTime, patientName, consultantName
+							, healthIssue, attachmentPaths, type, referrerName, referrerClinic
 							, previousId, remarks, status);
 					
 					// Log.d("appointment.getType()", "=" + appointment.getStatus());

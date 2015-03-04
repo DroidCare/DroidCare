@@ -38,7 +38,7 @@
         <item>Vietnamese</item>
     </string-array>
 
-    <string name="upcoming_appointment_list_fragment">Upcoming Appointment List</string>
+    <string name="upcoming_appointment_list_fragment">Accepted Appointment List</string>
     <string name="pending_appointment_list_fragment">Pending Appointment List</string>
     <string name="action_logout">Logout</string>
     <string name="action_overflow">Settings</string>
@@ -47,12 +47,15 @@
     <string name="LabelText_OldPassword">Old Password</string>
     <string name="update_btn">Update Profile</string>
     <string name="title_activity_appointment_details">Appointment Details</string>
-    <string name="LabelText_Consultant">Consultant\'s Name</string>
+    <string name="LabelText_Consultant">Consultant</string>
     <string name="LabelText_dateTime">Date and Time</string>
     <string name="LabelText_healthIssue">Health Issue</string>
     <string name="LabelText_appointmentStatus">Status</string>
     <string name="LabelText_remarks">Remarks</string>
-    <string name="LabelText_Patient">Patient\'s Name</string>
+    <string name="LabelText_Patient">Patient</string>
     <string name="Button_OK">OK</string>
+    <string name="Button_Edit_Appointment">Edit Appointment</string>
+    <string name="Button_Cancel_Appointment">Cancel Appointment</string>
+    <string name="title_activity_edit_appointment">EditAppointmentActivity</string>
 
 </resources>

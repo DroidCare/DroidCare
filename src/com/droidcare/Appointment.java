@@ -35,7 +35,9 @@ public class Appointment implements Parcelable{
 	// To make it easier to "parcelize"
 	private long dateTimeMillis;
 
-	private String	healthIssue,
+	private String	patientName,
+					consultantName,
+					healthIssue,
 					attachmentPath,
 					referrerName,
 					referrerClinic,
@@ -44,13 +46,16 @@ public class Appointment implements Parcelable{
 	// public Appointment(){} // An empty constructor
 	
 	public Appointment(int id, int patientId, int consultantId, String dateTime
-			, String healthIssue, String attachmentPath, String type, String referrerName
-			, String referrerClinic, int previousId, String remarks, String status){
+			, String patientName, String consultantName, String healthIssue
+			, String attachmentPath, String type, String referrerName
+			, String referrerClinic, int previousId, String remarks, String status) {
 		this.id				= id;
 		this.patientId		= patientId;
 		this.consultantId	= consultantId;
 		this.previousId		= previousId;
 		
+		this.patientName = patientName;
+		this.consultantName = consultantName;
 		this.healthIssue	= healthIssue;
 		this.attachmentPath = attachmentPath;
 		this.referrerName	= referrerName;
@@ -116,6 +121,14 @@ public class Appointment implements Parcelable{
 		return dateTimeMillis;
 	}
 	
+	public String getPatientName() {
+		return patientName;
+	}
+	
+	public String getConsultantName() {
+		return consultantName;
+	}
+	
 	public String getHealthIssue() {
 		return healthIssue;
 	}
@@ -147,6 +160,8 @@ public class Appointment implements Parcelable{
 		this.consultantId = in.readInt();
 		this.previousId = in.readInt();
 		this.dateTimeMillis = in.readLong();
+		this.patientName = in.readString();
+		this.consultantName = in.readString();
 		this.healthIssue = in.readString();
 		this.referrerName = in.readString();
 		this.referrerClinic = in.readString();		
@@ -166,6 +181,8 @@ public class Appointment implements Parcelable{
 		dest.writeInt(this.consultantId);
 		dest.writeInt(this.previousId);
 		dest.writeLong(this.dateTimeMillis);
+		dest.writeString(this.patientName);
+		dest.writeString(this.consultantName);
 		dest.writeString(this.healthIssue);
 		dest.writeString(this.referrerName);
 		dest.writeString(this.referrerClinic);		
