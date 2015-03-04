@@ -39,6 +39,7 @@ public class Global {
 	private static AppointmentManager appointmentManager;
     private static LoginManager loginManager;
     private static RegisterManager registerManager;
+    private static ImageManager imageManager;
 	
 	public static void init(Context context) {
 		AppSession.init(context);
@@ -48,6 +49,7 @@ public class Global {
 //		appointmentManager = AppointmentManager.getInstance();
         loginManager = LoginManager.getInstance();
         registerManager = RegisterManager.getInstance();
+        imageManager = ImageManager.getInstance();
 	}
 	
 	public static AppSession getAppSession() {
@@ -68,5 +70,9 @@ public class Global {
 
     public static RegisterManager getRegisterManager() {
         return registerManager;
+    }
+    
+    public static ImageManager getImageManager() {
+    	return imageManager;
     }
 }
