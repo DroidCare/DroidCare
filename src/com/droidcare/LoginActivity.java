@@ -5,8 +5,12 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -46,17 +50,14 @@ public class LoginActivity extends Activity {
 
         switch(loginManager.validateForm(email, password)) {
             case LoginManager.VALID_FORM:
-
-                loginManager.doLoginRequest(email, password, new OnFinishLoginListener() {
+                loginManager.doLoginRequest(email, password, new LoginManager.OnFinishTaskListener() {
                     private ProgressDialog pd;
                     private View btn;
-
-                    public OnFinishLoginListener init(View btn, ProgressDialog pd) {
+                    public LoginManager.OnFinishTaskListener init(View btn, ProgressDialog pd) {
                         this.btn = btn;
                         this.pd = pd;
                         return this;
                     }
-
                     @Override
                     public void onFinishTask(String responseText) {
                         btn.setEnabled(true);
@@ -64,13 +65,24 @@ public class LoginActivity extends Activity {
 
                         try {
                             JSONObject response = new JSONObject(responseText);
-                            JSONArray messages = response.getJSONArray("message");
+                            switch(response.getInt("status")) {
+                                case 0:
+                                    LoginActivity.this.finish();
 
-                            clearMessages();
-                            for(int i = 0, size = messages.length(); i < size; ++i) {
-                                putMessage(messages.getString(i));
+                                    Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(intent);
+                                    break;
+                                default:
+                                    JSONArray messages = response.getJSONArray("message");
+                                    clearMessages();
+                                    for(int i = 0, size = messages.length(); i < size; ++i) {
+                                        putMessage(messages.getString(i));
+                                    }
+                                    break;
                             }
+
                         } catch (JSONException e) {
+                            Log.d("DEBUGGING", "Not HTTP Status 400, responseText = " + responseText);
                         }
                     }
                 }.init(view, pd));
@@ -83,6 +95,7 @@ public class LoginActivity extends Activity {
                 putMessage("Password should be at least 4 characters!");
             default:
                 view.setEnabled(true);
+                pd.dismiss();
                 break;
         }
 	}
@@ -91,9 +104,41 @@ public class LoginActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_login);
-		
-		ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);
 
+        loginMessages = (LinearLayout) findViewById(R.id.login_messages);
+
+        ((EditText) findViewById(R.id.email_field)).setText("p@c1ang.com");
+        ((EditText) findViewById(R.id.password_field)).setText("123456");
+
+        ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);
+        Global.getLoginManager().checkLogin(new LoginManager.OnFinishTaskListener() {
+            private ProgressDialog pd;
+            public LoginManager.OnFinishTaskListener init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+            @Override
+            public void onFinishTask(String responseText) {
+                pd.dismiss();
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            // Log.d("DEBUGGING", "YES USER IS LOGGED IN!");
+                            finish();
+
+                            Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
+                            startActivity(intent);
+                            break;
+                        default:
+                            pd.dismiss();
+                            break;
+                    }
+                } catch (JSONException e) {
+                    pd.dismiss();
+                }
+            }
+        }.init(pd));
 	}
 
 	@Override

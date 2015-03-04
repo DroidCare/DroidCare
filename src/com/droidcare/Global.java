@@ -45,7 +45,7 @@ public class Global {
 		
 		userManager	= UserManager.getInstance();
 		appSession	= AppSession.getInstance();
-		// appointmentManager = AppointmentManager.getInstance();
+//		appointmentManager = AppointmentManager.getInstance();
         loginManager = LoginManager.getInstance();
         registerManager = RegisterManager.getInstance();
 	}

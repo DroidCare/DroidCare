@@ -29,7 +29,8 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		setContentView(R.layout.activity_home);
 		
 		user = Global.getUserManager().getUser();
-		
+
+        /*
 		// List Fragment Initialization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
@@ -57,6 +58,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			@Override
 			public void onPageScrollStateChanged(int arg0) {}
 		});
+		*/
 	}
 	
 	// Swipe view listener
@@ -129,10 +131,10 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
     private void doLogout() {
         ProgressDialog pd = ProgressDialog.show(this, null, "Logging out ...", true);
 
-        Global.getLoginManager().doLogoutRequest(new OnFinishLoginListener() {
+        Global.getLoginManager().doLogoutRequest(new LoginManager.OnFinishTaskListener() {
             private ProgressDialog pd;
 
-            public OnFinishLoginListener init(ProgressDialog pd) {
+            public LoginManager.OnFinishTaskListener init(ProgressDialog pd) {
                 this.pd = pd;
                 return this;
             }
