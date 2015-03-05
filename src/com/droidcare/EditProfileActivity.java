@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
@@ -20,6 +21,10 @@ import org.json.JSONObject;
 import java.util.HashMap;
 
 public class EditProfileActivity extends Activity {
+	private static final int SMS_NOTIFICATION = 1, EMAIL_NOTIFICATION = 2;
+    private int notificationType = 0;
+    private String notificationTypeString;
+	
     private LinearLayout updateMessages;
     private HashMap<String, Integer> nationalitySpinner;
 
@@ -48,27 +53,54 @@ public class EditProfileActivity extends Activity {
                 password = old_pw;
 
         int valid = 1;
-        if(old_pw.isEmpty()) {
+        if (old_pw.isEmpty()) {
             valid = 0;
             putMessage("You must provide your old password!");
-        } if(!new_pw.isEmpty() && !new_cpw.isEmpty()) {
+        } 
+        
+        if (!new_pw.isEmpty() && !new_cpw.isEmpty()) {
             if(!new_pw.equals(new_cpw)) {
                 valid = 0;
                 putMessage("New password and confirm password mismatch!");
             } else {
                 password = new_pw;
             }
-        } if(passportNumber.isEmpty()) {
+        } 
+        
+        if (passportNumber.isEmpty()) {
             valid = 0;
             putMessage("Passport number must not be empty!");
-        } if(address.isEmpty()) {
+        } 
+        
+        if (address.isEmpty()) {
             valid = 0;
             putMessage("Address field must not be empty!");
-        } if(nationality.isEmpty()) {
+        } 
+        
+        if (nationality.isEmpty()) {
             valid = 0;
             putMessage("Nationality field must not be empty!");
         }
-
+        
+        // @pciang: INCLUDE THIS IN YOUR SWITCH (VALID) case 1!!
+        switch (notificationType) {
+        case 0:
+        	notificationTypeString = "local";
+        	break;
+        
+        case 1:
+        	notificationTypeString = "sms";
+        	break;
+        	
+        case 2:
+        	notificationTypeString = "email";
+        	break;
+        
+        case 3:
+        	notificationTypeString = "all";
+        	break;
+        }
+        
         ProgressDialog pd = ProgressDialog.show(this, null, "Updating profile ...", true);
 
         User user = Global.getUserManager().getUser();
@@ -82,6 +114,7 @@ public class EditProfileActivity extends Activity {
                 , new Pair<String, String>("passport_number", passportNumber)
                 , new Pair<String, String>("nationality", nationality)
                 , new Pair<String, String>("date_of_birth", user.getDateOfBirth())
+                , new Pair<String, String>("notification_type", "" + notificationType)
                 , new Pair<String, String>("session_id", user.getSessionId())) {
             private ProgressDialog pd;
             public SimpleHttpPost init(ProgressDialog pd) {
@@ -111,6 +144,22 @@ public class EditProfileActivity extends Activity {
             }
         }.init(pd).send(Global.USER_UPDATE_URL);
     }
+    
+    public void onSMSNotificationClick (View v) {
+		if (((CheckBox) v).isChecked()) {
+			notificationType += SMS_NOTIFICATION;
+		} else {
+			notificationType -= SMS_NOTIFICATION;
+		}
+	}
+	
+	public void onEmailNotificationClick (View v) {
+		if (((CheckBox) v).isChecked()) {
+			notificationType += EMAIL_NOTIFICATION;
+		} else {
+			notificationType -= EMAIL_NOTIFICATION;
+		}
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {

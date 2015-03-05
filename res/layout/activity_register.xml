@@ -23,7 +23,7 @@
             android:orientation="horizontal" >
             <TextView
                 android:id="@+id/passport_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_passport" />
             <EditText
@@ -39,7 +39,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/name_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_Name" />
 
@@ -56,7 +56,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/address_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_address" />
 
@@ -73,7 +73,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/email_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_Email" />
 
@@ -90,7 +90,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/dob_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_dob" />
             <Button
@@ -111,7 +111,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/gender_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical"
                 android:text="@string/LabelText_gender" />
@@ -128,7 +128,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/nationality_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="fill_parent"
                 android:gravity="center_vertical"
                 android:text="@string/LabelText_nationality" />
@@ -146,7 +146,7 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/password_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
                 android:text="@string/LabelText_Password" />
 
@@ -163,10 +163,9 @@
             android:orientation="horizontal">
             <TextView
                 android:id="@+id/confirm_label"
-                android:layout_width="100dp"
+                android:layout_width="125dp"
                 android:layout_height="wrap_content"
-                android:text="@string/LabelText_Confirm"
-                android:textSize="12sp" />
+                android:text="@string/LabelText_Confirm" />
 
             <EditText
                 android:id="@+id/confirm_field"
@@ -174,10 +173,37 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
         </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/notification_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_ModeOfNotification" />
+
+            <CheckBox
+		        android:id="@+id/sms_notification_checkbox"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/LabelText_SMSNotification"
+		        android:onClick="onSMSNotificationClick" />
+            
+            <CheckBox
+		        android:id="@+id/email_notification_checkbox"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/LabelText_EmailNotification"
+		        android:onClick="onEmailNotificationClick" />
+            
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
             android:orientation="horizontal">
             <View
                 android:layout_width="0dp"
@@ -187,7 +213,6 @@
                 android:id="@+id/register_btn"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentRight="true"
                 android:onClick="doRegisterUser"
                 android:text="@string/ButtonText_Register" />
         </LinearLayout>

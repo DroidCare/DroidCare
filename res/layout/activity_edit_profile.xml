@@ -166,7 +166,6 @@
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
             android:orientation="horizontal" >
             <TextView
                 android:id="@+id/confirm_label"
@@ -179,6 +178,34 @@
                 android:layout_height="wrap_content"
                 android:inputType="textPassword" />
 
+        </LinearLayout>
+        
+        <LinearLayout
+           	android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/notification_label"
+                android:layout_width="125dp"
+                android:layout_height="wrap_content"
+                android:text="@string/LabelText_ModeOfNotification" />
+            
+        	<CheckBox
+		        android:id="@+id/sms_notification_checkbox"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/LabelText_SMSNotification"
+		        android:onClick="onSMSNotificationClick" />
+            
+            <CheckBox
+		        android:id="@+id/email_notification_checkbox"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/LabelText_EmailNotification"
+		        android:onClick="onEmailNotificationClick" />
+            
         </LinearLayout>
 
         <LinearLayout

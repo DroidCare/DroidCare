@@ -10,6 +10,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup.LayoutParams;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -25,10 +26,14 @@ import java.text.SimpleDateFormat;
 import java.util.Locale;
 
 public class RegisterActivity extends Activity {
+    private static final int SMS_NOTIFICATION = 1, EMAIL_NOTIFICATION = 2;
+    
+    private int notificationType = 0;
+    private String notificationTypeString;
 	private LinearLayout registerMessages;
     private SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
 
-	public void pickDateBtn(View btn) {
+	public void pickDateBtn (View btn) {
 		DialogFragment datePicker = new DatePickerFragment(){
             private View btn;
             public DatePickerFragment init(View btn){
@@ -75,16 +80,23 @@ public class RegisterActivity extends Activity {
         if(passportNumber == null || passportNumber.isEmpty()) {
             putMessage("Passport number is empty!");
             valid = 0;
-        } if(fullName == null || fullName.isEmpty()) {
+        } 
+        
+        if (fullName == null || fullName.isEmpty()) {
             putMessage("Full name is empty!");
             valid = 0;
-        } if(address == null || address.isEmpty()) {
+        } 
+        
+        if (address == null || address.isEmpty()) {
             putMessage("Address field is empty!");
             valid = 0;
-        } if(email == null || email.isEmpty()) {
+        } 
+        
+        if (email == null || email.isEmpty()) {
             putMessage("Email address is empty!");
             valid = 0;
         }
+        
         try {
             dateOfBirthFormat.format(dateOfBirthFormat.parse(dateOfBirth));
         } catch (ParseException e) {
@@ -92,24 +104,32 @@ public class RegisterActivity extends Activity {
             valid = 0;
         }
 
-        if(gender == null || gender.isEmpty()) {
+        if (gender == null || gender.isEmpty()) {
             putMessage("Please select your gender!");
             valid = 0;
-        } if(nationality == null || nationality.isEmpty()) {
+        } 
+        
+        if (nationality == null || nationality.isEmpty()) {
             putMessage("Please select your nationality!");
             valid = 0;
-        } if(password == null || password.isEmpty()) {
+        } 
+        
+        if (password == null || password.isEmpty()) {
             putMessage("Password field is empty!");
             valid = 0;
-        } if(confirm == null || confirm.isEmpty()) {
+        } 
+        
+        if (confirm == null || confirm.isEmpty()) {
             putMessage("Confirm password field is empty!");
             valid = 0;
-        } if(password != null
-                && password.length() < RegisterManager.passwordMinLength) {
+        } 
+        
+        if (password != null && password.length() < RegisterManager.passwordMinLength) {
             putMessage("Password is too short!");
             valid = 0;
-        } if(password != null && confirm != null
-                && !password.equals(confirm)) {
+        } 
+        
+        if (password != null && confirm != null && !password.equals(confirm)) {
             putMessage("Password and confirm password mismatch!");
             valid = 0;
         }
@@ -121,6 +141,25 @@ public class RegisterActivity extends Activity {
 
             default:
                 ProgressDialog pd = ProgressDialog.show(this, null, "Registering user ...", true);
+                
+                switch (notificationType) {
+                case 0:
+                	notificationTypeString = "local";
+                	break;
+                	
+                case 1:
+                	notificationTypeString = "sms";
+                	break;
+                	
+                case 2:
+                	notificationTypeString = "email";
+                	break;
+                
+                case 3:
+                	notificationTypeString = "all";
+                	break;
+                }
+                
                 Global.getRegisterManager().registerUser(new RegisterManager.OnFinishTaskListener() {
                     private View btn;
                     private ProgressDialog pd;
@@ -163,10 +202,27 @@ public class RegisterActivity extends Activity {
                         , new Pair<String, String>("date_of_birth", dateOfBirth)
                         , new Pair<String, String>("gender", gender)
                         , new Pair<String, String>("nationality", nationality)
-                        , new Pair<String, String>("password", password));
+                        , new Pair<String, String>("password", password)
+                        , new Pair<String, String>("notification_type", notificationTypeString));
                 break;
         }
     }
+	
+	public void onSMSNotificationClick (View v) {
+		if (((CheckBox) v).isChecked()) {
+			notificationType += SMS_NOTIFICATION;
+		} else {
+			notificationType -= SMS_NOTIFICATION;
+		}
+	}
+	
+	public void onEmailNotificationClick (View v) {
+		if (((CheckBox) v).isChecked()) {
+			notificationType += EMAIL_NOTIFICATION;
+		} else {
+			notificationType -= EMAIL_NOTIFICATION;
+		}
+	}
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -174,6 +230,7 @@ public class RegisterActivity extends Activity {
 		setContentView(R.layout.activity_register);
 		
 		registerMessages = (LinearLayout) findViewById(R.id.register_messages);
+		clearMessages();
 	}
 
 	@Override

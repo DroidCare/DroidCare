@@ -30,6 +30,7 @@ public class ImageManager {
 		byte[] b = baos.toByteArray();
 		String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
 		
+		// Sent this encoded STRING to the PHP server
 		return imageEncoded;
 	}
 	
