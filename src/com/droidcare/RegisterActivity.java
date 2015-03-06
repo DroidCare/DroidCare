@@ -203,7 +203,7 @@ public class RegisterActivity extends Activity {
                         , new Pair<String, String>("gender", gender)
                         , new Pair<String, String>("nationality", nationality)
                         , new Pair<String, String>("password", password)
-                        , new Pair<String, String>("notification_type", notificationTypeString));
+                        , new Pair<String, String>("notification", notificationTypeString));
                 break;
         }
     }

@@ -129,7 +129,7 @@ public class LoginManager {
 
                 listener.onFinishTask(responseText);
             }
-        }.init(onFinishTaskListener).send(Global.USER_LOGIN_URL);
+        }.init(onFinishTaskListener).send(Global.USER_LOGOUT_URL);
     }
 
     public void checkLogin(OnFinishTaskListener onFinishTaskListener) {
