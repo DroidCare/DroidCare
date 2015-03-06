@@ -30,7 +30,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		
 		user = Global.getUserManager().getUser();
 
-        /*
 		// List Fragment Initialization
 		viewPager = (ViewPager) findViewById(R.id.pager);
 		actionBar = getActionBar();
@@ -58,7 +57,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 			@Override
 			public void onPageScrollStateChanged(int arg0) {}
 		});
-		*/
 	}
 	
 	// Swipe view listener
