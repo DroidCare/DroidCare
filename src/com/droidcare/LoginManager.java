@@ -122,10 +122,7 @@ public class LoginManager {
             public void onFinish(String responseText) {
                 Global.getUserManager().removeUser();
                 Global.getAppSession().clearAll();
-//                Global.getAppointmentManager().clearRejectedAppointments();
-//                Global.getAppointmentManager().clearPendingAppointments();
-//                Global.getAppointmentManager().clearFinishedAppointments();
-//                Global.getAppointmentManager().clearAcceptedAppointments();
+                Global.getAppointmentManager().clearAllAppointments();
 
                 listener.onFinishTask(responseText);
             }

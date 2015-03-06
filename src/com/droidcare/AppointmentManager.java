@@ -181,4 +181,11 @@ public abstract class AppointmentManager {
 	public void clearFinishedAppointments() {
 		finishedAppointments.clear();
 	}
+	
+	public void clearAllAppointments () {
+		clearAcceptedAppointments();
+		clearPendingAppointments();
+		clearRejectedAppointments();
+		clearFinishedAppointments();
+	}
 }
