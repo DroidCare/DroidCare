@@ -16,9 +16,27 @@ public class RegisterManager {
         public abstract void onFinishTask(String responseText);
     }
 
-    public void registerUser(OnFinishTaskListener onFinishTaskListener
-            , Pair<String, String>... data) {
-        new SimpleHttpPost(data) {
+    public void registerUser(	String passportNumber
+    							, String fullName
+    							, String address
+    							, String email
+    							, String dateOfBirth
+    							, String gender
+    							, String nationality
+    							, String password
+    							, String notificationTypeString
+    							, OnFinishTaskListener onFinishTaskListener) {
+    	
+        new SimpleHttpPost(new Pair<String, String>("passport_number", passportNumber)
+                , new Pair<String, String>("full_name", fullName)
+                , new Pair<String, String>("address", address)
+                , new Pair<String, String>("email", email)
+                , new Pair<String, String>("date_of_birth", dateOfBirth)
+                , new Pair<String, String>("gender", gender)
+                , new Pair<String, String>("nationality", nationality)
+                , new Pair<String, String>("password", password)
+                , new Pair<String, String>("notification", notificationTypeString)) {
+        	
             private OnFinishTaskListener listener;
             public SimpleHttpPost init(OnFinishTaskListener listener) {
                 this.listener = listener;

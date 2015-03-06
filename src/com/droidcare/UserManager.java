@@ -105,7 +105,7 @@ public class UserManager {
     }
 
     public void editProfile(String password, String address, String passportNumber
-            , String nationality, String notificationType, OnFinishListener onFinishListener) {
+            , String nationality, String notificationTypeString, OnFinishListener onFinishListener) {
         new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())
                 , new Pair<String, String>("email", user.getEmail())
                 , new Pair<String, String>("password", password)
@@ -115,7 +115,7 @@ public class UserManager {
                 , new Pair<String, String>("passport_number", passportNumber)
                 , new Pair<String, String>("nationality", nationality)
                 , new Pair<String, String>("date_of_birth", user.getDateOfBirth())
-                , new Pair<String, String>("notification", notificationType)
+                , new Pair<String, String>("notification", notificationTypeString)
                 , new Pair<String, String>("session_id", user.getSessionId())) {
             private OnFinishListener listener;
             private String  address,
@@ -128,8 +128,8 @@ public class UserManager {
                     , String passportNumber
                     , String nationality
                     , String notification) {
+            	
                 this.listener = listener;
-
                 this.address = address;
                 this.passportNumber = passportNumber;
                 this.nationality = nationality;
@@ -158,6 +158,6 @@ public class UserManager {
                 listener.onFinish(responseText);
             }
         }.init(onFinishListener, address, passportNumber
-                , nationality, notificationType).send(Global.USER_UPDATE_URL);
+                , nationality, notificationTypeString).send(Global.USER_UPDATE_URL);
     }
 }

@@ -160,7 +160,16 @@ public class RegisterActivity extends Activity {
                 	break;
                 }
                 
-                Global.getRegisterManager().registerUser(new RegisterManager.OnFinishTaskListener() {
+                Global.getRegisterManager().registerUser(	passportNumber
+                											, fullName
+                											, address
+                											, email
+                											, dateOfBirth
+                											, gender
+                											, nationality
+                											, password
+                											, notificationTypeString
+                											, new RegisterManager.OnFinishTaskListener() {
                     private View btn;
                     private ProgressDialog pd;
 
@@ -195,15 +204,8 @@ public class RegisterActivity extends Activity {
                         }
 
                     }
-                }.init(view, pd), new Pair<String, String>("passport_number", passportNumber)
-                        , new Pair<String, String>("full_name", fullName)
-                        , new Pair<String, String>("address", address)
-                        , new Pair<String, String>("email", email)
-                        , new Pair<String, String>("date_of_birth", dateOfBirth)
-                        , new Pair<String, String>("gender", gender)
-                        , new Pair<String, String>("nationality", nationality)
-                        , new Pair<String, String>("password", password)
-                        , new Pair<String, String>("notification", notificationTypeString));
+                }.init(view, pd));
+                
                 break;
         }
     }
