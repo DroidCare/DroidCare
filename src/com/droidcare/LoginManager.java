@@ -61,6 +61,7 @@ public class LoginManager {
                                 }
                                 @Override
                                 public void onFinish(String responseText) {
+//                                    Log.d("DEBUGGING", "sessionId = " + Global.getAppSession().getString("session_id"));
                                     try {
                                         JSONObject response = new JSONObject(responseText);
                                         switch(response.getInt("status")) {
@@ -82,7 +83,6 @@ public class LoginManager {
                                                         , passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
                                                         .setSessionId(Global.getAppSession().getString("session_id"));
                                                 break;
-
                                             default:
                                                 break;
                                         }
@@ -111,7 +111,6 @@ public class LoginManager {
     public void doLogoutRequest(OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("session_id"
                 , Global.getUserManager().getUser().getSessionId())) {
-//                , Global.getAppSession().getString("session_id"))) {
             private OnFinishTaskListener listener;
             public SimpleHttpPost init(OnFinishTaskListener listener) {
                 this.listener = listener;
@@ -122,7 +121,10 @@ public class LoginManager {
             public void onFinish(String responseText) {
                 Global.getUserManager().removeUser();
                 Global.getAppSession().clearAll();
-                Global.getAppointmentManager().clearAllAppointments();
+//                Global.getAppointmentManager().clearRejectedAppointments();
+//                Global.getAppointmentManager().clearPendingAppointments();
+//                Global.getAppointmentManager().clearFinishedAppointments();
+//                Global.getAppointmentManager().clearAcceptedAppointments();
 
                 listener.onFinishTask(responseText);
             }
@@ -161,14 +163,12 @@ public class LoginManager {
                                     , gender, passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
                                     .setSessionId(Global.getAppSession().getString("session_id"));
                             break;
-
                         default:
                             break;
                     }
                 // Do nothing on exception
                 } catch (JSONException e) {
                 }
-
                 listener.onFinishTask(responseText);
             }
         }.init(onFinishTaskListener).send(Global.USER_URL);

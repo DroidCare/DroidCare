@@ -102,8 +102,8 @@ public class Appointment implements Parcelable{
         return status;
     }
 
-	public static String getStatus(int status) {
-        switch(status) {
+	public static String translate(int code) {
+        switch(code) {
             case PENDING:
                 return "pending";
             case ACCEPTED:
@@ -112,6 +112,12 @@ public class Appointment implements Parcelable{
                 return "rejected";
             case FINISHED:
                 return "finished";
+            case FOLLOW_UP:
+                return "follow-up";
+            case REFERRAL:
+                return "referral";
+            case NORMAL:
+                return "normal";
             default:
                 return null;
         }

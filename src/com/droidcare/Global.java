@@ -51,6 +51,10 @@ public class Global {
         registerManager = RegisterManager.getInstance();
         imageManager = ImageManager.getInstance();
 	}
+
+    public static void initAppointmentManager() {
+        appointmentManager = AppointmentManager.getInstance();
+    }
 	
 	public static AppSession getAppSession() {
 		return appSession;
