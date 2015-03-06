@@ -50,10 +50,20 @@
 	   	    android:id="@+id/login_btn"
 	   	    android:layout_width="wrap_content"
 	   	    android:layout_height="wrap_content"
+	   	    android:layout_marginTop="10dp"
 	   	    android:layout_alignParentRight="true"
 	   	    android:layout_below="@id/password_field"
 	   	    android:text="@string/ButtonText_Login"
 	   	    android:onClick="doLogin" />
+	   	<Button
+	   	    android:id="@+id/forgetPassword_btn"
+	   	    android:layout_width="wrap_content"
+	   	    android:layout_height="wrap_content"
+	   	    android:layout_marginTop="10dp"
+	   	  	android:layout_toLeftOf="@id/login_btn"
+	   	    android:layout_below="@id/password_field"
+	   	    android:text="@string/ButtonText_ForgetPassword"
+	   	    android:onClick="forgetPassword" />
 	   	<LinearLayout
 	   	    android:id="@+id/login_messages"
 	   	    android:layout_width="wrap_content"

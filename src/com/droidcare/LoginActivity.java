@@ -100,6 +100,11 @@ public class LoginActivity extends Activity {
         }
 	}
 	
+	public void forgetPassword (View v) {
+		Intent intent = new Intent (this, ForgetPasswordActivity.class);
+		startActivity(intent);
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);

@@ -7,6 +7,7 @@
     <string name="ButtonText_Login">Login</string>
     <string name="ButtonText_Register">Register</string>
     <string name="title_activity_login">Login</string>
+    <string name="ButtonText_ForgetPassword">Forget Password</string>
     <string name="LabelText_Email">E-mail</string>
     <string name="LabelText_Password">Password</string>
     <string name="title_activity_register">Register</string>
@@ -64,5 +65,6 @@
     <string name="LabelText_ModeOfNotification">Notification Mode</string>
     <string name="LabelText_SMSNotification">SMS</string>
     <string name="LabelText_EmailNotification">Email</string>
+    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
 
 </resources>

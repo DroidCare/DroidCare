@@ -66,6 +66,10 @@
             android:name=".EditAppointmentActivity"
             android:label="@string/title_activity_edit_appointment" >
         </activity>
+        <activity
+            android:name=".ForgetPasswordActivity"
+            android:label="@string/title_activity_forget_password" >
+        </activity>
     </application>
 
 </manifest>
