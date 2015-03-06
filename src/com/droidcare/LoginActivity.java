@@ -107,7 +107,7 @@ public class LoginActivity extends Activity {
 
         loginMessages = (LinearLayout) findViewById(R.id.login_messages);
 
-        ((EditText) findViewById(R.id.email_field)).setText("p@c1ang.com");
+        ((EditText) findViewById(R.id.email_field)).setText("kenrick95@gmail.com");
         ((EditText) findViewById(R.id.password_field)).setText("123456");
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);
@@ -125,9 +125,6 @@ public class LoginActivity extends Activity {
                     switch(response.getInt("status")) {
                         case 0:
                             // Log.d("DEBUGGING", "YES USER IS LOGGED IN!");
-                        	
-                        	// If the user is logged in, then fetch all appointments for that user
-                    		Global.getAppointmentManager().fetchAppointmentList();
                             finish();
 
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);

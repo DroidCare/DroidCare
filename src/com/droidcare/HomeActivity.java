@@ -27,36 +27,42 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-		
-		user = Global.getUserManager().getUser();
 
-		// List Fragment Initialization
-		viewPager = (ViewPager) findViewById(R.id.pager);
-		actionBar = getActionBar();
-		mAdapter = new HomeTabsPagerAdapter(getSupportFragmentManager());
-				
-		viewPager.setAdapter(mAdapter);
-		actionBar.setHomeButtonEnabled(false);
-		actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-				
-		// Adding tabs
-		for (String n: tabs) {
-			Tab t = actionBar.newTab().setText(n).setTabListener(this);
-			actionBar.addTab(t);
-		}
-			
-		viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-			@Override
-			public void onPageSelected(int position) {
-				actionBar.setSelectedNavigationItem(position);
-			}
-			
-			@Override
-			public void onPageScrolled(int arg0, float arg1, int arg2) {}
-			
-			@Override
-			public void onPageScrollStateChanged(int arg0) {}
-		});
+        Global.initAppointmentManager();
+        Global.getAppointmentManager().retrieveAppointmentList(new AppointmentManager.OnFinishListener() {
+            @Override
+            public void onFinish(String responseText) {
+                user = Global.getUserManager().getUser();
+
+                // List Fragment Initialization
+                viewPager = (ViewPager) findViewById(R.id.pager);
+                actionBar = getActionBar();
+                mAdapter = new HomeTabsPagerAdapter(getSupportFragmentManager());
+
+                viewPager.setAdapter(mAdapter);
+                actionBar.setHomeButtonEnabled(false);
+                actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+                // Adding tabs
+                for (String n: tabs) {
+                    Tab t = actionBar.newTab().setText(n).setTabListener(HomeActivity.this);
+                    actionBar.addTab(t);
+                }
+
+                viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                    @Override
+                    public void onPageSelected(int position) {
+                        actionBar.setSelectedNavigationItem(position);
+                    }
+
+                    @Override
+                    public void onPageScrolled(int arg0, float arg1, int arg2) {}
+
+                    @Override
+                    public void onPageScrollStateChanged(int arg0) {}
+                });
+            }
+        });
 	}
 	
 	// Swipe view listener

@@ -57,7 +57,7 @@ public class AppointmentDetailsActivity extends Activity {
         ((TextView) findViewById(R.id.dateTime_field)).setText(Global.dateFormat.format(new Date(appointment.getDateTimeMillis())));
         ((TextView) findViewById(R.id.healthIssue_field)).setText(appointment.getHealthIssue());
         ((TextView) findViewById(R.id.remarks_field)).setText(appointment.getRemarks());
-        ((TextView) findViewById(R.id.appointmentStatus_field)).setText(Appointment.getStatus(appointment.getStatus()));
+        ((TextView) findViewById(R.id.appointmentStatus_field)).setText(Appointment.translate(appointment.getStatus()));
 	}
 
 	@Override

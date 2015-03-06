@@ -8,8 +8,13 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.util.Log;
+import android.util.Pair;
 
 public abstract class AppointmentManager {
+    public interface OnFinishListener {
+        public abstract void onFinish(String responseText);
+    }
+
 	// Force singleton
 	// Use polymorphism
 	private static AppointmentManager instance;
@@ -40,7 +45,8 @@ public abstract class AppointmentManager {
 	 * This method is blocking. Call this method in a new AsyncTask.
 	 * @return Returns <i>true</i> if manager successfully obtained list of appointments.
 	 */
-	public boolean fetchAppointmentList() {
+	/*
+    public boolean fetchAppointmentList() {
 		String sessionId = Global.getAppSession().getString("session_id");
 		if(sessionId == null) {
 			// Unsuccessful
@@ -117,49 +123,132 @@ public abstract class AppointmentManager {
 		
 		return false;
 	}
+	*/
+
+    public void retrieveAppointmentList(OnFinishListener onFinishListener) {
+        String sessionId = Global
+                .getUserManager().getUser().getSessionId();
+        if(sessionId == null || sessionId.isEmpty()) {
+            return;
+        }
+
+//        Log.d("DEBUGGING", "retrieving sessionId = " + sessionId);
+//        Log.d("DEBUGGING", Global.USER_APPOINTMENT_URL + String.format("/%d", Global.getUserManager().getUser().getId()));
+        new SimpleHttpPost(new Pair<String, String>("session_id", sessionId)) {
+            private OnFinishListener listener;
+            public SimpleHttpPost init(OnFinishListener listener) {
+                this.listener = listener;
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                Log.d("DEBUGGING", "responseText = " + responseText);
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            JSONArray messages = response.getJSONArray("message");
+                            Log.d("DEBUGGING", "now starting to loop messages JSONArray length = " + messages.length());
+                            for(int i = 0, size = messages.length(); i < size; ++i) {
+                                JSONObject params = messages.getJSONObject(i);
+
+                                int		id = params.getInt("id"),
+                                        patientId = params.getInt("patient_id"),
+                                        consultantId = params.getInt("consultant_id"),
+                                        previousId = params.getInt("previous_id");
+
+                                String	dateTime = params.getString("date_time"),
+                                        patientName = params.getString("patient_name"),
+                                        consultantName = params.getString("consultant_name"),
+                                        healthIssue = params.getString("health_issue"),
+                                        attachmentPaths = params.getString("attachment_paths"),
+                                        type = params.getString("type"),
+                                        referrerName = params.getString("referrer_name"),
+                                        referrerClinic = params.getString("referrer_clinic"),
+                                        remarks = params.getString("remarks"),
+                                        status = params.getString("status");
+
+                                Appointment appointment = new Appointment(id
+                                        , patientId, consultantId, dateTime, patientName, consultantName
+                                        , healthIssue, attachmentPaths, type, referrerName, referrerClinic
+                                        , previousId, remarks, status);
+
+                                Log.d("DEBUGGING", "appointment.getStatus() = " + appointment.getStatus());
+                                switch(appointment.getStatus()) {
+                                    case Appointment.ACCEPTED:
+                                        addAcceptedAppointment(appointment);
+                                        break;
+                                    case Appointment.REJECTED:
+                                        addRejectedAppointment(appointment);
+                                        break;
+                                    case Appointment.FINISHED:
+                                        addFinishedAppointment(appointment);
+                                        break;
+                                    case Appointment.PENDING:
+                                        addPendingAppointment(appointment);
+                                        break;
+                                }
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                listener.onFinish(responseText);
+            }
+        }.init(onFinishListener).send(Global.USER_APPOINTMENT_URL);
+//                + String.format("/%d", Global.getUserManager().getUser().getId()));
+    }
+
+
 	
-	public void addAcceptedAppointment (Appointment appointment) {
-		acceptedAppointments.add(appointment);
+	public boolean addAcceptedAppointment (Appointment appointment) {
+		return acceptedAppointments.add(appointment);
 	}
 	
-	public void removeAcceptedAppointment (Appointment appointment) {
-		acceptedAppointments.remove(appointment);
+	public boolean removeAcceptedAppointment (Appointment appointment) {
+		return acceptedAppointments.remove(appointment);
 	}
 	
 	public ArrayList<Appointment> getAcceptedAppointments () {
 		return acceptedAppointments;
 	}
 	
-	public void addPendingAppointment (Appointment appointment) {
-		pendingAppointments.add(appointment);
+	public boolean addPendingAppointment (Appointment appointment) {
+		return pendingAppointments.add(appointment);
 	}
 	
-	public void removePendingAppointment (Appointment appointment) {
-		pendingAppointments.remove(appointment);
+	public boolean removePendingAppointment (Appointment appointment) {
+		return pendingAppointments.remove(appointment);
 	}
 	
 	public ArrayList<Appointment> getPendingAppointments () {
 		return pendingAppointments;
 	}
 	
-	public void addRejectedAppointment(Appointment appointment) {
-		rejectedAppointments.add(appointment);
+	public boolean addRejectedAppointment(Appointment appointment) {
+		return rejectedAppointments.add(appointment);
 	}
 	
-	public void removeRejectedAppointment(Appointment appointment) {
-		rejectedAppointments.remove(appointment);
+	public boolean removeRejectedAppointment(Appointment appointment) {
+		return rejectedAppointments.remove(appointment);
 	}
 	
 	public ArrayList<Appointment> getRejectedAppointments() {
 		return rejectedAppointments;
 	}
 	
-	public void addFinishedAppointment(Appointment appointment) {
-		finishedAppointments.add(appointment);
+	public boolean addFinishedAppointment(Appointment appointment) {
+		return finishedAppointments.add(appointment);
 	}
 	
-	public void removeFinishedAppointment(Appointment appointment) {
-		finishedAppointments.remove(appointment);
+	public boolean removeFinishedAppointment(Appointment appointment) {
+		return finishedAppointments.remove(appointment);
 	}
 	
 	public ArrayList<Appointment> getFinishedAppointments() {
@@ -180,12 +269,5 @@ public abstract class AppointmentManager {
 	
 	public void clearFinishedAppointments() {
 		finishedAppointments.clear();
-	}
-	
-	public void clearAllAppointments () {
-		clearAcceptedAppointments();
-		clearPendingAppointments();
-		clearRejectedAppointments();
-		clearFinishedAppointments();
 	}
 }
