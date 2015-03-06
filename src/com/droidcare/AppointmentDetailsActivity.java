@@ -1,6 +1,7 @@
 package com.droidcare;
 
 import android.app.Activity;
+import android.app.NotificationManager;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
@@ -29,6 +30,11 @@ public class AppointmentDetailsActivity extends Activity {
 		// Unpack the parcelled Appointment data
 		Bundle data = getIntent().getExtras();
 		appointment = (Appointment) data.getParcelable("appointment");
+		
+		// Cancel the notification of THIS APPOINTMENT
+		// Notification ID is always the same as Appointment ID
+		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+		notificationManager.cancel(appointment.getId());
 		
 		TextView textview = (TextView) findViewById(R.id.main_textview);
 		textview.setText("Appointment ID: " + appointment.getId());
