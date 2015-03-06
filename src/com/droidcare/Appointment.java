@@ -38,7 +38,7 @@ public class Appointment implements Parcelable{
 	private String	patientName,
 					consultantName,
 					healthIssue,
-					attachmentPath,
+//					attachmentPath,
 					referrerName,
 					referrerClinic,
 					remarks;
@@ -47,8 +47,8 @@ public class Appointment implements Parcelable{
 	
 	public Appointment(int id, int patientId, int consultantId, String dateTime
 			, String patientName, String consultantName, String healthIssue
-			, String attachmentPath, String type, String referrerName
-			, String referrerClinic, int previousId, String remarks, String status) {
+			, String type, String referrerName, String referrerClinic, int previousId
+            , String remarks, String status) {
 		this.id				= id;
 		this.patientId		= patientId;
 		this.consultantId	= consultantId;
@@ -57,7 +57,7 @@ public class Appointment implements Parcelable{
 		this.patientName = patientName;
 		this.consultantName = consultantName;
 		this.healthIssue	= healthIssue;
-		this.attachmentPath = attachmentPath;
+//		this.attachmentPath = attachmentPath;
 		this.referrerName	= referrerName;
 		this.referrerClinic = referrerClinic;
 		
@@ -139,9 +139,9 @@ public class Appointment implements Parcelable{
 		return healthIssue;
 	}
 	
-	public String getAttachmentPath() {
-		return attachmentPath;
-	}
+//	public String getAttachmentPath() {
+//		return attachmentPath;
+//	}
 	
 	public String getReferrerName() {
 		return referrerName;
@@ -176,7 +176,7 @@ public class Appointment implements Parcelable{
 		this.referrerName = in.readString();
 		this.referrerClinic = in.readString();		
 		this.type = in.readInt();
-		this.attachmentPath = in.readString();
+		// this.attachmentPath = in.readString();
 	}
 	
 	@Override
@@ -197,7 +197,7 @@ public class Appointment implements Parcelable{
 		dest.writeString(this.referrerName);
 		dest.writeString(this.referrerClinic);		
 		dest.writeInt(this.type);
-		dest.writeString(this.attachmentPath);
+		// dest.writeString(this.attachmentPath);
 	}
 	
 	public static final Parcelable.Creator<Appointment> CREATOR = new Parcelable.Creator<Appointment> () {

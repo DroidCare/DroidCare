@@ -162,7 +162,7 @@ public abstract class AppointmentManager {
                                         patientName = params.getString("patient_name"),
                                         consultantName = params.getString("consultant_name"),
                                         healthIssue = params.getString("health_issue"),
-                                        attachmentPaths = params.getString("attachment_paths"),
+//                                        attachmentPaths = params.getString("attachment_paths"),
                                         type = params.getString("type"),
                                         referrerName = params.getString("referrer_name"),
                                         referrerClinic = params.getString("referrer_clinic"),
@@ -171,10 +171,10 @@ public abstract class AppointmentManager {
 
                                 Appointment appointment = new Appointment(id
                                         , patientId, consultantId, dateTime, patientName, consultantName
-                                        , healthIssue, attachmentPaths, type, referrerName, referrerClinic
+                                        , healthIssue, type, referrerName, referrerClinic
                                         , previousId, remarks, status);
 
-                                Log.d("DEBUGGING", "appointment.getStatus() = " + appointment.getStatus());
+//                                Log.d("DEBUGGING", "appointment.getStatus() = " + appointment.getStatus());
                                 switch(appointment.getStatus()) {
                                     case Appointment.ACCEPTED:
                                         addAcceptedAppointment(appointment);
