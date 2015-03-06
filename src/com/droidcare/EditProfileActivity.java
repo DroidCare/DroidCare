@@ -85,31 +85,30 @@ public class EditProfileActivity extends Activity {
             valid = 0;
             putMessage("Nationality field must not be empty!");
         }
-        
-        // @pciang: INCLUDE THIS IN YOUR SWITCH (VALID) case 1!!
-        switch (notificationType) {
-        case 0:
-        	notificationTypeString = "local";
-        	break;
-
-        case 1:
-        	notificationTypeString = "sms";
-        	break;
-
-        case 2:
-        	notificationTypeString = "email";
-        	break;
-
-        case 3:
-        	notificationTypeString = "all";
-        	break;
-        }
-
 
         switch(valid) {
             case 0:
                 break;
             default:
+            	// @pciang: INCLUDE THIS IN YOUR SWITCH (VALID) case 1!!
+                switch (notificationType) {
+                case 0:
+                	notificationTypeString = "local";
+                	break;
+
+                case 1:
+                	notificationTypeString = "sms";
+                	break;
+
+                case 2:
+                	notificationTypeString = "email";
+                	break;
+
+                case 3:
+                	notificationTypeString = "all";
+                	break;
+                }
+            	
                 Log.d("DEBUGGING", "notification = " + notificationTypeString);
                 ProgressDialog pd = ProgressDialog.show(this, null, "Updating profile ...", true);
 
