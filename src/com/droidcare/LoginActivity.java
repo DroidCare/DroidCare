@@ -125,6 +125,9 @@ public class LoginActivity extends Activity {
                     switch(response.getInt("status")) {
                         case 0:
                             // Log.d("DEBUGGING", "YES USER IS LOGGED IN!");
+                        	
+                        	// If the user is logged in, then fetch all appointments for that user
+                    		Global.getAppointmentManager().fetchAppointmentList();
                             finish();
 
                             Intent intent = new Intent(LoginActivity.this, HomeActivity.class);

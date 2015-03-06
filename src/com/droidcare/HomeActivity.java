@@ -19,7 +19,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	private ViewPager viewPager;
 	private HomeTabsPagerAdapter mAdapter;
 	private ActionBar actionBar;
-	private String[] tabs = {"Upcoming", "Pending", "Rejected"};
+	private String[] tabs = {"Accepted", "Pending", "Rejected", "Finished"};
 	
 	private User user;
 	
