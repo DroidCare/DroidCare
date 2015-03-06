@@ -78,8 +78,8 @@ public class LoginManager {
                                                         type = params.getString("type"),
                                                         gender = params.getString("gender");
 
-                                                Global.getUserManager().createUser(id, email, fullName, address
-                                                        , gender, passportNumber, nationality, dateOfBirth, type)
+                                                Global.getUserManager().createUser(id, email, fullName, address, gender
+                                                        , passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
                                                         .setSessionId(Global.getAppSession().getString("session_id"));
                                                 break;
 
@@ -161,7 +161,7 @@ public class LoginManager {
                                     gender = params.getString("gender");
 
                             Global.getUserManager().createUser(id, email, fullName, address
-                                    , gender, passportNumber, nationality, dateOfBirth, type)
+                                    , gender, passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
                                     .setSessionId(Global.getAppSession().getString("session_id"));
                             break;
 

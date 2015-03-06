@@ -1,8 +1,11 @@
 package com.droidcare;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,7 +37,7 @@ public class EditProfileActivity extends Activity {
 
     public void putMessage(String message) {
         TextView textView = new TextView(this);
-        textView.setText(message);
+        textView.setText("\u2022 " + message);
         textView.setLayoutParams(new ViewGroup.LayoutParams(
                 ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT));
         updateMessages.addView(textView);
@@ -44,12 +47,12 @@ public class EditProfileActivity extends Activity {
         clearMessages();
 
         // Mutable
-        String  old_pw = (old_pw = ((EditText) findViewById(R.id.old_password_field)).getText().toString()) == null ? "" : old_pw,
-                new_pw = (new_pw = ((EditText) findViewById(R.id.passport_field)).getText().toString()) == null ? "" : new_pw,
-                new_cpw = (new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString()) == null ? "" : new_cpw,
-                passportNumber = (passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString()) == null ? "" : passportNumber,
-                address = (address = ((EditText) findViewById(R.id.address_field)).getText().toString()) == null ? "" : address,
-                nationality = (nationality = ((Spinner) findViewById(R.id.nationality_field)).getSelectedItem().toString()) == null ? "" : nationality,
+        String  old_pw = ((EditText) findViewById(R.id.old_password_field)).getText().toString(),
+                new_pw = ((EditText) findViewById(R.id.password_field)).getText().toString(),
+                new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString(),
+                passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
+                address = ((EditText) findViewById(R.id.address_field)).getText().toString(),
+                nationality = ((Spinner) findViewById(R.id.nationality_field)).getSelectedItem().toString(),
                 password = old_pw;
 
         int valid = 1;
@@ -60,6 +63,7 @@ public class EditProfileActivity extends Activity {
         
         if (!new_pw.isEmpty() && !new_cpw.isEmpty()) {
             if(!new_pw.equals(new_cpw)) {
+                Log.d("DEBUGGING", "" + new_pw + ", " + new_cpw);
                 valid = 0;
                 putMessage("New password and confirm password mismatch!");
             } else {
@@ -87,62 +91,70 @@ public class EditProfileActivity extends Activity {
         case 0:
         	notificationTypeString = "local";
         	break;
-        
+
         case 1:
         	notificationTypeString = "sms";
         	break;
-        	
+
         case 2:
         	notificationTypeString = "email";
         	break;
-        
+
         case 3:
         	notificationTypeString = "all";
         	break;
         }
-        
-        ProgressDialog pd = ProgressDialog.show(this, null, "Updating profile ...", true);
 
-        User user = Global.getUserManager().getUser();
 
-        new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())
-                , new Pair<String, String>("email", user.getEmail())
-                , new Pair<String, String>("password", password)
-                , new Pair<String, String>("full_name", user.getFullName())
-                , new Pair<String, String>("address", address)
-                , new Pair<String, String>("gender", user.getGender())
-                , new Pair<String, String>("passport_number", passportNumber)
-                , new Pair<String, String>("nationality", nationality)
-                , new Pair<String, String>("date_of_birth", user.getDateOfBirth())
-                , new Pair<String, String>("notification_type", "" + notificationType)
-                , new Pair<String, String>("session_id", user.getSessionId())) {
-            private ProgressDialog pd;
-            public SimpleHttpPost init(ProgressDialog pd) {
-                this.pd = pd;
-                return this;
-            }
+        switch(valid) {
+            case 0:
+                break;
+            default:
+                Log.d("DEBUGGING", "notification = " + notificationTypeString);
+                ProgressDialog pd = ProgressDialog.show(this, null, "Updating profile ...", true);
 
-            @Override
-            public void onFinish(String responseText) {
-                pd.dismiss();
-                try {
-                    JSONObject response = new JSONObject(responseText);
-                    switch(response.getInt("status")) {
-                        case 0:
-                            finish();
-                            break;
-                        default:
-                            JSONArray messages = response.getJSONArray("message");
-                            for(int i = 0, size = messages.length(); i < size; ++i) {
-                                putMessage(messages.getString(i));
-                            }
-                            break;
+                Global.getUserManager().editProfile(password, address, passportNumber
+                        , nationality, notificationTypeString, new UserManager.OnFinishListener() {
+                    private ProgressDialog pd;
+                    public UserManager.OnFinishListener init(ProgressDialog pd) {
+                        this.pd = pd;
+                        return this;
                     }
-                // Do nothing on exception
-                } catch (JSONException e) {
-                }
-            }
-        }.init(pd).send(Global.USER_UPDATE_URL);
+
+                    @Override
+                    public void onFinish(String responseText) {
+                        pd.dismiss();
+
+                        try {
+                            JSONObject response = new JSONObject(responseText);
+                            switch(response.getInt("status")){
+                                case 0:
+                                    new AlertDialog.Builder(EditProfileActivity.this)
+                                            .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
+                                                @Override
+                                                public void onClick(DialogInterface dialog, int which) {
+                                                    dialog.dismiss();
+                                                    EditProfileActivity.this.finish();
+                                                }
+                                            })
+                                            .setTitle(null)
+                                            .setMessage("Profile successfully updated!")
+                                            .setIcon(android.R.drawable.ic_dialog_info)
+                                            .show();
+                                    break;
+                                default:
+                                    JSONArray messages = response.getJSONArray("message");
+                                    for(int i = 0, size = messages.length(); i < size; ++i) {
+                                        putMessage(messages.getString(i));
+                                    }
+                                    break;
+                            }
+                        } catch (JSONException e) {
+                        }
+                    }
+                }.init(pd));
+                break;
+        }
     }
     
     public void onSMSNotificationClick (View v) {
@@ -168,6 +180,7 @@ public class EditProfileActivity extends Activity {
 
         updateMessages = (LinearLayout) findViewById(R.id.update_messages);
 
+        nationalitySpinner = new HashMap<String, Integer>();
         nationalitySpinner.put("Indonesian", 1);
         nationalitySpinner.put("Singaporean", 2);
         nationalitySpinner.put("Thailand", 3);
@@ -184,6 +197,22 @@ public class EditProfileActivity extends Activity {
         ((TextView) findViewById(R.id.gender_field)).setText(user.getGender());
         ((Spinner) findViewById(R.id.nationality_field))
                 .setSelection(nationalitySpinner.get(user.getNationality()));
+
+        String notification = user.getNotification();
+        if(notification.equals("all")) {
+            notificationType = 3;
+        } else if(notification.equals("email")) {
+            notificationType = 2;
+        } else if(notification.equals("sms")) {
+            notificationType = 1;
+        } else {
+            notificationType = 0;
+        }
+
+        ((CheckBox) findViewById(R.id.email_notification_checkbox))
+                .setChecked(user.getNotification().equals("all") || user.getNotification().equals("email"));
+        ((CheckBox) findViewById(R.id.sms_notification_checkbox))
+                .setChecked(user.getNotification().equals("all") || user.getNotification().equals("sms"));
 	}
 
 	@Override

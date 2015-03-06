@@ -11,7 +11,8 @@ public class User{
 					dateOfBirth,
 					type,
 					sessionId,
-                    gender;
+                    gender,
+                    notification;
 	
 	// Empty constructor
 	public User(){}
@@ -19,7 +20,7 @@ public class User{
 	// Lengthy constructor
 	public User(int id, String email, String fullName, String address
 			, String gender, String passportNumber, String nationality
-			, String dateOfBirth, String type){
+			, String dateOfBirth, String type, String notification){
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
@@ -29,11 +30,12 @@ public class User{
 		this.nationality = nationality;
 		this.dateOfBirth = dateOfBirth;
 		this.type = type;
+        this.notification = notification;
 	}
 	
 	public void setData(int id, String email, String fullName, String address
 			, String gender, String passportNumber, String nationality
-			, String dateOfBirth, String type){
+			, String dateOfBirth, String type, String notification){
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
@@ -43,6 +45,7 @@ public class User{
 		this.nationality = nationality;
 		this.dateOfBirth = dateOfBirth;
 		this.type = type;
+        this.notification = notification;
 	}
 	
 	// Most attributes are immutable
@@ -103,4 +106,12 @@ public class User{
 	public String getSessionId() {
 		return sessionId;
 	}
+
+    public String getNotification() {
+        return notification;
+    }
+
+    public void setNotification(String notification) {
+        this.notification = notification;
+    }
 }

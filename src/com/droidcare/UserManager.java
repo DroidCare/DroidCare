@@ -1,12 +1,12 @@
 package com.droidcare;
 
-import java.util.HashMap;
+import android.util.Log;
+import android.util.Pair;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import android.content.Context;
-import android.util.Pair;
+import java.util.HashMap;
 
 public class UserManager {
 	
@@ -33,6 +33,10 @@ public class UserManager {
 	public void removeUser() {
 		user = null;
 	}
+
+    public interface OnFinishListener {
+        public abstract void onFinish(String responseText);
+    }
 	
 	/**
 	 * This method is blocking. Call this method in a new AsyncTask.
@@ -73,7 +77,7 @@ public class UserManager {
 				
 				user = new User(id, email, fullName, address
 						, gender, passportNumber, nationality,
-						dateOfBirth, type);
+						dateOfBirth, type, params.getString("notification"));
 				
 				return true;
 		
@@ -89,13 +93,71 @@ public class UserManager {
 
     public User createUser(int id, String email, String fullName, String address
             , String gender, String passportNumber, String nationality
-            , String dateOfBirth, String type) {
+            , String dateOfBirth, String type, String notification) {
 
         return user = new User(id, email, fullName, address
-                , gender, passportNumber, nationality, dateOfBirth, type);
+                , gender, passportNumber, nationality, dateOfBirth, type
+                , notification);
     }
 
     public User createUser() {
         return user = new User();
+    }
+
+    public void editProfile(String password, String address, String passportNumber
+            , String nationality, String notificationType, OnFinishListener onFinishListener) {
+        new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())
+                , new Pair<String, String>("email", user.getEmail())
+                , new Pair<String, String>("password", password)
+                , new Pair<String, String>("full_name", user.getFullName())
+                , new Pair<String, String>("address", address)
+                , new Pair<String, String>("gender", user.getGender())
+                , new Pair<String, String>("passport_number", passportNumber)
+                , new Pair<String, String>("nationality", nationality)
+                , new Pair<String, String>("date_of_birth", user.getDateOfBirth())
+                , new Pair<String, String>("notification", notificationType)
+                , new Pair<String, String>("session_id", user.getSessionId())) {
+            private OnFinishListener listener;
+            private String  address,
+                            passportNumber,
+                            nationality,
+                            notification;
+
+            public SimpleHttpPost init(OnFinishListener listener
+                    , String address
+                    , String passportNumber
+                    , String nationality
+                    , String notification) {
+                this.listener = listener;
+
+                this.address = address;
+                this.passportNumber = passportNumber;
+                this.nationality = nationality;
+                this.notification = notification;
+
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                Log.d("DEBUGGING", "UserManager.OnFinishListener responseText = " + responseText);
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            user.setAddress(address);
+                            user.setNationality(nationality);
+                            user.setPassportNumber(passportNumber);
+                            user.setNotification(notification);
+                            break;
+                    }
+
+                } catch (JSONException e) {
+                }
+
+                listener.onFinish(responseText);
+            }
+        }.init(onFinishListener, address, passportNumber
+                , nationality, notificationType).send(Global.USER_UPDATE_URL);
     }
 }
