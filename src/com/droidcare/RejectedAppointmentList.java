@@ -2,13 +2,14 @@ package com.droidcare;
 
 import java.util.ArrayList;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
 public class RejectedAppointmentList extends ListFragment {
-	private ArrayList<Appointment> appointmentList;
+	private ArrayList<Appointment> rejectedAppointmentList;
 	private AppointmentListAdapter mAdapter;
 	
 	@Override
@@ -16,7 +17,7 @@ public class RejectedAppointmentList extends ListFragment {
 		super.onCreate(savedInstanceState);
 		
 		this.fetchList();
-		mAdapter = new AppointmentListAdapter(getActivity(), this.appointmentList);
+		mAdapter = new AppointmentListAdapter(getActivity(), this.rejectedAppointmentList);
 		setListAdapter(mAdapter);
 	}
 	
@@ -24,7 +25,21 @@ public class RejectedAppointmentList extends ListFragment {
 	public void onListItemClick(ListView l, View v, int position, long id) {
 		super.onListItemClick(l, v, position, id);
 		
-		// Do nothing at the moment.
+		// Creating a new intent
+		Intent intent = new Intent(getActivity().getApplicationContext(), AppointmentDetailsActivity.class);
+		Appointment a = this.rejectedAppointmentList.get(position);
+		intent.putExtra("appointmentType", a.getType());
+		
+		// USE OF POLYMORPHISM
+		if (a.getType().equalsIgnoreCase(Appointment.NORMAL)) {
+			intent.putExtra("appointment", a);
+		} else if (a.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
+			intent.putExtra("referralAppointment", (ReferralAppointment) a);
+		} else if (a.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
+			intent.putExtra("followUpAppointment", (FollowUpAppointment) a);
+		}		
+		
+		startActivity(intent);
 	}
 	
 	/**
@@ -32,6 +47,6 @@ public class RejectedAppointmentList extends ListFragment {
 	 * Use a more "descriptive" word please -___-
 	 */
 	public void fetchList() {
-		appointmentList = Global.getAppointmentManager().getRejectedAppointments();
+		this.rejectedAppointmentList = Global.getAppointmentManager().getRejectedAppointments();
 	}
 }

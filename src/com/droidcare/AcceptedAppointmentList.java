@@ -37,7 +37,17 @@ public class AcceptedAppointmentList extends ListFragment {
 		// Creating a new intent
 		Intent intent = new Intent(getActivity(), AppointmentDetailsActivity.class);
 		Appointment a = this.acceptedAppointmentList.get(position);
-		intent.putExtra("appointment", a);
+		intent.putExtra("appointmentType", a.getType());
+		
+		// USE OF POLYMORPHISM
+		if (a.getType().equalsIgnoreCase(Appointment.NORMAL)) {
+			intent.putExtra("appointment", a);
+		} else if (a.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
+			intent.putExtra("referralAppointment", (ReferralAppointment) a);
+		} else if (a.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
+			intent.putExtra("followUpAppointment", (FollowUpAppointment) a);
+		}
+		
 		startActivity(intent);
 	}
 	

@@ -9,28 +9,31 @@ import android.os.Parcel;
 import android.os.Parcelable;
 import android.util.Log;
 
+/*
+ * ATTENTION!!!
+ * THIS CLASS IS ONLY FOR POLYMORPHISM (AS A BASE CLASS) OR NORMAL APPOINTMENT ONLY!!!
+ */
+
 public class Appointment implements Parcelable{
 	/**
 	 * Appointment status.
 	 */
-	public static final int	PENDING = 0,
-							ACCEPTED = 1,
-							REJECTED = 2,
-							FINISHED = 3;
+	public static final String	PENDING 	= "pending",
+								ACCEPTED 	= "accepted",
+								REJECTED 	= "rejected",
+								FINISHED 	= "finished";
 	
 	/**
 	 * Appointment type.
 	 */
-	public static final int	FOLLOW_UP = 0xA0000000,
-							REFERRAL = 0xA0000001,
-							NORMAL = 0xA0000002;
+	public static final String	FOLLOW_UP 	= "follow_up",
+								REFERRAL 	= "referral",
+								NORMAL 		= "normal";
 	
 	private int	id,
 				patientId,
 				consultantId,
-				previousId,
-				status,
-				type;
+				previousId;
 	
 	// To make it easier to "parcelize"
 	private long dateTimeMillis;
@@ -38,36 +41,24 @@ public class Appointment implements Parcelable{
 	private String	patientName,
 					consultantName,
 					healthIssue,
-//					attachmentPath,
-					referrerName,
-					referrerClinic,
-					remarks;
+					remarks,
+					type,
+					status;
 	
 	// public Appointment(){} // An empty constructor
 	
 	public Appointment(int id, int patientId, int consultantId, String dateTime
 			, String patientName, String consultantName, String healthIssue
-			, String type, String referrerName, String referrerClinic, int previousId
-            , String remarks, String status) {
+			, String type, int previousId, String remarks, String status) {
 		this.id				= id;
 		this.patientId		= patientId;
 		this.consultantId	= consultantId;
 		this.previousId		= previousId;
-		
-		this.patientName = patientName;
+		this.patientName 	= patientName;
 		this.consultantName = consultantName;
 		this.healthIssue	= healthIssue;
-//		this.attachmentPath = attachmentPath;
-		this.referrerName	= referrerName;
-		this.referrerClinic = referrerClinic;
-		
-		this.type = type.equals("follow-up") ? FOLLOW_UP
-				: type.equals("referrral") ? REFERRAL : NORMAL;
-		
-		this.status = status.equals("pending") ? PENDING
-				: status.equals("accepted") ? ACCEPTED
-				: status.equals("rejected") ? REJECTED : FINISHED;
-		
+		this.type 			= type;
+		this.status			= status;
 		this.remarks = remarks;
 		
 		try {
@@ -98,30 +89,9 @@ public class Appointment implements Parcelable{
 		return previousId;
 	}
 
-    public int getStatus() {
+    public String getStatus() {
         return status;
     }
-
-	public static String translate(int code) {
-        switch(code) {
-            case PENDING:
-                return "pending";
-            case ACCEPTED:
-                return "accepted";
-            case REJECTED:
-                return "rejected";
-            case FINISHED:
-                return "finished";
-            case FOLLOW_UP:
-                return "follow-up";
-            case REFERRAL:
-                return "referral";
-            case NORMAL:
-                return "normal";
-            default:
-                return null;
-        }
-	}
 	
 	public long getDateTimeMillis() {
 		return dateTimeMillis;
@@ -139,28 +109,33 @@ public class Appointment implements Parcelable{
 		return healthIssue;
 	}
 	
-//	public String getAttachmentPath() {
-//		return attachmentPath;
-//	}
-	
-	public String getReferrerName() {
-		return referrerName;
-	}
-	
-	public String getReferrerClinic() {
-		return referrerClinic;
-	}
-	
 	public String getRemarks() {
 		return remarks;
 	}
 	
-	public int getType() {
+	public String getType() {
 		return type;
 	}
 	
-	public void setStatus(int status) {
+	// SETTER
+	public void setDateTimeMillis (long dateTimeMillis) {
+		this.dateTimeMillis = dateTimeMillis;
+	}
+	
+	public void setConsultantId (int id) {
+		this.consultantId = id;
+	}
+	
+	public void setConsultantName (String name) {
+		this.consultantName = name;
+	}
+	
+	public void setStatus (String status) {
 		this.status = status;
+	}
+	
+	public void setRemarks (String remarks) {
+		this.remarks = remarks;
 	}
 	
 	// PARCELABLE IMPLEMENTATION -> provide a way to send an object from one activity / fragment to another
@@ -173,10 +148,8 @@ public class Appointment implements Parcelable{
 		this.patientName = in.readString();
 		this.consultantName = in.readString();
 		this.healthIssue = in.readString();
-		this.referrerName = in.readString();
-		this.referrerClinic = in.readString();		
-		this.type = in.readInt();
-		// this.attachmentPath = in.readString();
+		this.type = in.readString();
+		this.status = in.readString();
 	}
 	
 	@Override
@@ -194,10 +167,8 @@ public class Appointment implements Parcelable{
 		dest.writeString(this.patientName);
 		dest.writeString(this.consultantName);
 		dest.writeString(this.healthIssue);
-		dest.writeString(this.referrerName);
-		dest.writeString(this.referrerClinic);		
-		dest.writeInt(this.type);
-		// dest.writeString(this.attachmentPath);
+		dest.writeString(this.type);
+		dest.writeString(this.status);
 	}
 	
 	public static final Parcelable.Creator<Appointment> CREATOR = new Parcelable.Creator<Appointment> () {

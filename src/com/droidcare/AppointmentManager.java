@@ -196,36 +196,44 @@ public abstract class AppointmentManager {
                                         patientName = params.getString("patient_name"),
                                         consultantName = params.getString("consultant_name"),
                                         healthIssue = params.getString("health_issue"),
-//                                        attachmentPaths = params.getString("attachment_paths"),
+                                        attachment = params.getString("attachment"),
                                         type = params.getString("type"),
                                         referrerName = params.getString("referrer_name"),
                                         referrerClinic = params.getString("referrer_clinic"),
                                         remarks = params.getString("remarks"),
                                         status = params.getString("status");
-
-                                Appointment appointment = new Appointment(id
-                                        , patientId, consultantId, dateTime, patientName, consultantName
-                                        , healthIssue, type, referrerName, referrerClinic
-                                        , previousId, remarks, status);
-
-//                                Log.d("DEBUGGING", "appointment.getStatus() = " + appointment.getStatus());
-                                switch(appointment.getStatus()) {
-                                    case Appointment.ACCEPTED:
-                                        addAcceptedAppointment(appointment);
-                                        break;
-                                    case Appointment.REJECTED:
-                                        addRejectedAppointment(appointment);
-                                        break;
-                                    case Appointment.FINISHED:
-                                        addFinishedAppointment(appointment);
-                                        break;
-                                    case Appointment.PENDING:
-                                        addPendingAppointment(appointment);
-                                        break;
+                                
+                                Appointment appointment = null;
+                                if (type.equalsIgnoreCase(Appointment.NORMAL)) {
+                                	appointment = new Appointment(id
+                                			, patientId, consultantId, dateTime, patientName, consultantName
+                                			, healthIssue, type, previousId, remarks, status);
+                                } else if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
+                                	appointment = new ReferralAppointment(id, patientId
+                                			, consultantId, dateTime, patientName, consultantName, healthIssue
+                                			, type, previousId, remarks, status, referrerName, referrerClinic);
+                                } else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
+                                	appointment = new FollowUpAppointment(id, patientId
+                                			, consultantId, dateTime, patientName, consultantName, healthIssue
+                                			, type, previousId, remarks, status, attachment);
+                                }
+                                
+                                // DOUBLE CHECK
+                                if (appointment != null) {
+	                                if (appointment.getStatus().equalsIgnoreCase(Appointment.ACCEPTED)) {
+	                                    addAcceptedAppointment(appointment);
+	                                } else if (appointment.getStatus().equalsIgnoreCase(Appointment.REJECTED)) {
+	                                	addRejectedAppointment(appointment);
+	                                } else if (appointment.getStatus().equalsIgnoreCase(Appointment.FINISHED)) {
+	                                	addFinishedAppointment(appointment);
+	                                } else if (appointment.getStatus().equalsIgnoreCase(Appointment.PENDING)) {
+	                                	addPendingAppointment(appointment);
+	                                }
                                 }
                             }
 
                             break;
+                            
                         default:
                             break;
                     }

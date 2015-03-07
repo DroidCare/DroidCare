@@ -4,7 +4,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.ListFragment;
 import android.view.View;
+
 import java.util.ArrayList;
+
 import android.widget.ListView;
 
 /**
@@ -37,7 +39,17 @@ public class FinishedAppointmentList extends ListFragment {
 		// Creating a new intent
 		Intent intent = new Intent(getActivity(), AppointmentDetailsActivity.class);
 		Appointment a = this.finishedAppointmentList.get(position);
-		intent.putExtra("appointment", a);
+		intent.putExtra("appointmentType", a.getType());
+		
+		// USE OF POLYMORPHISM
+		if (a.getType().equalsIgnoreCase(Appointment.NORMAL)) {
+			intent.putExtra("appointment", a);
+		} else if (a.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
+			intent.putExtra("referralAppointment", (ReferralAppointment) a);
+		} else if (a.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
+			intent.putExtra("followUpAppointment", (FollowUpAppointment) a);
+		}
+		
 		startActivity(intent);
 	}
 	
