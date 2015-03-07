@@ -40,7 +40,7 @@ public class UserManager {
 	
 	/**
 	 * This method is blocking. Call this method in a new AsyncTask.
-	 * @return Returns <i>true</i> if manager successfully obtained user's details.
+	 * @return Returns {@code true} if manager successfully obtained user's details, {@code false} otherwise.
 	 */
 	public boolean fetchUserDetails() {
 		String sessionId = Global.getAppSession().getString("session_id");

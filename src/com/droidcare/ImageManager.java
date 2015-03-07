@@ -10,19 +10,30 @@ import android.util.Base64;
 /**
  * 
  * @author Edwin Candinegara
- * 
- * This class is responsible for Base64 encoding of an image and decoding a Base64 String
- *
+ * Encodes an image {@link Bitmap} object into a Base64 encoded String and decodes a Base64 encoded String into
+ * an image {@link Bitmap} object.
  */
 
 public class ImageManager {
-	private static ImageManager instance;
+	/**
+	 * An instance of {@link ImageManager}. Use this to promote singleton design pattern.
+	 */
+	private static ImageManager instance = new ImageManager();
 	
+	/**
+	 * Returns {@link #instance}.
+	 * @return	returns {@link #instance}
+	 */
 	public static ImageManager getInstance () {
 		instance = new ImageManager();
 		return instance;
 	}
 	
+	/**
+	 * Encodes an image {@link Bitmap} into a Base64 encoded String and returns the encoded String. 
+	 * @param image	{@link Bitmap} object of the image.
+	 * @return		a Base64 encoded String.
+	 */
 	public static String encodeImageBase64 (Bitmap image) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
@@ -34,6 +45,11 @@ public class ImageManager {
 		return imageEncoded;
 	}
 	
+	/**
+	 * Decodes a Base64 encoded String into an image {@link Bitmap} object and returns the image {@link Bitmap} object.
+	 * @param encodedImage	a Base64 encoded String.
+	 * @return				an image {@link Bitmap} object.
+	 */
 	public static Bitmap decodeImageBase64 (String encodedImage) {
 		byte[] imageByte = Base64.decode(encodedImage, 0);
 		return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);

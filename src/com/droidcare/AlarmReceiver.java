@@ -11,12 +11,18 @@ import android.content.Intent;
  * 
  * @author Edwin Candinegara
  * 
- * This class is basically run when a certain "ALARM" is on for notification purpose (the type of notification
- * depends on the user's choice) 
+ * Receives "ALARM" broadcasts for notification purpose (the type of notification
+ * depends on the user's choice).
  *
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
+	
+	/**
+	 *  This method definition is overriding the onReceive method in BroadcastReceiver. The method
+	 *  defines what to do when an "ALARM" is on. It notifies the user through local notification,
+	 *  SMS, or email depending on what the user chooses.
+	 */
 	@Override
 	public void onReceive (Context context, Intent intent) {
 		Appointment appointment = (Appointment) intent.getExtras().getParcelable("appointment");
@@ -37,6 +43,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 		}
 	}
 	
+	/**
+	 * This method is responsible for showing local notification in the user's Android phone.
+	 * 
+	 * @param context		this refers to the {@code context} of the method caller (BroadcastReceiver's context)
+	 * @param appointment	an {@link Appointment} object whose information will be used in the local notification content.
+	 */
 	public void  showLocalNotification (Context context, Appointment appointment) {
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification.Builder mBuilder = new Notification.Builder(context);
@@ -58,6 +70,10 @@ public class AlarmReceiver extends BroadcastReceiver {
 		notificationManager.notify(notificationId, mBuilder.build());
 	}
 	
+	/**
+	 * This method is responsible for sending a Email notification to the user's registered email.
+	 * @param appointment	an {@link Appointment} object whose information will be used in the Email notification content.
+	 */
 	public void sendEmailNotification (Appointment appointment) {
 		// @pciang : please implement the POST / GET request to the PHP EMAIL HANDLER
 	}
