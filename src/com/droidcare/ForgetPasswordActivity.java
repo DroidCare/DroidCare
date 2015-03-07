@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
 
 public class ForgetPasswordActivity extends Activity {
 
@@ -30,5 +32,10 @@ public class ForgetPasswordActivity extends Activity {
 			return true;
 		}
 		return super.onOptionsItemSelected(item);
+	}
+	
+	public void forgetPassword (View v) {
+		// @pciang : SEND REQUEST TO PHP SERVER
+		String emailAddress = ((EditText) findViewById(R.id.emailAddress_field)).getText().toString();
 	}
 }

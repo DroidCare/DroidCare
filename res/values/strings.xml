@@ -65,6 +65,9 @@
     <string name="LabelText_ModeOfNotification">Notification Mode</string>
     <string name="LabelText_SMSNotification">SMS</string>
     <string name="LabelText_EmailNotification">Email</string>
-    <string name="title_activity_forget_password">ForgetPasswordActivity</string>
+    <string name="title_activity_forget_password">Forget Password</string>
+    <string name="Label_EmailAddress">E-mail Address</string>
+    <string name="Label_ForgetPasswordInstruction">Please enter your registered e-mail address.</string>
+    <string name="Button_ForgetPassword">Submit</string>
 
 </resources>
