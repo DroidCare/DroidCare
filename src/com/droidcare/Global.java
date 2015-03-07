@@ -24,6 +24,7 @@ public class Global {
 	public static String USER_REGISTER_URL = USER_URL + "register";
 	public static String USER_UPDATE_URL = USER_URL + "update";
 	public static String USER_LOGOUT_URL = USER_URL + "logout";
+    public static String USER_FORGET_URL = USER_URL + "forget";
 
 	public static String USER_APPOINTMENT_URL = APPOINTMENT_URL + "user";
 	public static String GET_APPOINTMENT_ATTACH_URL = APPOINTMENT_URL + "attachment/";
@@ -47,7 +48,7 @@ public class Global {
 		
 		userManager	= UserManager.getInstance();
 		appSession	= AppSession.getInstance();
-		appointmentManager = AppointmentManager.getInstance();
+//		appointmentManager = AppointmentManager.getInstance();
         loginManager = LoginManager.getInstance();
         registerManager = RegisterManager.getInstance();
         imageManager = ImageManager.getInstance();

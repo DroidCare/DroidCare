@@ -2,6 +2,7 @@ package com.droidcare;
 
 import android.content.Entity;
 import android.os.AsyncTask;
+import android.util.Log;
 import android.util.Pair;
 
 import org.apache.http.HttpResponse;

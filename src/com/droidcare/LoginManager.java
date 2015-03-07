@@ -173,4 +173,19 @@ public class LoginManager {
             }
         }.init(onFinishTaskListener).send(Global.USER_URL);
     }
+
+    public void forgetPasswordRequest(String email, OnFinishTaskListener onFinishTaskListener) {
+        new SimpleHttpPost(new Pair<String, String> ("email", email)) {
+            private OnFinishTaskListener listener;
+            public SimpleHttpPost init(OnFinishTaskListener listener) {
+                this.listener = listener;
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                listener.onFinishTask(responseText);
+            }
+        }.init(onFinishTaskListener).send(Global.USER_FORGET_URL);
+    }
 }

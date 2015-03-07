@@ -70,6 +70,9 @@
             android:name=".ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
             android:parentActivityName=".LoginActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.droidcare.LoginActivity" />
         </activity>
     </application>
 

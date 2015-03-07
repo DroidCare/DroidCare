@@ -1,11 +1,19 @@
 package com.droidcare;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class ForgetPasswordActivity extends Activity {
 
@@ -37,5 +45,56 @@ public class ForgetPasswordActivity extends Activity {
 	public void forgetPassword (View v) {
 		// @pciang : SEND REQUEST TO PHP SERVER
 		String emailAddress = ((EditText) findViewById(R.id.emailAddress_field)).getText().toString();
+
+        ProgressDialog pd = ProgressDialog.show(this, null, "Sending email...", true);
+        Global.getLoginManager().forgetPasswordRequest(emailAddress, new LoginManager.OnFinishTaskListener() {
+            private ProgressDialog pd;
+            public LoginManager.OnFinishTaskListener init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+
+            @Override
+            public void onFinishTask(String responseText) {
+                pd.dismiss();
+
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            new AlertDialog.Builder(ForgetPasswordActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setTitle(null)
+                                    .setMessage("Reset password successful!")
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                            ForgetPasswordActivity.this.finish();
+                                        }
+                                    })
+                                    .show();
+                            break;
+                        default:
+                            new AlertDialog.Builder(ForgetPasswordActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setTitle(null)
+                                    .setMessage(response.getJSONArray("message").getString(0))
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
+                                        }
+                                    })
+                                    .show();
+                            break;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    ForgetPasswordActivity.this.finish();
+                }
+            }
+        }.init(pd));
 	}
 }
