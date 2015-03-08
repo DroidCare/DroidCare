@@ -14,6 +14,12 @@ import android.util.Log;
  * THIS CLASS IS ONLY FOR POLYMORPHISM (AS A BASE CLASS) OR NORMAL APPOINTMENT ONLY!!!
  */
 
+/**
+ * @author Edwin Candinegara
+ * Stores a normal appointment detailed information. This class is also a base class for {@link FollowUpAppointment} and
+ * {@link ReferralAppointment} class.
+ */
+
 public class Appointment implements Parcelable{
 	/**
 	 * Appointment status.
@@ -29,15 +35,28 @@ public class Appointment implements Parcelable{
 	public static final String	FOLLOW_UP 	= "follow_up",
 								REFERRAL 	= "referral",
 								NORMAL 		= "normal";
-	
+	/**
+	 * id = ID of this {@link Appointment} object.
+	 * patientId = ID of the current {@link User} object.
+	 * consultantId = ID of the consultant.
+	 */
 	private int	id,
 				patientId,
-				consultantId,
-				previousId;
-	
-	// To make it easier to "parcelize"
+				consultantId;
+				
+	/**
+	 * The appointment's date and time in milliseconds.
+	 */
 	private long dateTimeMillis;
 
+	/**
+	 * patientName = name of the patient.
+	 * consultantName = name of the consultant.
+	 * healthIssue = the patient's health issue.
+	 * remarks = any additional information
+	 * type = the appointment's type.
+	 * status = the current status of this {@link Appointment} object.
+	 */
 	private String	patientName,
 					consultantName,
 					healthIssue,
@@ -45,15 +64,25 @@ public class Appointment implements Parcelable{
 					type,
 					status;
 	
-	// public Appointment(){} // An empty constructor
-	
+	/**
+	 * Constructs an {@link Appointment} object.
+	 * @param id				the ID of this {@link Appointment} object.
+	 * @param patientId			the ID of the patient
+	 * @param consultantId		the ID of the consultant
+	 * @param dateTime			the date and time of the appointment
+	 * @param patientName		the name of the patient
+	 * @param consultantName	the name of the consultant
+	 * @param healthIssue		the patient's health issue
+	 * @param type				the type of this appointment
+	 * @param remarks			additional information for this appointment
+	 * @param status			the current status of the appointment
+	 */
 	public Appointment(int id, int patientId, int consultantId, String dateTime
 			, String patientName, String consultantName, String healthIssue
-			, String type, int previousId, String remarks, String status) {
+			, String type, String remarks, String status) {
 		this.id				= id;
 		this.patientId		= patientId;
 		this.consultantId	= consultantId;
-		this.previousId		= previousId;
 		this.patientName 	= patientName;
 		this.consultantName = consultantName;
 		this.healthIssue	= healthIssue;
@@ -72,68 +101,122 @@ public class Appointment implements Parcelable{
 		}
 	}
 	
-	// GETTER
+	/**
+	 * Returns this {@link Appointment} object ID
+	 * @return the ID of this {@link Appointment} object
+	 */
 	public int getId () {
 		return id;
 	}
 	
+	/**
+	 * Returns the patient's ID
+	 * @return the patient's ID
+	 */
 	public int getPatientId() {
 		return patientId;
 	}
 	
+	/**
+	 * Returns the consultant's ID
+	 * @return the consultant's ID
+	 */
 	public int getConsultantId() {
 		return consultantId;
 	}
-	
-	public int getPreviousId() {
-		return previousId;
-	}
 
+	/**
+	 * Returns this {@link Appointment} object status
+	 * @return the status of this {@link Appointment} object
+	 */
     public String getStatus() {
         return status;
     }
 	
+    /**
+     * Returns this {@link Appointment} object date and time in millisecond
+     * @return the date and time of this {@link Appointment} object in millisecond
+     */
 	public long getDateTimeMillis() {
 		return dateTimeMillis;
 	}
 	
+	/**
+	 * Returns the patient's name
+	 * @return the patient's name
+	 */
 	public String getPatientName() {
 		return patientName;
 	}
 	
+	/**
+	 * Returns the consultant's name
+	 * @return the consultant's name
+	 */
 	public String getConsultantName() {
 		return consultantName;
 	}
 	
+	/**
+	 * Returns the patient's health issue
+	 * @return the patient's health issue
+	 */
 	public String getHealthIssue() {
 		return healthIssue;
 	}
 	
+	/**
+	 * Returns the additional information
+	 * @return the additional information
+	 */
 	public String getRemarks() {
 		return remarks;
 	}
 	
+	/**
+	 * Returns the type of this {@link Appointment} object
+	 * @return the type of this {@link Appointment} object
+	 */
 	public String getType() {
 		return type;
 	}
 	
-	// SETTER
+	/**
+	 * Sets this {@link Appointment} object date and time in millisecond 
+	 * @param dateTimeMillis the date and time in millisecond
+	 */
 	public void setDateTimeMillis (long dateTimeMillis) {
 		this.dateTimeMillis = dateTimeMillis;
 	}
 	
+	/**
+	 * Sets the consultant's ID of this {@link Appointment} object
+	 * @param id the consultant's ID
+	 */
 	public void setConsultantId (int id) {
 		this.consultantId = id;
 	}
 	
+	/**
+	 * Sets the consultant's name of this {@link Appointment} object
+	 * @param name the consultant's name
+	 */
 	public void setConsultantName (String name) {
 		this.consultantName = name;
 	}
 	
+	/**
+	 * Sets the status of this {@link Appointment} object
+	 * @param status the new status of this {@link Appointment} object
+	 */
 	public void setStatus (String status) {
 		this.status = status;
 	}
 	
+	/**
+	 * Sets the additional information
+	 * @param remarks the additional information
+	 */
 	public void setRemarks (String remarks) {
 		this.remarks = remarks;
 	}
@@ -143,7 +226,6 @@ public class Appointment implements Parcelable{
 		this.id = in.readInt();
 		this.patientId = in.readInt();
 		this.consultantId = in.readInt();
-		this.previousId = in.readInt();
 		this.dateTimeMillis = in.readLong();
 		this.patientName = in.readString();
 		this.consultantName = in.readString();
@@ -162,7 +244,6 @@ public class Appointment implements Parcelable{
 		dest.writeInt(this.id);
 		dest.writeInt(this.patientId);
 		dest.writeInt(this.consultantId);
-		dest.writeInt(this.previousId);
 		dest.writeLong(this.dateTimeMillis);
 		dest.writeString(this.patientName);
 		dest.writeString(this.consultantName);

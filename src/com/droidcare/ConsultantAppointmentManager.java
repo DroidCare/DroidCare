@@ -21,7 +21,7 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 	
 	/**
 	 * Accepts a pending {@link Appointment} object.
-	 * @param context		the context from which this method is called.
+	 * @param context		the activity context from which this method is called.
 	 * @param appointment	a pending {@link Appointment} object to be accepted by the consultant.
 	 */
 	public void acceptAppointment (Context context, Appointment appointment) {

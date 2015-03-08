@@ -207,15 +207,15 @@ public abstract class AppointmentManager {
                                 if (type.equalsIgnoreCase(Appointment.NORMAL)) {
                                 	appointment = new Appointment(id
                                 			, patientId, consultantId, dateTime, patientName, consultantName
-                                			, healthIssue, type, previousId, remarks, status);
+                                			, healthIssue, type, remarks, status);
                                 } else if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
                                 	appointment = new ReferralAppointment(id, patientId
                                 			, consultantId, dateTime, patientName, consultantName, healthIssue
-                                			, type, previousId, remarks, status, referrerName, referrerClinic);
+                                			, type, remarks, status, referrerName, referrerClinic);
                                 } else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
                                 	appointment = new FollowUpAppointment(id, patientId
                                 			, consultantId, dateTime, patientName, consultantName, healthIssue
-                                			, type, previousId, remarks, status, attachment);
+                                			, type, remarks, status, attachment, previousId);
                                 }
                                 
                                 // DOUBLE CHECK
