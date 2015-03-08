@@ -1,6 +1,6 @@
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    tools:context="com.droidcare.AppointmentDetailsActivity"
+    tools:context="com.droidcare.boundary.AppointmentDetailsActivity"
     android:layout_height="wrap_content"
     android:layout_width="match_parent">
     <LinearLayout
