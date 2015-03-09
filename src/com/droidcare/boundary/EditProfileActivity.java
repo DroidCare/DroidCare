@@ -6,7 +6,6 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
-import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -22,10 +21,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.droidcare.R;
-import com.droidcare.R.id;
-import com.droidcare.R.layout;
-import com.droidcare.R.menu;
-import com.droidcare.R.string;
 import com.droidcare.control.Global;
 import com.droidcare.control.UserManager;
 import com.droidcare.entity.User;
