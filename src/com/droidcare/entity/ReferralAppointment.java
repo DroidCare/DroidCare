@@ -2,7 +2,10 @@ package com.droidcare.entity;
 
 import java.util.Date;
 
-import com.droidcare.control.Global;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import android.os.Parcel;
 import android.os.Parcelable;
