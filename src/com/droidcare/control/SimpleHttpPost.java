@@ -1,13 +1,10 @@
 package com.droidcare.control;
 
-import android.content.Entity;
 import android.os.AsyncTask;
-import android.util.Log;
 import android.util.Pair;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;

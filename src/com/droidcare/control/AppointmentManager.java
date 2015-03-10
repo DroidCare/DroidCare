@@ -6,9 +6,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.droidcare.entity.Appointment;
-import com.droidcare.entity.FollowUpAppointment;
-import com.droidcare.entity.ReferralAppointment;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import android.util.Log;
 import android.util.Pair;

@@ -6,7 +6,10 @@ import android.util.Pair;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.droidcare.entity.User;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import java.util.HashMap;
 

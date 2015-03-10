@@ -5,10 +5,10 @@ import java.lang.reflect.Method;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
-import com.droidcare.R;
-import com.droidcare.R.drawable;
-import com.droidcare.boundary.AppointmentDetailsActivity;
-import com.droidcare.entity.Appointment;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import android.app.Notification;
 import android.app.NotificationManager;

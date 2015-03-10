@@ -1,6 +1,9 @@
 package com.droidcare.control;
 
-import com.droidcare.entity.Appointment;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import android.content.Context;
 import android.widget.Toast;
