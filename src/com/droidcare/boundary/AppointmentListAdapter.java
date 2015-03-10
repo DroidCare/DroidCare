@@ -51,7 +51,7 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 			holder = new ViewHolder();
 			
 			// Take all views needed to be customized here
-			holder.titleText = (TextView) convertView.findViewById(R.id.appointment_list_item_textview);
+			//holder.titleText = (TextView) convertView.findViewById(R.id.appointment_list_item_textview);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();

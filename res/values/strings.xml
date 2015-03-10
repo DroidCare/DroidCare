@@ -69,5 +69,12 @@
     <string name="Label_EmailAddress">E-mail Address</string>
     <string name="Label_ForgetPasswordInstruction">Please enter your registered e-mail address.</string>
     <string name="Button_ForgetPassword">Submit</string>
+    <string name="Label_AppointmentID">Appointment ID: </string>
+    <string name="Label_AppointmentType">Type: </string>
+    
+    
+    
+    <string name="TEST_AppointmentID">239</string>
+    <string name="TEST_AppointmentType">Referral</string>
 
 </resources>
