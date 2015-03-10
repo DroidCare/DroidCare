@@ -35,7 +35,7 @@ public abstract class AppointmentManager {
      * If the user is a patient, instantiate {@link #instance} into a {@link PatientAppointmentManager} object.
      * If the user is a consultant, instantiate {@link #instance} into a {@link ConsultantAppointmentManager} object.
      */
-	private static AppointmentManager instance = Global.getUserManager().getUser().getType().equalsIgnoreCase("patient")? new PatientAppointmentManager() : new ConsultantAppointmentManager();	
+	private static AppointmentManager instance = null;
 	
 	/**
 	 * A list of appointments which have been accepted by the consultants.
@@ -72,93 +72,17 @@ public abstract class AppointmentManager {
 	 * @return returns {@link #instance}.
 	 */
 	public static AppointmentManager getInstance() {
-		return instance;
-	}
-	
-	/*
-	/**
-	 * This method is blocking. Call this method in a new AsyncTask.
-	 * @return Returns <i>true</i> if manager successfully obtained list of appointments.
-	 */
-	/*
-    public boolean fetchAppointmentList() {
-		String sessionId = Global.getAppSession().getString("session_id");
-		if(sessionId == null) {
-			// Unsuccessful
-			return false;
-		}
-		
-		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("session_id", sessionId);
-		
-		String responseText = new HttpPostRequest(data).send(Global.USER_APPOINTMENT_URL);
-		
-		int responseStatus = -1;
-		try {
-			JSONObject response = new JSONObject(responseText);
-			
-			responseStatus = response.getInt("status");
-			switch(responseStatus) {
-			
-			case 0:
-				JSONArray paramList = response.getJSONArray("message");
-				
-				for(int i = 0, size = paramList.length(); i < size; ++i){
-					JSONObject param = paramList.getJSONObject(i);
-					
-					int		id = param.getInt("id"),
-							patientId = param.getInt("patient_id"),
-							consultantId = param.getInt("consultant_id"),
-							previousId = param.getInt("previous_id");
-					
-					String	dateTime = param.getString("date_time"),
-							patientName = param.getString("patient_name"),
-							consultantName = param.getString("consultant_name"),
-							healthIssue = param.getString("health_issue"),
-							attachmentPaths = param.getString("attachment_paths"),
-							type = param.getString("type"),
-							referrerName = param.getString("referrer_name"),
-							referrerClinic = param.getString("referrer_clinic"),
-							remarks = param.getString("remarks"),
-							status = param.getString("status");
-					
-					Appointment appointment = new Appointment(id
-							, patientId, consultantId, dateTime, patientName, consultantName
-							, healthIssue, attachmentPaths, type, referrerName, referrerClinic
-							, previousId, remarks, status);
-
-					switch(appointment.getStatus()) {
-
-					case Appointment.PENDING:
-						addPendingAppointment(appointment);
-						break;
-					case Appointment.ACCEPTED:
-						addAcceptedAppointment(appointment);
-						break;
-					case Appointment.REJECTED:
-						addRejectedAppointment(appointment);
-						break;
-					case Appointment.FINISHED:
-						addFinishedAppointment(appointment);
-						break;
-
-					default:
-						break;
-					}
-				}
-				
-				return true;
-				
-		// Do nothing on exception and status != 0
-			default:
-				break;
-			}
-		} catch (JSONException e) {
-		}
-		
-		return false;
-	}
-	*/
+        if(instance == null) {
+            if(Global.getUserManager().getUser() == null) {
+                return null;
+            } else {
+                return instance = Global.getUserManager().getUser().getType().equalsIgnoreCase("patient") ?
+                        new PatientAppointmentManager()
+                        : new ConsultantAppointmentManager();
+            }
+        }
+        return instance;
+    }
 
 	/**
 	 * Fetches all appointments data related to this user and categorizes each appointment according to its status.
@@ -201,7 +125,7 @@ public abstract class AppointmentManager {
                                         patientName = params.getString("patient_name"),
                                         consultantName = params.getString("consultant_name"),
                                         healthIssue = params.getString("health_issue"),
-                                        attachment = params.getString("attachment"),
+                                        // attachment = params.getString("attachment"),
                                         type = params.getString("type"),
                                         referrerName = params.getString("referrer_name"),
                                         referrerClinic = params.getString("referrer_clinic"),
@@ -220,7 +144,7 @@ public abstract class AppointmentManager {
                                 } else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
                                 	appointment = new FollowUpAppointment(id, patientId
                                 			, consultantId, dateTime, patientName, consultantName, healthIssue
-                                			, type, remarks, status, attachment, previousId);
+                                			, type, remarks, status, "", previousId);
                                 }
                                 
                                 // DOUBLE CHECK

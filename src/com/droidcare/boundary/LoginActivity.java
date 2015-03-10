@@ -95,7 +95,7 @@ public class LoginActivity extends Activity {
             case LoginManager.EMAIL_EMPTY:
                 putMessage("Email field is empty!");
             case LoginManager.PASSWORD_TOO_SHORT:
-                putMessage("Password should be at least 4 characters!");
+                putMessage("Password should be at least 6 characters!");
             default:
                 view.setEnabled(true);
                 pd.dismiss();
