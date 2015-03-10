@@ -1,10 +1,9 @@
 package com.droidcare.boundary;
 
-import com.droidcare.R;
-import com.droidcare.control.AppointmentManager;
-import com.droidcare.control.Global;
-import com.droidcare.control.LoginManager;
-import com.droidcare.entity.User;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import android.app.ActionBar;
 import android.app.AlertDialog;

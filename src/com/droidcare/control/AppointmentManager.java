@@ -80,8 +80,6 @@ public abstract class AppointmentManager {
 	 * @return Returns <i>true</i> if manager successfully obtained list of appointments.
 	 */
 	/*
-	 * */
-	/*
     public boolean fetchAppointmentList() {
 		String sessionId = Global.getAppSession().getString("session_id");
 		if(sessionId == null) {

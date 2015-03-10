@@ -20,10 +20,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.droidcare.R;
-import com.droidcare.control.Global;
-import com.droidcare.control.UserManager;
-import com.droidcare.entity.User;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import java.util.HashMap;
 

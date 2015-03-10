@@ -1,7 +1,9 @@
 package com.droidcare.boundary;
 
-import com.droidcare.R;
-import com.droidcare.control.Global;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import android.app.Activity;
 import android.app.AlertDialog;

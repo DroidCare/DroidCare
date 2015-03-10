@@ -2,10 +2,10 @@ package com.droidcare.boundary;
 
 import java.util.List;
 
-import com.droidcare.R;
-import com.droidcare.R.id;
-import com.droidcare.R.layout;
-import com.droidcare.entity.Appointment;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 import android.app.Activity;
 import android.content.Context;

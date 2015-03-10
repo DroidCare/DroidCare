@@ -13,16 +13,10 @@ import android.widget.TextView;
 
 import java.util.Date;
 
-import com.droidcare.R;
-import com.droidcare.R.id;
-import com.droidcare.R.layout;
-import com.droidcare.R.menu;
-import com.droidcare.control.ConsultantAppointmentManager;
-import com.droidcare.control.Global;
-import com.droidcare.control.PatientAppointmentManager;
-import com.droidcare.entity.Appointment;
-import com.droidcare.entity.FollowUpAppointment;
-import com.droidcare.entity.ReferralAppointment;
+import com.droidcare.*;
+import com.droidcare.control.*;
+import com.droidcare.boundary.*;
+import com.droidcare.entity.*;
 
 public class AppointmentDetailsActivity extends Activity {
 	private Appointment appointment;
