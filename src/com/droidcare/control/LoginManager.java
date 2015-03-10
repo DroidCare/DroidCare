@@ -97,7 +97,8 @@ public class LoginManager {
                             return;
 
                         default:
-                            break;
+                            listener.onFinishTask(responseText);
+                            return;
                     }
                 // Do nothing on exception
                 } catch (JSONException e) {
