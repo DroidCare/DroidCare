@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="10dp"
+    android:paddingLeft="10dp"
+    android:paddingRight="10dp"
+    android:paddingTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" >
@@ -12,6 +12,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+		android:layout_marginBottom="3dp"        
         android:orientation="horizontal" >
         
 	    <TextView
@@ -37,6 +38,62 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/TEST_AppointmentType" />
+	    
+	 </LinearLayout>
+	 <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:orientation="horizontal" >
+        
+	    <TextView
+	        android:id="@+id/Label_AppointmentDateTime"
+	        android:layout_width="80dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/Label_AppointmentDateTime" />
+	    
+	    <TextView
+	        android:id="@+id/Field_AppointmentDateTime"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/TEST_AppointmentDateTime" />
+	    
+	 </LinearLayout>
+	 <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:orientation="horizontal" >
+        
+	    <TextView
+	        android:id="@+id/Label_AppointmentHealthIssue"
+	        android:layout_width="90dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/Label_AppointmentHealthIssue" />
+	    
+	    <TextView
+	        android:id="@+id/Field_AppointmentHealthIssue"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/TEST_AppointmentHealthIssue" />
+	    
+	 </LinearLayout>
+	 <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" >
+        
+	    <TextView
+	        android:id="@+id/Label_AppointmentConsultant"
+	        android:layout_width="90dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/Label_AppointmentConsultant" />
+	    
+	    <TextView
+	        android:id="@+id/Field_AppointmentConsultant"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/TEST_AppointmentConsultant" />
 	    
 	 </LinearLayout>
 

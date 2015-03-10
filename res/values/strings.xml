@@ -71,10 +71,14 @@
     <string name="Button_ForgetPassword">Submit</string>
     <string name="Label_AppointmentID">Appointment ID: </string>
     <string name="Label_AppointmentType">Type: </string>
-    
-    
+    <string name="Label_AppointmentDateTime">Date/Time: </string>
+    <string name="Label_AppointmentHealthIssue">Health Issue: </string>
+    <string name="Label_AppointmentConsultant">Consultant: </string>
     
     <string name="TEST_AppointmentID">239</string>
     <string name="TEST_AppointmentType">Referral</string>
+    <string name="TEST_AppointmentDateTime">Monday, 9 March 2015 / 14.00</string>
+    <string name="TEST_AppointmentHealthIssue">Dental problem</string>
+    <string name="TEST_AppointmentConsultant">Dr. Andrew Tan</string>
 
 </resources>
