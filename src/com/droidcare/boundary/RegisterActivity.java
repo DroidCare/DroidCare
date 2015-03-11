@@ -73,6 +73,7 @@ public class RegisterActivity extends Activity {
         String  passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
                 fullName = ((EditText) findViewById(R.id.name_field)).getText().toString(),
                 address = ((EditText) findViewById(R.id.address_field)).getText().toString(),
+                country = ((Spinner) findViewById(R.id.country_field)).getSelectedItem().toString(),
                 email = ((EditText) findViewById(R.id.email_field)).getText().toString(),
                 dateOfBirth = ((Button) findViewById(R.id.dob_field)).getText().toString(),
                 gender = ((Spinner) findViewById(R.id.gender_field)).getSelectedItem().toString(),
@@ -93,6 +94,11 @@ public class RegisterActivity extends Activity {
         
         if (address == null || address.isEmpty()) {
             putMessage("Address field is empty!");
+            valid = 0;
+        }
+        
+        if (country == null || country.isEmpty()) {
+            putMessage("Country field is empty!");
             valid = 0;
         } 
         
@@ -167,6 +173,7 @@ public class RegisterActivity extends Activity {
                 Global.getRegisterManager().registerUser(	passportNumber
                 											, fullName
                 											, address
+                											, country
                 											, email
                 											, dateOfBirth
                 											, gender

@@ -56,6 +56,7 @@ public class EditProfileActivity extends Activity {
                 new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString(),
                 passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
                 address = ((EditText) findViewById(R.id.address_field)).getText().toString(),
+                country = ((Spinner) findViewById(R.id.country_field)).getSelectedItem().toString(),
                 nationality = ((Spinner) findViewById(R.id.nationality_field)).getSelectedItem().toString(),
                 password = old_pw;
 
@@ -83,6 +84,11 @@ public class EditProfileActivity extends Activity {
         if (address.isEmpty()) {
             valid = 0;
             putMessage("Address field must not be empty!");
+        } 
+        
+        if (country.isEmpty()) {
+            valid = 0;
+            putMessage("Country field must not be empty!");
         } 
         
         if (nationality.isEmpty()) {
@@ -116,7 +122,7 @@ public class EditProfileActivity extends Activity {
                 Log.d("DEBUGGING", "notification = " + notificationTypeString);
                 ProgressDialog pd = ProgressDialog.show(this, null, "Updating profile ...", true);
 
-                Global.getUserManager().editProfile(password, address, passportNumber
+                Global.getUserManager().editProfile(password, address, country, passportNumber
                         , nationality, notificationTypeString, new UserManager.OnFinishListener() {
                     private ProgressDialog pd;
                     public UserManager.OnFinishListener init(ProgressDialog pd) {

@@ -97,6 +97,16 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		return true;
 	}
 	
+	// REMOVE EDIT PROFILE IF THE USER IS A CONSULTANT
+	@Override
+	public boolean onPrepareOptionsMenu (Menu menu) {
+	    if (Global.getUserManager().getUser().getType().equalsIgnoreCase("consultant")) {
+	        menu.getItem(0).setEnabled(false);
+	    }
+	    
+	    return true;
+	}
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
         // Handle action bar item clicks here. The action bar will
@@ -106,9 +116,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
             case R.id.action_logout:
                 doLogout();
                 return true;
-            case R.id.action_settings:
-                return true;
-
             case R.id.action_EditProfile:
                 Intent intent = new Intent(this, EditProfileActivity.class);
                 startActivity(intent);

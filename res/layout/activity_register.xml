@@ -66,6 +66,23 @@
                 android:layout_height="wrap_content"
                 android:inputType="text" />
         </LinearLayout>
+        
+        <LinearLayout
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+            <TextView
+                android:id="@+id/country_label"
+                android:layout_width="125dp"
+                android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+                android:text="@string/LabelText_country" />
+            <Spinner
+                android:id="@+id/country_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/Country_values" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"

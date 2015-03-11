@@ -15,6 +15,7 @@
     <string name="LabelText_Confirm">Confirm Password</string>
     <string name="LabelText_passport">Passport No.</string>
     <string name="LabelText_address">Address</string>
+    <string name="LabelText_country">Country</string>
     <string name="LabelText_dob">Date of birth</string>
     <string name="ButtonText_dob">Input</string>
     <string name="title_activity_home">Home</string>
@@ -27,8 +28,14 @@
         <item>Female</item>
     </string-array>
 
+    <string-array name="Country_values">
+        <item></item>
+        <item>Singapore</item>
+        <item>Thailand</item>
+        <item>Malaysia</item>
+    </string-array>
+    
     <string name="LabelText_nationality">Nationality</string>
-
     <string-array name="Nationality_values">
         <item></item>
         <item>Indonesian</item>

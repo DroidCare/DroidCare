@@ -6,6 +6,7 @@ public class User{
 	private String	email,
 					fullName,
 					address,
+					country,
 					passportNumber,
 					nationality,
 					dateOfBirth,
@@ -18,13 +19,14 @@ public class User{
 	public User(){}
 	
 	// Lengthy constructor
-	public User(int id, String email, String fullName, String address
+	public User(int id, String email, String fullName, String address, String country
 			, String gender, String passportNumber, String nationality
 			, String dateOfBirth, String type, String notification){
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
+		this.country = country;
 		this.gender = gender;
 		this.passportNumber = passportNumber;
 		this.nationality = nationality;
@@ -33,13 +35,14 @@ public class User{
         this.notification = notification;
 	}
 	
-	public void setData(int id, String email, String fullName, String address
+	public void setData(int id, String email, String fullName, String address, String country
 			, String gender, String passportNumber, String nationality
 			, String dateOfBirth, String type, String notification){
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
+		this.country = country;
 		this.gender = gender;
 		this.passportNumber = passportNumber;
 		this.nationality = nationality;
@@ -53,6 +56,10 @@ public class User{
 	
 	public void setAddress(String address){
 		this.address = address;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
 	}
 	
 	public void setPassportNumber(String passportNumber){
@@ -73,6 +80,10 @@ public class User{
 	
 	public String getAddress(){
 		return address;
+	}
+	
+	public String getCountry(){
+		return country;
 	}
 	
 	public String getPassportNumber(){

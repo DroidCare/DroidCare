@@ -74,13 +74,14 @@ public class UserManager {
 				String	email = params.getString("email"),
 						fullName = params.getString("full_name"),
 						address = params.getString("address"),
+						country = params.getString("country"),
 						passportNumber = params.getString("passport_number"),
 						nationality = params.getString("nationality"),
 						dateOfBirth = params.getString("date_of_birth"),
 						type = params.getString("type"),
                         gender = params.getString("gender");
 				
-				user = new User(id, email, fullName, address
+				user = new User(id, email, fullName, address, country
 						, gender, passportNumber, nationality,
 						dateOfBirth, type, params.getString("notification"));
 				
@@ -96,11 +97,11 @@ public class UserManager {
 		return false;
 	}
 
-    public User createUser(int id, String email, String fullName, String address
+    public User createUser(int id, String email, String fullName, String address, String country
             , String gender, String passportNumber, String nationality
             , String dateOfBirth, String type, String notification) {
 
-        return user = new User(id, email, fullName, address
+        return user = new User(id, email, fullName, address, country
                 , gender, passportNumber, nationality, dateOfBirth, type
                 , notification);
     }
@@ -109,13 +110,14 @@ public class UserManager {
         return user = new User();
     }
 
-    public void editProfile(String password, String address, String passportNumber
+    public void editProfile(String password, String address, String country, String passportNumber
             , String nationality, String notificationTypeString, OnFinishListener onFinishListener) {
         new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())
                 , new Pair<String, String>("email", user.getEmail())
                 , new Pair<String, String>("password", password)
                 , new Pair<String, String>("full_name", user.getFullName())
                 , new Pair<String, String>("address", address)
+                , new Pair<String, String>("country", country)
                 , new Pair<String, String>("gender", user.getGender())
                 , new Pair<String, String>("passport_number", passportNumber)
                 , new Pair<String, String>("nationality", nationality)
@@ -124,18 +126,21 @@ public class UserManager {
                 , new Pair<String, String>("session_id", user.getSessionId())) {
             private OnFinishListener listener;
             private String  address,
+            				country,
                             passportNumber,
                             nationality,
                             notification;
 
             public SimpleHttpPost init(OnFinishListener listener
                     , String address
+                    , String country
                     , String passportNumber
                     , String nationality
                     , String notification) {
             	
                 this.listener = listener;
                 this.address = address;
+                this.country = country;
                 this.passportNumber = passportNumber;
                 this.nationality = nationality;
                 this.notification = notification;
@@ -162,7 +167,7 @@ public class UserManager {
 
                 listener.onFinish(responseText);
             }
-        }.init(onFinishListener, address, passportNumber
+        }.init(onFinishListener, address, country, passportNumber
                 , nationality, notificationTypeString).send(Global.USER_UPDATE_URL);
     }
 }
