@@ -34,7 +34,7 @@ public class Appointment implements Parcelable{
 	/**
 	 * Appointment type.
 	 */
-	public static final String	FOLLOW_UP 	= "follow_up",
+	public static final String	FOLLOW_UP 	= "follow-up",
 								REFERRAL 	= "referral",
 								NORMAL 		= "normal";
 	/**
