@@ -35,6 +35,11 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		setContentView(R.layout.activity_home);
 
         Global.initAppointmentManager();
+        AppointmentManager appointmentManager = Global.getAppointmentManager();
+        appointmentManager.clearRejectedAppointments();
+        appointmentManager.clearAcceptedAppointments();
+        appointmentManager.clearFinishedAppointments();
+        appointmentManager.clearPendingAppointments();
 
         Log.d("DEBUGGING", "HomeActivity onCreate");
         Global.getAppointmentManager().retrieveAppointmentList(new AppointmentManager.OnFinishListener() {
