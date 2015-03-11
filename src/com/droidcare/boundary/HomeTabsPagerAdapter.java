@@ -18,7 +18,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  */
 
 public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
-	private final int NO_OF_TABS = 3;
+	private final int NO_OF_TABS = 4;
 	
 	public HomeTabsPagerAdapter (FragmentManager fm) {
 		super(fm);

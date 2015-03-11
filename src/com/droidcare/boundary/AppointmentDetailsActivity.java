@@ -33,6 +33,7 @@ public class AppointmentDetailsActivity extends Activity {
 			setContentView(R.layout.appointment_details_consultant_activity);
 		
 		// Unpack the parcelled Appointment data
+        Intent intent = getIntent();
 		Bundle data = getIntent().getExtras();
 		String appointmentType = data.getString("appointmentType");
 		
