@@ -1,5 +1,8 @@
 package com.droidcare.boundary;
 
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.droidcare.*;
@@ -34,7 +37,8 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 	
 	private class ViewHolder {
 		// ALL VIEWS THAT NEED TO BE CUSTOMIZED ARE PUT HERE
-		TextView titleText;
+		TextView appointmentIdText, appointmentTypeText, appointmentDateTimeText,
+				 appointmentHealthIssueText, appointmentConsultantText;
 	}
 	
 	@Override
@@ -51,15 +55,26 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 			holder = new ViewHolder();
 			
 			// Take all views needed to be customized here
-			//holder.titleText = (TextView) convertView.findViewById(R.id.appointment_list_item_textview);
+			holder.appointmentIdText = (TextView) convertView.findViewById(R.id.Field_AppointmentID);
+			holder.appointmentTypeText = (TextView) convertView.findViewById(R.id.Field_AppointmentType);
+			holder.appointmentDateTimeText = (TextView) convertView.findViewById(R.id.Field_AppointmentDateTime);
+			holder.appointmentHealthIssueText = (TextView) convertView.findViewById(R.id.Field_AppointmentHealthIssue);
+			holder.appointmentConsultantText = (TextView) convertView.findViewById(R.id.Field_AppointmentConsultant);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
 		}
 		
 		if (appointment != null) {
+			Date d = new Date(appointment.getDateTimeMillis());
+			String dateTimeString = Global.dateFormat.format(d);
+			
 			// Customize the view based on each appointment details
-			holder.titleText.setText("" + appointment.getId());
+			holder.appointmentIdText.setText("" + appointment.getId());
+			holder.appointmentTypeText.setText(appointment.getType());
+			holder.appointmentDateTimeText.setText(dateTimeString);
+			holder.appointmentHealthIssueText.setText(appointment.getHealthIssue());
+			holder.appointmentConsultantText.setText(appointment.getConsultantName());
 		}
 		
 		return convertView;
