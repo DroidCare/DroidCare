@@ -14,6 +14,7 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -34,6 +35,8 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		setContentView(R.layout.activity_home);
 
         Global.initAppointmentManager();
+
+        Log.d("DEBUGGING", "HomeActivity onCreate");
         Global.getAppointmentManager().retrieveAppointmentList(new AppointmentManager.OnFinishListener() {
             @Override
             public void onFinish(String responseText) {

@@ -69,7 +69,7 @@
         <activity
             android:name="com.droidcare.boundary.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
-            android:parentActivityName="con.droidcare.boundary.LoginActivity" >
+            android:parentActivityName="com.droidcare.boundary.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.boundary.LoginActivity" />
