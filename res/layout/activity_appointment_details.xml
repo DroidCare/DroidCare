@@ -1,0 +1,268 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView  xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context="com.droidcare.boundary.EditProfileActivity"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentId"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentID" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentID" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentPreviousId"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentPreviousId"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentPreviousID" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentPreviousId"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentPreviousID" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentReferrerName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentReferrerName"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentReferrerName" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentReferrerName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentReferrerName" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentReferrerClinic"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentReferrerClinic"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentReferrerClinic" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentReferrerClinic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentReferrerClinic" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentStatus"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentStatus" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentStatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentStatus" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentType"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentType"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentType" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentType"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentType" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentConsultantName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentConsultantName"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentConsultant" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentConsultantName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentConsultant" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentDateTime"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentDateTime" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentDateTime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentDateTime" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentHealthIssue"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentHealthIssue"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentHealthIssue" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentHealthIssue"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentHealthIssue" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentAttachment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentAttachment"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentAttachment" />
+            
+            <ImageView
+                android:id="@+id/Field_AppointmentAttachment"
+                android:contentDescription="@string/AppointmentAttachmentDescription"
+                android:layout_width="150dp"
+                android:layout_height="150dp" />
+        </LinearLayout>
+        
+        <LinearLayout
+            android:id="@+id/LL_AppointmentRemarks"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentRemarks"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentRemarks" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentRemarks"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentRemarks" />
+        </LinearLayout>
+        
+        <Button
+            android:id="@+id/Button_EditAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:text="@string/Button_Edit_Appointment" />
+        
+        <Button
+            android:id="@+id/Button_CancelAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/Button_Cancel_Appointment" />
+        
+        <Button
+            android:id="@+id/Button_AcceptAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_gravity="center"
+            android:text="@string/Button_Accept_Appointment" />
+        
+        <Button
+            android:id="@+id/Button_RejectAppointment"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/Button_Reject_Appointment" />
+    </LinearLayout>
+    
+</ScrollView>

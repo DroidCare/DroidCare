@@ -76,16 +76,28 @@
     <string name="Label_EmailAddress">E-mail Address</string>
     <string name="Label_ForgetPasswordInstruction">Please enter your registered e-mail address.</string>
     <string name="Button_ForgetPassword">Submit</string>
-    <string name="Label_AppointmentID">Appointment ID: </string>
-    <string name="Label_AppointmentType">Type: </string>
-    <string name="Label_AppointmentDateTime">Date/Time: </string>
-    <string name="Label_AppointmentHealthIssue">Health Issue: </string>
-    <string name="Label_AppointmentConsultant">Consultant: </string>
+    <string name="Label_AppointmentID">ID</string>
+    <string name="Label_AppointmentPreviousID">Previous ID</string>
+    <string name="Label_AppointmentReferrerName">Referrer Name</string>
+    <string name="Label_AppointmentReferrerClinic">Referrer Clinic</string>
+    <string name="Label_AppointmentType">Type</string>
+    <string name="Label_AppointmentDateTime">Date/Time</string>
+    <string name="Label_AppointmentHealthIssue">Health Issue</string>
+    <string name="Label_AppointmentConsultant">Consultant</string>
+    <string name="Label_AppointmentStatus">Status</string>
+    <string name="Label_AppointmentAttachment">Attachment</string>
+    <string name="AppointmentAttachmentDescription">Appointment Attachment</string>
+    <string name="Label_AppointmentRemarks">Remarks</string>
     
     <string name="TEST_AppointmentID">239</string>
+    <string name="TEST_AppointmentPreviousID">500</string>
+    <string name="TEST_AppointmentReferrerName">Dr. KPETUR</string>
+    <string name="TEST_AppointmentReferrerClinic">Clinic X</string>
     <string name="TEST_AppointmentType">Referral</string>
-    <string name="TEST_AppointmentDateTime">Monday, 9 March 2015 / 14.00</string>
-    <string name="TEST_AppointmentHealthIssue">Dental problem</string>
+    <string name="TEST_AppointmentStatus">Finished</string>
+    <string name="TEST_AppointmentDateTime">Monday, 9 March 2015/14.00</string>
+    <string name="TEST_AppointmentHealthIssue">Dental problem asdhjasgdajhsgdajhsgdajhsgdajhsgdajhsdgajhsd</string>
     <string name="TEST_AppointmentConsultant">Dr. Andrew Tan</string>
+    <string name="TEST_AppointmentRemarks">Lalalalalalalalallaksdjalksjdalksjdlkqwjelqkwjelkasjdlkasjd</string>
 
 </resources>

@@ -34,7 +34,7 @@ public class ImageManager {
 	 * @param image	{@link Bitmap} object of the image.
 	 * @return		a Base64 encoded String.
 	 */
-	public static String encodeImageBase64 (Bitmap image) {
+	public String encodeImageBase64 (Bitmap image) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 		
@@ -50,7 +50,7 @@ public class ImageManager {
 	 * @param encodedImage	a Base64 encoded String.
 	 * @return				an image {@link Bitmap} object.
 	 */
-	public static Bitmap decodeImageBase64 (String encodedImage) {
+	public Bitmap decodeImageBase64 (String encodedImage) {
 		byte[] imageByte = Base64.decode(encodedImage, 0);
 		return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
 	}
