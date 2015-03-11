@@ -31,7 +31,7 @@ public class RejectedAppointmentList extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 		
 		// Creating a new intent
-		Intent intent = new Intent(getActivity().getApplicationContext(), AppointmentDetailsActivity.class);
+		Intent intent = new Intent(getActivity(), AppointmentDetailsActivity.class);
 		Appointment a = this.rejectedAppointmentList.get(position);
 		intent.putExtra("appointmentType", a.getType());
 		

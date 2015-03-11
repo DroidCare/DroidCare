@@ -90,7 +90,7 @@ public class Appointment implements Parcelable{
 		this.healthIssue	= healthIssue;
 		this.type 			= type;
 		this.status			= status;
-		this.remarks = remarks;
+		this.remarks 		= remarks;
 		
 		try {
 			this.dateTimeMillis = Global.dateFormat.parse(dateTime).getTime();
@@ -233,6 +233,7 @@ public class Appointment implements Parcelable{
 		this.consultantName = in.readString();
 		this.healthIssue = in.readString();
 		this.type = in.readString();
+		this.remarks = in.readString();
 		this.status = in.readString();
 	}
 	
@@ -251,6 +252,7 @@ public class Appointment implements Parcelable{
 		dest.writeString(this.consultantName);
 		dest.writeString(this.healthIssue);
 		dest.writeString(this.type);
+		dest.writeString(this.remarks);
 		dest.writeString(this.status);
 	}
 	

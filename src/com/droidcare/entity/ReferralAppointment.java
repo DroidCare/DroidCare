@@ -87,7 +87,7 @@ public class ReferralAppointment extends Appointment {
 		super(in.readInt(), in.readInt(), in.readInt(), Global.dateFormat.format(new Date(in.readLong())), 
 				in.readString(), in.readString(), in.readString() ,in.readString(),
 				in.readString(), in.readString());
-		
+	
 		this.referrerName = in.readString();
 		this.referrerClinic = in.readString();
 	}
@@ -107,6 +107,7 @@ public class ReferralAppointment extends Appointment {
 		dest.writeString(getConsultantName());
 		dest.writeString(getHealthIssue());
 		dest.writeString(getType());
+		dest.writeString(getRemarks());
 		dest.writeString(getStatus());
 		dest.writeString(this.referrerName);
 		dest.writeString(this.referrerClinic);

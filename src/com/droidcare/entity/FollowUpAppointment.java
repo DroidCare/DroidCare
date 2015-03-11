@@ -86,7 +86,7 @@ public class FollowUpAppointment extends Appointment {
 		super(in.readInt(), in.readInt(), in.readInt(), Global.dateFormat.format(new Date(in.readLong())), 
 				in.readString(), in.readString(), in.readString() ,in.readString(),
 				in.readString(), in.readString());
-		
+
 		this.attachment = in.readString();
 		this.previousId = in.readInt();
 	}
@@ -106,6 +106,7 @@ public class FollowUpAppointment extends Appointment {
 		dest.writeString(getConsultantName());
 		dest.writeString(getHealthIssue());
 		dest.writeString(getType());
+		dest.writeString(getRemarks());
 		dest.writeString(getStatus());
 		dest.writeString(this.attachment);
 		dest.writeInt(this.previousId);
