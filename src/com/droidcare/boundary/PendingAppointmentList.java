@@ -42,7 +42,7 @@ public class PendingAppointmentList extends ListFragment {
 		super.onListItemClick(l, v, position, id);
 		
 		// Creating a new intent
-		Intent intent = new Intent(getActivity().getApplicationContext(), AppointmentDetailsActivity.class);
+		Intent intent = new Intent(getActivity(), AppointmentDetailsActivity.class);
 		Appointment a = this.pendingAppointmentList.get(position);
 		intent.putExtra("appointmentType", a.getType());
 		
