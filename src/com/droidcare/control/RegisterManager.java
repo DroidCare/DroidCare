@@ -31,7 +31,7 @@ public class RegisterManager {
         new SimpleHttpPost(new Pair<String, String>("passport_number", passportNumber)
                 , new Pair<String, String>("full_name", fullName)
                 , new Pair<String, String>("address", address)
-                , new Pair<String, String>("country", country)
+                , new Pair<String, String>("location", country)
                 , new Pair<String, String>("email", email)
                 , new Pair<String, String>("date_of_birth", dateOfBirth)
                 , new Pair<String, String>("gender", gender)

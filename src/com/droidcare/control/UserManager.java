@@ -42,60 +42,6 @@ public class UserManager {
     public interface OnFinishListener {
         public abstract void onFinish(String responseText);
     }
-	
-	/**
-	 * This method is blocking. Call this method in a new AsyncTask.
-	 * @return Returns {@code true} if manager successfully obtained user's details, {@code false} otherwise.
-	 */
-	public boolean fetchUserDetails() {
-		String sessionId = Global.getAppSession().getString("session_id");
-		if(sessionId == null){
-			// Unsuccessful
-			return false;
-		}
-
-		HashMap<String, String> data = new HashMap<String, String>();
-		data.put("session_id", sessionId);
-		
-		String responseText = new HttpPostRequest(data).send(Global.USER_URL);
-		
-		int status = -1;
-		try {
-			JSONObject response = new JSONObject(responseText);
-			
-			status = response.getInt("status");
-			switch(status) {
-			
-			case 0:
-				JSONObject params = response.getJSONObject("message");
-				
-				int		id = params.getInt("id");
-				
-				String	email = params.getString("email"),
-						fullName = params.getString("full_name"),
-						address = params.getString("address"),
-						country = params.getString("country"),
-						passportNumber = params.getString("passport_number"),
-						nationality = params.getString("nationality"),
-						dateOfBirth = params.getString("date_of_birth"),
-						type = params.getString("type"),
-                        gender = params.getString("gender");
-				
-				user = new User(id, email, fullName, address, country
-						, gender, passportNumber, nationality,
-						dateOfBirth, type, params.getString("notification"));
-				
-				return true;
-		
-		// Do nothing on exception and status != 0
-			default:
-				break;
-			}
-		} catch (JSONException e) {
-		}
-		
-		return false;
-	}
 
     public User createUser(int id, String email, String fullName, String address, String country
             , String gender, String passportNumber, String nationality
@@ -117,7 +63,7 @@ public class UserManager {
                 , new Pair<String, String>("password", password)
                 , new Pair<String, String>("full_name", user.getFullName())
                 , new Pair<String, String>("address", address)
-                , new Pair<String, String>("country", country)
+                , new Pair<String, String>("location", country)
                 , new Pair<String, String>("gender", user.getGender())
                 , new Pair<String, String>("passport_number", passportNumber)
                 , new Pair<String, String>("nationality", nationality)
