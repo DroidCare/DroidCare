@@ -32,8 +32,8 @@ public class AppointmentDetailsActivity extends Activity {
 		
 		// Unpack the parcelled Appointment data
 		Bundle data = getIntent().getExtras();
-		String appointmentType = data.getString("appointmentType");
-		
+		//String appointmentType = data.getString("appointmentType");
+		/*
 		if (appointmentType.equalsIgnoreCase(Appointment.NORMAL)) {
 			this.appointment = (Appointment) data.getParcelable("appointment");
 		} else if (appointmentType.equalsIgnoreCase(Appointment.REFERRAL)) {
@@ -41,6 +41,7 @@ public class AppointmentDetailsActivity extends Activity {
 		} else if (appointmentType.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
 			this.appointment = (FollowUpAppointment) data.getParcelable("followUpAppointment");
 		}
+		*/
 		
 		// Cancel the notification of THIS APPOINTMENT
 		// Notification ID is always the same as Appointment ID
@@ -48,12 +49,12 @@ public class AppointmentDetailsActivity extends Activity {
 		notificationManager.cancel(appointment.getId());
 		
 		// SETTING UP LAYOUT
-		this.configureLayout(appointmentType, 
-							 appointment.getStatus(),
-							 Global.getUserManager().getUser().getType());
+		//this.configureLayout(appointmentType, 
+		//					 appointment.getStatus(),
+		//					 Global.getUserManager().getUser().getType());
 		
 		// POPULATING THE APPOINTMENT DATA
-		this.setData(appointment);
+		//this.setData(appointment);
 	}
 
 	@Override

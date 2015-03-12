@@ -44,7 +44,7 @@ public class AcceptedAppointmentList extends ListFragment {
 		// Creating a new intent
 		Intent intent = new Intent(getActivity(), AppointmentDetailsActivity.class);
 		Appointment a = this.acceptedAppointmentList.get(position);
-		intent.putExtra("appointmentType", a.getType());
+		//intent.putExtra("appointmentType", a.getType());
 		
 		// USE OF POLYMORPHISM
 		if (a.getType().equalsIgnoreCase(Appointment.NORMAL)) {
