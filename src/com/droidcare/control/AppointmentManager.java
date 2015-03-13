@@ -11,6 +11,7 @@ import com.droidcare.control.*;
 import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
+import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
 
@@ -81,6 +82,7 @@ public abstract class AppointmentManager {
                         : new ConsultantAppointmentManager();
             }
         }
+        
         return instance;
     }
 
@@ -306,5 +308,30 @@ public abstract class AppointmentManager {
 	 */
 	public void clearFinishedAppointments() {
 		finishedAppointments.clear();
+	}
+	
+	/**
+	 * Set all accepted appointment "ALARM" 
+	 * @param context the context from which this method is called
+	 */
+	public void setAllAlarms (Context context) {
+		for (Appointment a: this.acceptedAppointments) {
+			Global.getAlarmSetter().setAlarm(context, a);
+		}
+	}
+	
+	public String getAttachment (FollowUpAppointment followUpAppointment) {
+		// @pciang : implement this, will be called when AppointmentDetailsActivity and EditAppointmentActivity is opened!
+		return "";
+	}
+	
+	// UPDATE STATUS IN DATABASE OF THIS APPOINTMENT
+	public void updateStatusDB (Appointment appointment) {
+		// @pciang : implement this
+	}
+	
+	// DELETE THIS APPOINTMENT ENTRY
+	public void deleteAppointmentDB (Appointment appointment) {
+		// @pciang : implement this
 	}
 }

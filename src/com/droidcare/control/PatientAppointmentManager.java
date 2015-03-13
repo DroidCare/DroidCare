@@ -43,6 +43,7 @@ public class PatientAppointmentManager extends AppointmentManager {
 	 */
 	public void cancelAppointment (Appointment appointment, OnFinishListener onFinishListener) {
 		// Double check Pending status
+<<<<<<< HEAD
 		if (appointment.getStatus().equalsIgnoreCase(Appointment.PENDING)) {
             new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
                     , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
@@ -71,6 +72,17 @@ public class PatientAppointmentManager extends AppointmentManager {
                     listener.onFinish(responseText);
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_CANCEL_URL);
+=======
+		if (appointment.getStatus() == Appointment.PENDING) {
+			this.removePendingAppointment(appointment);
+			
+			// @pciang: please DELETE the entry in the database
+			this.deleteAppointmentDB(appointment);
+			
+			// SIMPLE FEEDBACK
+			Toast toast = Toast.makeText(context, "Appointment cancelled!", Toast.LENGTH_SHORT);
+			toast.show();
+>>>>>>> origin/master
 		}
 	}
 }

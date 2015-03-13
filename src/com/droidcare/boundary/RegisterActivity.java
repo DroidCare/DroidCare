@@ -27,6 +27,8 @@ import com.droidcare.entity.*;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 
 public class RegisterActivity extends Activity {
@@ -109,6 +111,13 @@ public class RegisterActivity extends Activity {
         
         try {
             dateOfBirthFormat.format(dateOfBirthFormat.parse(dateOfBirth));
+            
+            // CHECKING DATE OF BIRTH VALIDITY
+            Calendar cal = new GregorianCalendar();
+            if (dateOfBirthFormat.parse(dateOfBirth).after(cal.getTime())) {
+            	putMessage("Please select a valid date of birth!");
+            	valid = 0;
+            }
         } catch (ParseException e) {
             putMessage("Please select your date of birth!");
             valid = 0;

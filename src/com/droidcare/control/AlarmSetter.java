@@ -38,19 +38,29 @@ public class AlarmSetter {
 	 */
 	public void setAlarm (Context context, Appointment appointment) {
 		// Intent to run the AlarmReceiver when the alarm is on
-		Intent intent = new Intent (context.getApplicationContext(), AlarmReceiver.class);
-		intent.putExtra("appointment", appointment);
+		Intent oneHourNotificationIntent = new Intent (context.getApplicationContext(), AlarmReceiver.class);
+		oneHourNotificationIntent.putExtra("appointment", appointment);
+		oneHourNotificationIntent.putExtra("notification", true);
+		
+		Intent setStatusOnFinishIntent = new Intent (context.getApplicationContext(), AlarmReceiver.class);
+		setStatusOnFinishIntent.putExtra("appointment", appointment);
+		setStatusOnFinishIntent.putExtra("notification", false);
 		
 		// Make it a PendingIntent because it is going to be run in a later stage
-		int alarmId = -appointment.getId();
+		int oneHourNotificationId = -appointment.getId();
+		int setStatusOnFinishId = appointment.getId();
 		
 		// Use the same alarmId and the FLAG_CANCEL_CURRENT to overwrite the old PendingIntent
-		PendingIntent sender = PendingIntent.getBroadcast(context.getApplicationContext(), alarmId, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent oneHourNotificationSender = PendingIntent.getBroadcast(context.getApplicationContext(), oneHourNotificationId, oneHourNotificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent setStatusOnFinish = PendingIntent.getBroadcast(context, setStatusOnFinishId, setStatusOnFinishIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 		
 		// Set when the PendingIntent should be executed
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		
 		// Set alarm 1 DAY BEFORE THE APPOINTMENT -> change necessarily
-		am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() - 24 * 3600 * 1000, sender);
+		am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() - 24 * 3600 * 1000, oneHourNotificationSender);
+		
+		// Set the appointment to FINISHED after 30 minutes of the appointment time
+		am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() + 1800 * 1000, setStatusOnFinish);
 	}	
 }

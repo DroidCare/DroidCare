@@ -35,31 +35,22 @@ public class AppointmentDetailsActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_appointment_details);
 		
-		// Unpack the parcelled Appointment data
 		Bundle data = getIntent().getExtras();
-		//String appointmentType = data.getString("appointmentType");
-		/*
-		if (appointmentType.equalsIgnoreCase(Appointment.NORMAL)) {
-			this.appointment = (Appointment) data.getParcelable("appointment");
-		} else if (appointmentType.equalsIgnoreCase(Appointment.REFERRAL)) {
-			this.appointment = (ReferralAppointment) data.getParcelable("referralAppointment");
-		} else if (appointmentType.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
-			this.appointment = (FollowUpAppointment) data.getParcelable("followUpAppointment");
-		}
-		*/
-		
+		Appointment appointment = data.getParcelable("appointment");
+		String appointmentType = appointment.getType();
+
 		// Cancel the notification of THIS APPOINTMENT
 		// Notification ID is always the same as Appointment ID
 		NotificationManager notificationManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
 		notificationManager.cancel(appointment.getId());
 		
 		// SETTING UP LAYOUT
-		//this.configureLayout(appointmentType, 
-		//					 appointment.getStatus(),
-		//					 Global.getUserManager().getUser().getType());
+		this.configureLayout(appointmentType, 
+							 appointment.getStatus(),
+							 Global.getUserManager().getUser().getType());
 		
 		// POPULATING THE APPOINTMENT DATA
-		//this.setData(appointment);
+		this.setData(appointment);
 	}
 
 	@Override
@@ -83,10 +74,10 @@ public class AppointmentDetailsActivity extends Activity {
 	
 	private void configureLayout (String appointmentType, String appointmentStatus, String userType) {
 		// Showing buttons depending on the user type
-		if (userType.equalsIgnoreCase("patient")) {
+		if (this.userType.equalsIgnoreCase("patient")) {
 			((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
-		} else if (userType.equalsIgnoreCase("consultant")) {
+		} else if (this.userType.equalsIgnoreCase("consultant")) {
 			((Button) findViewById(R.id.Button_EditAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_CancelAppointment)).setVisibility(View.GONE);
 		}
@@ -125,7 +116,7 @@ public class AppointmentDetailsActivity extends Activity {
 		String dateTimeString = Global.dateFormat.format(d);
 		
 		// POPULATE GENERAL DATA
-		((TextView) findViewById(R.id.Field_AppointmentId)).setText(appointment.getId());
+		((TextView) findViewById(R.id.Field_AppointmentId)).setText("" + appointment.getId());
 		((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus());
 		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointment.getType());
 		((TextView) findViewById(R.id.Field_AppointmentConsultantName)).setText(appointment.getConsultantName());
@@ -141,7 +132,7 @@ public class AppointmentDetailsActivity extends Activity {
 			FollowUpAppointment a = (FollowUpAppointment) appointment;
 			Bitmap attachmentImage = Global.getImageManager().decodeImageBase64(a.getAttachment());
 			
-			((TextView) findViewById(R.id.Field_AppointmentPreviousId)).setText(a.getPreviousId());
+			((TextView) findViewById(R.id.Field_AppointmentPreviousId)).setText("" + a.getPreviousId());
 			((ImageView) findViewById(R.id.Field_AppointmentAttachment)).setImageBitmap(attachmentImage);
 		}
 	}
@@ -149,6 +140,7 @@ public class AppointmentDetailsActivity extends Activity {
 	// PATIENT SPECIFIC METHODS!
 	public void openEditAppointment (View v) {
 		Intent intent = new Intent(this, EditAppointmentActivity.class);
+		intent.putExtra("appointmentType", appointment.getType());
 		intent.putExtra("appointment", appointment);
 		startActivity(intent);
 	}
@@ -191,6 +183,7 @@ public class AppointmentDetailsActivity extends Activity {
 	}
 
 	public void acceptAppointment (View v) {
+<<<<<<< HEAD
         ProgressDialog pd = ProgressDialog.show(this, null, "Accepting appointment ...", true);
         pd.show();
 		((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(appointment
@@ -261,5 +254,12 @@ public class AppointmentDetailsActivity extends Activity {
                 }
             }
         }.init(pd));
+=======
+		((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(this, appointment);
+	}
+	
+	public void rejectAppointment (View v) {
+		((ConsultantAppointmentManager) Global.getAppointmentManager()).rejectAppointment(this, appointment);
+>>>>>>> origin/master
 	}
 }

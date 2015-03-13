@@ -54,6 +54,10 @@ public class FollowUpAppointment extends Appointment {
 	 * @return Base64 encoded String of the proof image
 	 */
 	public String getAttachment () {
+		if (this.attachment.isEmpty()) {
+			this.attachment = Global.getAppointmentManager().getAttachment(this);
+		}
+		
 		return this.attachment;
 	}
 	
