@@ -64,6 +64,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 			} 
 			// ALARM for a just-finished appointment
 			else {
+				// UPDATE STATUS IN DATABASE
                 new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
                         , new Pair<String, String>("status", Appointment.FINISHED)
                         , new Pair<String, String>("remarks", appointment.getRemarks())
