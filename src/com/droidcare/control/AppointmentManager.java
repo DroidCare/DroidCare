@@ -324,14 +324,4 @@ public abstract class AppointmentManager {
 		// @pciang : implement this, will be called when AppointmentDetailsActivity and EditAppointmentActivity is opened!
 		return "";
 	}
-	
-	// UPDATE STATUS IN DATABASE OF THIS APPOINTMENT
-	public void updateStatusDB (Appointment appointment) {
-		// @pciang : implement this
-	}
-	
-	// DELETE THIS APPOINTMENT ENTRY
-	public void deleteAppointmentDB (Appointment appointment) {
-		// @pciang : implement this
-	}
 }
