@@ -219,7 +219,8 @@ public abstract class AppointmentManager {
 	 * @return				{@code true} if success, {@code false} otherwise.
 	 */
 	public boolean removePendingAppointment (Appointment appointment) {
-		return pendingAppointments.remove(appointment);
+		boolean result = pendingAppointments.remove(appointment);
+        return result;
 	}
 	
 	/**

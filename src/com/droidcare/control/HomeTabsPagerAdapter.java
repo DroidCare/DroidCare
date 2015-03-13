@@ -8,6 +8,8 @@ import com.droidcare.boundary.RejectedAppointmentList;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.app.FragmentStatePagerAdapter;
+import android.util.Log;
 
 /**
  * 
@@ -22,7 +24,7 @@ import android.support.v4.app.FragmentPagerAdapter;
  * @pciang: Hi, can I be your co-author? :)
  */
 
-public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
+public class HomeTabsPagerAdapter extends FragmentStatePagerAdapter {
 	private final int NO_OF_TABS = 4;
 	
 	public HomeTabsPagerAdapter (FragmentManager fm) {
@@ -41,6 +43,9 @@ public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
 			return new RejectedAppointmentList();
 		case 3:
 			return new FinishedAppointmentList();
+        default:
+            Log.d("DEBUGGING", "track");
+            break;
 		}
 		
 		return null;

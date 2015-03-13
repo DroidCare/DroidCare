@@ -123,6 +123,7 @@ public class LoginManager {
             public void onFinish(String responseText) {
                 Global.getUserManager().removeUser();
                 Global.getAppSession().clearAll();
+                Global.firstInitialization = false;
 //                Global.getAppointmentManager().clearRejectedAppointments();
 //                Global.getAppointmentManager().clearPendingAppointments();
 //                Global.getAppointmentManager().clearFinishedAppointments();

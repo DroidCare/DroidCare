@@ -36,7 +36,7 @@ public class AppointmentDetailsActivity extends Activity {
 		setContentView(R.layout.activity_appointment_details);
 		
 		Bundle data = getIntent().getExtras();
-		Appointment appointment = data.getParcelable("appointment");
+		this.appointment = data.getParcelable("appointment");
 		String appointmentType = appointment.getType();
 
 		// Cancel the notification of THIS APPOINTMENT
@@ -166,13 +166,15 @@ public class AppointmentDetailsActivity extends Activity {
                             Toast toast = Toast.makeText(AppointmentDetailsActivity.this
                                     , "Appointment cancelled!", Toast.LENGTH_SHORT);
                             toast.show();
-                            AppointmentDetailsActivity.this.finish();
+//                            AppointmentDetailsActivity.this.finish();
+                            AppointmentDetailsActivity.super.onBackPressed();
                             break;
                         default:
                             Toast onFailToast = Toast.makeText(AppointmentDetailsActivity.this
                                     , "Failed to cancel appointment", Toast.LENGTH_LONG);
                             onFailToast.show();
-                            AppointmentDetailsActivity.this.finish();
+//                            AppointmentDetailsActivity.this.finish();
+                            AppointmentDetailsActivity.super.onBackPressed();
                             break;
                     }
                     // Do nothing on exception

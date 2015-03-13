@@ -240,6 +240,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"
+            android:onClick="openEditAppointment"
             android:text="@string/Button_Edit_Appointment" />
         
         <Button
@@ -247,6 +248,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:onClick="cancelAppointment"
             android:text="@string/Button_Cancel_Appointment" />
         
         <Button
@@ -255,6 +257,7 @@
             android:layout_height="wrap_content"
             android:layout_marginBottom="8dp"
             android:layout_gravity="center"
+            android:onClick="acceptAppointment"
             android:text="@string/Button_Accept_Appointment" />
         
         <Button
@@ -262,6 +265,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:onClick="rejectAppointment"
             android:text="@string/Button_Reject_Appointment" />
     </LinearLayout>
     

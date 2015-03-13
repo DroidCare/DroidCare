@@ -34,6 +34,7 @@ public class EditProfileActivity extends Activity {
 	
     private LinearLayout updateMessages;
     private HashMap<String, Integer> nationalitySpinner;
+    private HashMap<String, Integer> countrySpinner;
 
     public void clearMessages() {
         updateMessages.removeAllViews();
@@ -196,6 +197,11 @@ public class EditProfileActivity extends Activity {
         nationalitySpinner.put("Malaysian", 4);
         nationalitySpinner.put("Vietnamese", 5);
 
+        countrySpinner = new HashMap<String, Integer>();
+        countrySpinner.put("Singapore", 1);
+        countrySpinner.put("Thailand", 2);
+        countrySpinner.put("Malaysia", 3);
+
         User user = Global.getUserManager().getUser();
 
         ((EditText) findViewById(R.id.passport_field)).setText(user.getPassportNumber());
@@ -206,6 +212,8 @@ public class EditProfileActivity extends Activity {
         ((TextView) findViewById(R.id.gender_field)).setText(user.getGender());
         ((Spinner) findViewById(R.id.nationality_field))
                 .setSelection(nationalitySpinner.get(user.getNationality()));
+        ((Spinner) findViewById(R.id.country_field))
+                .setSelection(countrySpinner.get(user.getCountry()));
 
         String notification = user.getNotification();
         if(notification.equals("all")) {

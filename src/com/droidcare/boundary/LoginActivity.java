@@ -71,7 +71,6 @@ public class LoginActivity extends Activity {
                             switch(response.getInt("status")) {
                                 case 0:
                                     LoginActivity.this.finish();
-                                    Global.getAppointmentManager().setAllAlarms(LoginActivity.this);
                                     Intent intent = new Intent(LoginActivity.this, HomeActivity.class);
                                     startActivity(intent);
                                     break;

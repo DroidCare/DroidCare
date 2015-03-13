@@ -105,6 +105,7 @@ public class UserManager {
                             user.setNationality(nationality);
                             user.setPassportNumber(passportNumber);
                             user.setNotification(notification);
+                            user.setCountry(country);
                             break;
                     }
 
