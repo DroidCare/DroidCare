@@ -38,9 +38,9 @@ public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
 		case 1:
 			return new PendingAppointmentList();
 		case 2:
-			return new FinishedAppointmentList();
-		case 3:
 			return new RejectedAppointmentList();
+		case 3:
+			return new FinishedAppointmentList();
 		}
 		
 		return null;

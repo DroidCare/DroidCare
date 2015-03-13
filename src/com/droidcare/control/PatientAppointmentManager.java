@@ -39,8 +39,10 @@ public class PatientAppointmentManager extends AppointmentManager {
 			this.removePendingAppointment(appointment);
 			
 			// @pciang: please DELETE the entry in the database
+			this.deleteAppointmentDB(appointment);
+			
 			// SIMPLE FEEDBACK
-			Toast toast = Toast.makeText(context, "Appointment Cancelled", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, "Appointment cancelled!", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 		

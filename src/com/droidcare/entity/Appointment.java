@@ -22,7 +22,7 @@ import android.util.Log;
  * {@link ReferralAppointment} class.
  */
 
-public class Appointment implements Parcelable{
+public class Appointment implements Parcelable {
 	/**
 	 * Appointment status.
 	 */

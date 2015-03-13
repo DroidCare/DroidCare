@@ -37,9 +37,13 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 			
 			// UPDATE DATABASE HERE!
 			// While updating, give a progress bar probably?
+			this.updateStatusDB(appointment);
+			
+			// Add an Alarm
+			Global.getAlarmSetter().setAlarm(context, appointment);
 			
 			// ON FINISH -> simple feedback
-			Toast toast = Toast.makeText(context, "Appointment Accepted", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, "Appointment accepted!", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 	}
@@ -57,9 +61,10 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 			
 			// UPDATE DATABASE HERE!!
 			// While updating, give a progress bar probably?
+			this.updateStatusDB(appointment);
 			
 			// ON FINISH -> simple feedback
-			Toast toast = Toast.makeText(context, "Appointment Rejected", Toast.LENGTH_SHORT);
+			Toast toast = Toast.makeText(context, "Appointment rejected!", Toast.LENGTH_SHORT);
 			toast.show();
 		}
 	}

@@ -16,7 +16,9 @@ import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
+import android.util.Log;
 
 /**
  * 
@@ -36,22 +38,40 @@ public class AlarmReceiver extends BroadcastReceiver {
 	 */
 	@Override
 	public void onReceive (Context context, Intent intent) {
-		// USE APPOINTMENT OBJECT FOR GENERAL INFO ONLY (NO FOLLOW UP OR REFERRAL SPECIFIC INFORMATION)
-		Appointment appointment = (Appointment) intent.getExtras().getParcelable("appointment");
+		Bundle data = intent.getExtras();
+		Appointment appointment = data.getParcelable("appointment");
+		boolean notification = data.getBoolean("notification");
 		
-		// Regardless of the user's choice of notification, local notification is still shown
-		showLocalNotification(context, appointment);
-		
-		// Notification based on the user's choice
-		// SMS notification is NOT IMPLEMENTED AS FOR NOW
-		String notificationType = Global.getUserManager().getUser().getNotification();
-		if (notificationType.equalsIgnoreCase("email")) {
-			sendEmailNotification(appointment);
-		} else if (notificationType.equalsIgnoreCase("sms")) {
-			sendSMSNotification(context, appointment);
-		} else if (notificationType.equalsIgnoreCase("all")) {
-			sendSMSNotification(context, appointment);
-			sendEmailNotification(appointment);
+		if (appointment != null) {
+			if (notification) {
+				// Regardless of the user's choice of notification, local notification is still shown
+				showLocalNotification(context, appointment);
+				
+				// Notification based on the user's choice
+				// SMS notification is NOT IMPLEMENTED AS FOR NOW
+				String notificationType = Global.getUserManager().getUser().getNotification();
+				if (notificationType.equalsIgnoreCase("email")) {
+					sendEmailNotification(appointment);
+				} else if (notificationType.equalsIgnoreCase("sms")) {
+					sendSMSNotification(context, appointment);
+				} else if (notificationType.equalsIgnoreCase("all")) {
+					sendSMSNotification(context, appointment);
+					sendEmailNotification(appointment);
+				}
+			} 
+			// ALARM for a just-finished appointment
+			else {
+				appointment.setStatus(Appointment.FINISHED);
+				Global.getAppointmentManager().updateStatusDB(appointment); // UPDATE DATABASE -> IMPLEMENTATION NEEDED!!
+				Global.getAppointmentManager().addFinishedAppointment(appointment);
+				
+				// Double check that status is from ACCEPTED to FINISHED
+				if (appointment.getStatus().equalsIgnoreCase(Appointment.ACCEPTED)) {
+					Global.getAppointmentManager().removeAcceptedAppointment(appointment);
+				}
+			}
+		} else {
+			Log.d("APPOINTMENT NULL", "THE APPOINTMENT IS NOT RETRIEVED PROPERLY! POSSIBLY BECAUSE OF PARCELABLE!");
 		}
 	}
 	
