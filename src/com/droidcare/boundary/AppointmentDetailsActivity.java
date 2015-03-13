@@ -2,6 +2,7 @@ package com.droidcare.boundary;
 
 import android.app.Activity;
 import android.app.NotificationManager;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.os.Bundle;
@@ -13,6 +14,7 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.Date;
 
@@ -20,6 +22,9 @@ import com.droidcare.*;
 import com.droidcare.control.*;
 import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class AppointmentDetailsActivity extends Activity {
 	private Appointment appointment;
@@ -147,26 +152,114 @@ public class AppointmentDetailsActivity extends Activity {
 		intent.putExtra("appointment", appointment);
 		startActivity(intent);
 	}
-	
+
 	public void cancelAppointment (View v) {
-		// CALL PATIENT APPOINTMENT MANAGER TO CANCEL THE APPOINTMENT
-		((PatientAppointmentManager) Global.getAppointmentManager()).cancelAppointment(this, appointment);
-		
-		// Go back to the HomeActivity
-        finish();
+        ProgressDialog pd = ProgressDialog.show(this, null, "Cancelling appointment ...", true);
+        pd.show();
+        ((PatientAppointmentManager) Global.getAppointmentManager()).cancelAppointment(appointment
+                , new PatientAppointmentManager.OnFinishListener() {
+            private ProgressDialog pd;
+            public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                pd.dismiss();
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch (response.getInt("status")) {
+                        case 0:
+                            Toast toast = Toast.makeText(AppointmentDetailsActivity.this
+                                    , "Appointment cancelled!", Toast.LENGTH_SHORT);
+                            toast.show();
+                            AppointmentDetailsActivity.this.finish();
+                            break;
+                        default:
+                            Toast onFailToast = Toast.makeText(AppointmentDetailsActivity.this
+                                    , "Failed to cancel appointment", Toast.LENGTH_LONG);
+                            onFailToast.show();
+                            AppointmentDetailsActivity.this.finish();
+                            break;
+                    }
+                    // Do nothing on exception
+                } catch (JSONException e) {
+                }
+            }
+        }.init(pd));
 	}
-	
-	
-	// CONSULTANT SPECIFIC METHODS! 
+
 	public void acceptAppointment (View v) {
-		((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(this, appointment);
-		
-		// GIVE FEEDBACK HERE
+        ProgressDialog pd = ProgressDialog.show(this, null, "Accepting appointment ...", true);
+        pd.show();
+		((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(appointment
+                , new ConsultantAppointmentManager.OnFinishListener() {
+            private ProgressDialog pd;
+            public ConsultantAppointmentManager.OnFinishListener init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                pd.dismiss();
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            Toast toast = Toast.makeText(AppointmentDetailsActivity.this
+                                    , "Appointment accepted", Toast.LENGTH_SHORT);
+                            toast.show();
+                            AppointmentDetailsActivity.this.finish();
+                            break;
+                        default:
+                            Toast onFailToast = Toast.makeText(AppointmentDetailsActivity.this
+                                    , "Failed to accept appointment", Toast.LENGTH_SHORT);
+                            onFailToast.show();
+                            AppointmentDetailsActivity.this.finish();
+                            break;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+            }
+        }.init(pd));
 	}
 	
 	public void rejectAppointment (View v) {
-		((ConsultantAppointmentManager) Global.getAppointmentManager()).rejectAppointment(this, appointment);
-		
-		// GIVE FEEDBACK HERE
+        ProgressDialog pd = ProgressDialog.show(this, null, "Rejecting appointment ...", true);
+        pd.show();
+        ((ConsultantAppointmentManager) Global.getAppointmentManager()).rejectAppointment(appointment
+                , new ConsultantAppointmentManager.OnFinishListener() {
+            private ProgressDialog pd;
+            public ConsultantAppointmentManager.OnFinishListener init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                pd.dismiss();
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            Toast toast = Toast.makeText(AppointmentDetailsActivity.this
+                                    , "Appointment rejected", Toast.LENGTH_SHORT);
+                            toast.show();
+                            AppointmentDetailsActivity.this.finish();
+                            break;
+                        default:
+                            Toast onFailToast = Toast.makeText(AppointmentDetailsActivity.this
+                                    , "Failed to reject appointment", Toast.LENGTH_SHORT);
+                            onFailToast.show();
+                            AppointmentDetailsActivity.this.finish();
+                            break;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+            }
+        }.init(pd));
 	}
 }
