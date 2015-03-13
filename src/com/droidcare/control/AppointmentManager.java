@@ -352,8 +352,9 @@ public abstract class AppointmentManager {
 		}
 	}
 	
-	public String getAttachment (FollowUpAppointment followUpAppointment) {
+	public void getAttachment (FollowUpAppointment followUpAppointment) {
 		// @pciang : implement this, will be called when AppointmentDetailsActivity and EditAppointmentActivity is opened!
-		return "";
+		String result = "";
+		followUpAppointment.setAttachment(result);
 	}
 }
