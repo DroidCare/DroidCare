@@ -19,6 +19,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
+import android.util.Pair;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 /**
  * 
@@ -30,7 +34,6 @@ import android.util.Log;
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
-	
 	/**
 	 *  This method definition is overriding the onReceive method in BroadcastReceiver. The method
 	 *  defines what to do when an "ALARM" is on. It notifies the user through local notification,
@@ -61,14 +64,35 @@ public class AlarmReceiver extends BroadcastReceiver {
 			} 
 			// ALARM for a just-finished appointment
 			else {
-				appointment.setStatus(Appointment.FINISHED);
-				Global.getAppointmentManager().updateStatusDB(appointment); // UPDATE DATABASE -> IMPLEMENTATION NEEDED!!
-				Global.getAppointmentManager().addFinishedAppointment(appointment);
-				
-				// Double check that status is from ACCEPTED to FINISHED
-				if (appointment.getStatus().equalsIgnoreCase(Appointment.ACCEPTED)) {
-					Global.getAppointmentManager().removeAcceptedAppointment(appointment);
-				}
+                new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
+                        , new Pair<String, String>("status", Appointment.FINISHED)
+                        , new Pair<String, String>("remarks", appointment.getRemarks())
+                        , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
+                    private Appointment appointment;
+
+                    public SimpleHttpPost init(Appointment appointment) {
+                        this.appointment = appointment;
+                        return this;
+                    }
+
+                    @Override
+                    public void onFinish(String responseText) {
+                        try {
+                            JSONObject response = new JSONObject(responseText);
+                            switch(response.getInt("status")) {
+                                case 0:
+                                    appointment.setStatus(Appointment.FINISHED);
+                                    Global.getAppointmentManager().addFinishedAppointment(appointment);
+                                    Global.getAppointmentManager().removeAcceptedAppointment(appointment);
+                                    break;
+                                default:
+                                    break;
+                            }
+                        // Do nothing on exception
+                        } catch (JSONException e) {
+                        }
+                    }
+                }.init(appointment).send(Global.APPOINTMENT_STATUS_URL);
 			}
 		} else {
 			Log.d("APPOINTMENT NULL", "THE APPOINTMENT IS NOT RETRIEVED PROPERLY! POSSIBLY BECAUSE OF PARCELABLE!");
