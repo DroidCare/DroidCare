@@ -183,7 +183,6 @@ public class AppointmentDetailsActivity extends Activity {
 	}
 
 	public void acceptAppointment (View v) {
-<<<<<<< HEAD
         ProgressDialog pd = ProgressDialog.show(this, null, "Accepting appointment ...", true);
         pd.show();
 		((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(appointment
@@ -254,12 +253,5 @@ public class AppointmentDetailsActivity extends Activity {
                 }
             }
         }.init(pd));
-=======
-		((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(this, appointment);
-	}
-	
-	public void rejectAppointment (View v) {
-		((ConsultantAppointmentManager) Global.getAppointmentManager()).rejectAppointment(this, appointment);
->>>>>>> origin/master
 	}
 }

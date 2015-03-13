@@ -36,7 +36,6 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 	 * Accepts a pending {@link Appointment} object.
 	 * @param appointment	a pending {@link Appointment} object to be accepted by the consultant.
 	 */
-<<<<<<< HEAD
 	public void acceptAppointment (Appointment appointment, OnFinishListener onFinishListener) {
 		if (appointment.getStatus().equalsIgnoreCase(Appointment.PENDING)) {
             new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
@@ -69,24 +68,6 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                     listener.onFinish(responseText);
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_STATUS_URL);
-=======
-	public void acceptAppointment (Context context, Appointment appointment) {
-		if (appointment.getStatus() == Appointment.PENDING) {
-			appointment.setStatus(Appointment.ACCEPTED);
-			this.removePendingAppointment(appointment);
-			this.addAcceptedAppointment(appointment);
-			
-			// UPDATE DATABASE HERE!
-			// While updating, give a progress bar probably?
-			this.updateStatusDB(appointment);
-			
-			// Add an Alarm
-			Global.getAlarmSetter().setAlarm(context, appointment);
-			
-			// ON FINISH -> simple feedback
-			Toast toast = Toast.makeText(context, "Appointment accepted!", Toast.LENGTH_SHORT);
-			toast.show();
->>>>>>> origin/master
 		}
 	}
 	
@@ -94,7 +75,6 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 	 * Rejects a pending {@link Appointment} object.
 	 * @param appointment	a pending {@link Appointment} object to be rejected by the consultant.
 	 */
-<<<<<<< HEAD
 	public void rejectAppointment (Appointment appointment, OnFinishListener onFinishListener) {
 		if (appointment.getStatus().equalsIgnoreCase(Appointment.PENDING)) {
             new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
@@ -127,21 +107,6 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                     listener.onFinish(responseText);
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_STATUS_URL);
-=======
-	public void rejectAppointment (Context context, Appointment appointment) {
-		if (appointment.getStatus() == Appointment.PENDING) {
-			appointment.setStatus(Appointment.REJECTED);
-			this.removePendingAppointment(appointment);
-			this.addRejectedAppointment(appointment);
-			
-			// UPDATE DATABASE HERE!!
-			// While updating, give a progress bar probably?
-			this.updateStatusDB(appointment);
-			
-			// ON FINISH -> simple feedback
-			Toast toast = Toast.makeText(context, "Appointment rejected!", Toast.LENGTH_SHORT);
-			toast.show();
->>>>>>> origin/master
 		}
 	}
 }
