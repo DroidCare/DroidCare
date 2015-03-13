@@ -193,7 +193,15 @@ public abstract class AppointmentManager {
 	 * @return				{@code true} if success, {@code false} otherwise.
 	 */
 	public boolean removeAcceptedAppointment (Appointment appointment) {
-		return acceptedAppointments.remove(appointment);
+		int id = appointment.getId();
+		for (int i = 0; i < this.acceptedAppointments.size(); i++) {
+			if (this.acceptedAppointments.get(i).getId() == id) {
+				this.acceptedAppointments.remove(i);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -219,8 +227,15 @@ public abstract class AppointmentManager {
 	 * @return				{@code true} if success, {@code false} otherwise.
 	 */
 	public boolean removePendingAppointment (Appointment appointment) {
-		boolean result = pendingAppointments.remove(appointment);
-        return result;
+		int id = appointment.getId();
+		for (int i = 0; i < this.pendingAppointments.size(); i++) {
+			if (this.pendingAppointments.get(i).getId() == id) {
+				this.pendingAppointments.remove(i);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -246,7 +261,15 @@ public abstract class AppointmentManager {
 	 * @return				{@code true} if success, {@code false} otherwise.
 	 */
 	public boolean removeRejectedAppointment(Appointment appointment) {
-		return rejectedAppointments.remove(appointment);
+		int id = appointment.getId();
+		for (int i = 0; i < this.rejectedAppointments.size(); i++) {
+			if (this.rejectedAppointments.get(i).getId() == id) {
+				this.rejectedAppointments.remove(i);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
@@ -272,7 +295,15 @@ public abstract class AppointmentManager {
 	 * @return				{@code true} if success, {@code false} otherwise.
 	 */
 	public boolean removeFinishedAppointment(Appointment appointment) {
-		return finishedAppointments.remove(appointment);
+		int id = appointment.getId();
+		for (int i = 0; i < this.finishedAppointments.size(); i++) {
+			if (this.finishedAppointments.get(i).getId() == id) {
+				this.finishedAppointments.remove(i);
+				return true;
+			}
+		}
+		
+		return false;
 	}
 	
 	/**
