@@ -320,6 +320,11 @@ public abstract class AppointmentManager {
 		}
 	}
 	
+	public String getAttachment (FollowUpAppointment followUpAppointment) {
+		// @pciang : implement this, will be called when AppointmentDetailsActivity and EditAppointmentActivity is opened!
+		return "";
+	}
+	
 	// UPDATE STATUS IN DATABASE OF THIS APPOINTMENT
 	public void updateStatusDB (Appointment appointment) {
 		// @pciang : implement this
