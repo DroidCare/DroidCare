@@ -74,6 +74,13 @@ public class AppointmentDetailsActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Configures the activity layout depending the {@link User} type, the {@link Appointment} status,
+	 * and the {@link Appointment} type.
+	 * @param appointmentType		the current {@link Appointment} type
+	 * @param appointmentStatus	 	the current {@link Appointment} status
+	 * @param userType				the {@link User} type
+	 */
 	private void configureLayout (String appointmentType, String appointmentStatus, String userType) {
 		// Showing buttons depending on the user type
 		if (this.userType.equalsIgnoreCase("patient")) {
@@ -115,6 +122,10 @@ public class AppointmentDetailsActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Sets the {@link Appointment} details onto the corresponding layout view.
+	 * @param appointment	the {@link Appointment) object to be displayed in details
+	 */
 	private void setData (Appointment appointment) {
 		Date d = new Date(appointment.getDateTimeMillis());
 		String dateTimeString = Global.dateFormat.format(d);
@@ -142,6 +153,11 @@ public class AppointmentDetailsActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * onClick listener method for Edit Appointment button in the layout.
+	 * This method is patient specific method.
+	 * @param v	the clicked {@link View} object
+	 */
 	public void openEditAppointment (View v) {
 		Intent intent = new Intent(this, EditAppointmentActivity.class);
 		intent.putExtra("appointmentType", appointment.getType());
@@ -149,6 +165,11 @@ public class AppointmentDetailsActivity extends Activity {
 		startActivity(intent);
 	}
 
+	/**
+	 * onClick listener method for Cancel Appointment button in the layout.
+	 * This method is patient specific method.
+	 * @param v	the clicked {@link View} object
+	 */
 	public void cancelAppointment (View v) {
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 		alertBuilder.setTitle("Cancel Appointment");
@@ -209,8 +230,16 @@ public class AppointmentDetailsActivity extends Activity {
 				dialog.dismiss();
 			}
 		});
+		
+		// Pop up the AlertDialog box
+		alertBuilder.show();
 	}
 
+	/**
+	 * onClick listener method for Accept Appointment button in the layout.
+	 * This method is consultant specific method.
+	 * @param v	the clicked {@link View} object
+	 */
 	public void acceptAppointment (View v) {
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 		alertBuilder.setTitle("Accept Appointment");
@@ -292,8 +321,16 @@ public class AppointmentDetailsActivity extends Activity {
 				dialog.dismiss();
 			}
 		});
+		
+		// Pop up the AlertDialog box
+		alertBuilder.show();
 	}
 	
+	/**
+	 * onClick listener method for Reject Appointment button in the layout.
+	 * This method is consultant specific method.
+	 * @param v	the clicked {@link View} object
+	 */
 	public void rejectAppointment (View v) {
 		AlertDialog.Builder alertBuilder = new AlertDialog.Builder(this);
 		alertBuilder.setTitle("Reject Appointment");
@@ -372,5 +409,8 @@ public class AppointmentDetailsActivity extends Activity {
 				dialog.dismiss();
 			}
 		});
+		
+		// Pop up the AlertDialog box
+		alertBuilder.show();
 	}
 }
