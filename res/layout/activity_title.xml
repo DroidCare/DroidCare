@@ -7,28 +7,38 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.droidcare.boundary.TitleActivity" >
+   
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/app_name"
-        android:id="@+id/app_name" />
+    <ImageView
+        android:id="@+id/droidcare_logo"
+        android:layout_width="180dp"
+        android:layout_height="200dp"
+        android:layout_alignParentTop="true"
+        android:layout_centerHorizontal="true"
+        android:src="@drawable/ic_droidcare" />
+
     <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ButtonText_Login"
-        android:layout_below="@id/app_name"
-        android:layout_toLeftOf="@+id/gotoRegister_btn"
         android:id="@+id/gotoLogin_btn"
-        android:onClick="gotoLoginActivity" />
-
-    <Button
-        android:id="@id/gotoRegister_btn"
-        android:layout_width="wrap_content"
+        style="@style/DefaultButtonText"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_alignParentRight="true"
-        android:layout_below="@id/app_name"
-        android:text="@string/ButtonText_Register"
-        android:onClick="gotoRegisterActivity" />
+        android:layout_below="@+id/droidcare_logo"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="100dp"
+        android:background="@drawable/button_default_bg"
+        android:onClick="gotoLoginActivity"
+        android:text="@string/ButtonText_Login" />
+    
+     <Button
+       	android:id="@+id/gotoRegister_btn"
+        style="@style/DefaultButtonText"
+        android:layout_below="@+id/gotoLogin_btn"
+        android:layout_marginTop="50dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:background="@drawable/button_default_bg"
+        android:onClick="gotoRegisterActivity"
+        android:text="@string/ButtonText_Register" />
 
 </RelativeLayout>

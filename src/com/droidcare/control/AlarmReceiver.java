@@ -121,7 +121,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		// NOTE: WITHOUT icon, the notification will not be shown
 		mBuilder.setContentTitle("APPOINTMENT NOTIFICATION")
 				.setContentText("APPOINTMENT DETAILS HERE!")
-				.setSmallIcon(R.drawable.ic_launcher)
+				.setSmallIcon(R.drawable.ic_logo)
 				.setContentIntent(pIntent);
 		
 		notificationManager.notify(notificationId, mBuilder.build());
