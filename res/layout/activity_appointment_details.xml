@@ -234,6 +234,30 @@
                 android:text="@string/TEST_AppointmentRemarks" />
         </LinearLayout>
         
+        <LinearLayout
+            android:id="@+id/LL_AppointmentRemarksEditable"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="25dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentRemarksEditable"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentRemarks" />
+            
+            <EditText 
+                android:id="@+id/Field_AppointmentRemarksEditable"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:inputType="textMultiLine"
+                android:lines="20"
+                android:scrollHorizontally="false"
+                android:scrollbars="vertical"
+                android:text="@string/TEST_AppointmentRemarks" />
+        </LinearLayout>
+        
         <Button
             android:id="@+id/Button_EditAppointment"
             android:layout_width="wrap_content"
