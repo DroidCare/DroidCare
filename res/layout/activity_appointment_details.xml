@@ -294,22 +294,40 @@
 		    android:background="@drawable/button_default_bg" />
         </LinearLayout>
         
-        <Button
-            android:id="@+id/Button_AcceptAppointment"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"
-            android:onClick="acceptAppointment"
-            android:text="@string/Button_Accept_Appointment" />
+            android:orientation="horizontal"
+            android:layout_gravity="center" >
+	        <Button
+	            android:id="@+id/Button_AcceptAppointment"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:padding="10dp"
+			    android:layout_margin="4dp"
+			    android:text="@string/Button_Accept_Appointment"
+			    android:onClick="acceptAppointment"
+			    style="@style/DefaultButtonText"
+			    android:background="@drawable/button_default_bg" />
+        </LinearLayout>
         
-        <Button
-            android:id="@+id/Button_RejectAppointment"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="rejectAppointment"
-            android:text="@string/Button_Reject_Appointment" />
+            android:orientation="horizontal"
+            android:layout_gravity="center" >
+	        <Button
+	            android:id="@+id/Button_RejectAppointment"
+			    android:layout_width="match_parent"
+			    android:layout_height="wrap_content"
+			    android:padding="10dp"
+			    android:layout_margin="4dp"
+			    android:text="@string/Button_Reject_Appointment"
+			    android:onClick="rejectAppointment"
+			    style="@style/DefaultButtonText"
+			    android:background="@drawable/button_default_bg" />
+        </LinearLayout>
+       
     </LinearLayout>
     
 </ScrollView>
