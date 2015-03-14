@@ -70,6 +70,18 @@ public class User{
 		this.nationality = nationality;
 	}
 	
+	public void setSessionId(String sessionId) {
+		this.sessionId = sessionId;
+	}
+
+    public void setNotification(String notification) {
+        this.notification = notification;
+    }
+	
+	public int getId(){
+		return id;
+	}
+	
 	public String getEmail(){
 		return email;
 	}
@@ -106,23 +118,11 @@ public class User{
 		return gender;
 	}
 	
-	public int getId(){
-		return id;
-	}
-	
-	public void setSessionId(String sessionId) {
-		this.sessionId = sessionId;
-	}
-	
 	public String getSessionId() {
 		return sessionId;
 	}
 
     public String getNotification() {
         return notification;
-    }
-
-    public void setNotification(String notification) {
-        this.notification = notification;
     }
 }

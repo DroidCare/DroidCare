@@ -2,22 +2,22 @@
 <resources>
 
     <style name="DefaultButtonText">
-	   <item name="android:layout_width">fill_parent</item>
-	    <item name="android:layout_height">wrap_content</item>
-	    <item name="android:textColor">#5C5C5C</item>
-	    <item name="android:gravity">center</item>
-	    <item name="android:layout_margin">3dp</item>
-	    <item name="android:textStyle">normal</item>
-	    <item name="android:textSize">20sp</item>
-	    <item name="android:shadowColor">#f9f9f9</item>
-	    <item name="android:shadowDx">1</item>
-	    <item name="android:shadowDy">1</item>
-	    <item name="android:shadowRadius">1</item>
-	</style>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">#5C5C5C</item>
+        <item name="android:gravity">center</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textStyle">normal</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:shadowColor">#f9f9f9</item>
+        <item name="android:shadowDx">1</item>
+        <item name="android:shadowDy">1</item>
+        <item name="android:shadowRadius">1</item>
+    </style>
 
     <string name="app_name">DroidCare</string>
     <string name="hello_world">Hello world!</string>
-    <string name="action_settings">Settings</string>
+    <string name="action_CreateAppointment">Create Appointment</string>
     <string name="ButtonText_Login">Login</string>
     <string name="ButtonText_Register">Register</string>
     <string name="title_activity_login">Login</string>
@@ -41,15 +41,15 @@
         <item>Male</item>
         <item>Female</item>
     </string-array>
-
     <string-array name="Country_values">
         <item></item>
         <item>Singapore</item>
         <item>Thailand</item>
         <item>Malaysia</item>
     </string-array>
-    
+
     <string name="LabelText_nationality">Nationality</string>
+
     <string-array name="Nationality_values">
         <item></item>
         <item>Indonesian</item>
@@ -102,7 +102,6 @@
     <string name="Label_AppointmentAttachment">Attachment</string>
     <string name="AppointmentAttachmentDescription">Appointment Attachment</string>
     <string name="Label_AppointmentRemarks">Remarks</string>
-    
     <string name="TEST_AppointmentID">239</string>
     <string name="TEST_AppointmentPreviousID">500</string>
     <string name="TEST_AppointmentReferrerName">Dr. KPETUR</string>
@@ -113,5 +112,14 @@
     <string name="TEST_AppointmentHealthIssue">Dental problem asdhjasgdajhsgdajhsgdajhsgdajhsgdajhsdgajhsd</string>
     <string name="TEST_AppointmentConsultant">Dr. Andrew Tan</string>
     <string name="TEST_AppointmentRemarks">Lalalalalalalalallaksdjalksjdalksjdlkqwjelqkwjelkasjdlkasjd</string>
+    <string name="title_activity_create_appointment">CreateAppointmentActivity</string>
+    <string name="Label_ConsultantName">Consultant</string>
+    <string name="RadioText_Normal">Normal</string>
+    <string name="RadioText_Referral">Referral</string>
+    <string name="RadioText_FollowUp">Follow-Up</string>
+    <string name="Label_AppointmentDate">Date</string>
+    <string name="Label_AppointmentTime">Time</string>
+    <string name="ButtonText_AppointmentAttachment">Select Attachment</string>
+    <string name="ButtonText_CreateAppointment">Create Appointment</string>
 
 </resources>

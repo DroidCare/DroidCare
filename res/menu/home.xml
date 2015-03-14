@@ -11,6 +11,10 @@
             <item
                 android:id="@+id/action_EditProfile"
                 android:title="@string/action_EditProfile" />
+            
+            <item
+                android:id="@+id/action_CreateAppointment"
+                android:title="@string/action_CreateAppointment" />
         </menu>
     </item>
     <item

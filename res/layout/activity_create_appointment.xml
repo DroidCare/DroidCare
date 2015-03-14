@@ -1,0 +1,266 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content" >
+    
+	<LinearLayout
+		android:layout_width="wrap_content"
+		android:layout_height="wrap_content"
+		android:orientation="vertical" >
+		  
+	    <LinearLayout
+			android:id="@+id/LL_CreateAppointmentMessages"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal" >
+			
+			<TextView
+				android:layout_width="wrap_content"
+				android:layout_height="wrap_content"
+				android:text="@string/hello_world" />
+			
+		</LinearLayout>
+		      
+		<LinearLayout
+			android:id="@+id/LL_AppointmentTypeText"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:orientation="horizontal" >
+			
+			<TextView
+				android:id="@+id/LabelText_AppointmentType"
+				android:layout_width="95dp"
+				android:layout_height="wrap_content"
+				android:text="@string/Label_AppointmentType" />
+		    
+		</LinearLayout>
+		
+		<LinearLayout 
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal" >
+			            
+			<RadioGroup
+				android:id="@+id/RadioGroup_AppointmentType"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content"
+				android:orientation="horizontal"
+				android:checkedButton="@+id/Radio_NormalAppointment" >
+				
+				<RadioButton 
+				    android:id="@+id/Radio_NormalAppointment"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="2dp"
+					android:text="@string/RadioText_Normal"
+					android:textSize="14sp"
+					android:onClick="onAppointmentTypeClicked"/>
+				
+				<RadioButton 
+				    android:id="@+id/Radio_ReferralAppointment"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:layout_marginRight="2dp"
+					android:text="@string/RadioText_Referral"
+					android:textSize="14sp"
+					android:onClick="onAppointmentTypeClicked"/>
+				
+				<RadioButton 
+				    android:id="@+id/Radio_FollowUpAppointment"
+					android:layout_width="wrap_content"
+					android:layout_height="wrap_content"
+					android:text="@string/RadioText_FollowUp"
+					android:textSize="14sp"
+					android:onClick="onAppointmentTypeClicked"/>
+			    
+			</RadioGroup>
+		            
+		</LinearLayout>
+		        
+		<LinearLayout
+			android:id="@+id/LL_ConsultantName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal" >
+			
+			<TextView
+				android:id="@+id/LabelText_ConsultantName"
+				android:layout_width="95dp"
+				android:layout_height="fill_parent"
+                android:gravity="center_vertical"
+				android:text="@string/Label_ConsultantName" />
+			
+			<Spinner
+				android:id="@+id/Spinner_ConsultantName"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+		         
+		</LinearLayout>
+		
+		<LinearLayout
+			android:id="@+id/LL_AppointmentDateTime"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal" >
+			
+			<TextView
+				android:id="@+id/LabelText_AppointmentDateTime"
+				android:layout_width="95dp"
+				android:layout_height="wrap_content"
+				android:text="@string/Label_AppointmentDateTime" />
+			
+			<Button
+                android:id="@+id/Field_AppointmentDate"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/ic_action_go_to_today"
+                android:onClick="onDateButtonClicked"
+                android:paddingTop="0dp"
+                android:paddingBottom="0dp"
+                android:text="@string/Label_AppointmentDate"
+                android:gravity="left|center_vertical" />
+			
+			<Spinner
+				android:id="@+id/Spinner_AppointmentTime"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
+			
+		</LinearLayout>
+		
+		<LinearLayout
+			android:id="@+id/LL_AppointmentHealthIssue"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal" >
+			
+			<TextView
+				android:id="@+id/LabelText_AppointmentHealthIssue"
+				android:layout_width="95dp"
+				android:layout_height="wrap_content"
+				android:text="@string/Label_AppointmentHealthIssue" />
+			
+			<EditText
+			    android:id="@+id/Field_AppointmentHealthIssue"
+			    android:layout_width="190dp"
+			    android:layout_height="wrap_content"
+			    android:inputType="text" />
+			
+		</LinearLayout>
+		
+		<LinearLayout
+			android:id="@+id/LL_AppointmentReferrerName"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal" >
+			
+			<TextView
+				android:id="@+id/LabelText_AppointmentReferrerName"
+				android:layout_width="95dp"
+				android:layout_height="wrap_content"
+				android:text="@string/Label_AppointmentReferrerName" />
+			
+			<EditText
+			    android:id="@+id/Field_AppointmentReferrerName"
+			    android:layout_width="190dp"
+			    android:layout_height="wrap_content"
+			    android:inputType="text" />
+			
+		</LinearLayout>
+		
+		<LinearLayout
+			android:id="@+id/LL_AppointmentReferrerClinic"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_marginBottom="5dp"
+			android:orientation="horizontal" >
+			
+			<TextView
+				android:id="@+id/LabelText_AppointmentReferrerClinic"
+				android:layout_width="95dp"
+				android:layout_height="wrap_content"
+				android:text="@string/Label_AppointmentReferrerClinic" />
+			
+			<EditText
+			    android:id="@+id/Field_AppointmentReferrerClinic"
+			    android:layout_width="190dp"
+			    android:layout_height="wrap_content"
+			    android:inputType="text" />
+			
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/LL_AppointmentPreviousId"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginBottom="5dp"
+		    android:orientation="horizontal" >
+		    
+		    <TextView
+		        android:id="@+id/LabelText_AppointmentPreviousId"
+		        android:layout_width="95dp"
+		        android:layout_height="wrap_content"
+		        android:text="@string/Label_AppointmentPreviousID" />
+		    
+		    <EditText
+		        android:id="@+id/FIeld_AppointmentPreviousId"
+		        android:layout_width="190dp"
+		        android:layout_height="wrap_content"
+		        android:inputType="numberDecimal" />
+		    
+		</LinearLayout>
+		
+		<LinearLayout
+		    android:id="@+id/LL_AppointmentAttachment"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginBottom="5dp"
+		    android:orientation="horizontal" >
+		    
+		    <TextView
+		        android:id="@+id/LabelText_AppointmentAttachment"
+		        android:layout_width="95dp"
+		        android:layout_height="wrap_content"
+		        android:layout_gravity="center_vertical"
+		        android:text="@string/Label_AppointmentAttachment" />
+		    
+		    <LinearLayout
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="vertical" >
+		
+		        <ImageView
+		            android:id="@+id/ImageView_AppointmentAttachment"
+		            android:contentDescription="@string/AppointmentAttachmentDescription"
+		            android:layout_width="180dp"
+		            android:layout_height="180dp" />
+		        
+			    <Button
+			        android:id="@+id/Button_AppointmentAttachment"
+			        android:layout_width="fill_parent"
+			        android:layout_height="wrap_content"
+			        android:text="@string/ButtonText_AppointmentAttachment"
+			        android:onClick="onSelectImage" />
+			    
+		    </LinearLayout>
+		</LinearLayout>
+		
+		<Button
+		    android:id="@+id/Button_CreateAppointment"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_marginTop="20dp"
+		    android:layout_gravity="center"
+		    android:text="@string/ButtonText_CreateAppointment"
+		    android:onClick="onCreateAppointment" />
+		
+	</LinearLayout>
+</ScrollView>

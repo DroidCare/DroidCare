@@ -160,10 +160,16 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
             case R.id.action_logout:
                 doLogout();
                 return true;
+                
             case R.id.action_EditProfile:
-                Intent intent = new Intent(this, EditProfileActivity.class);
-                startActivity(intent);
+                Intent editProfileIntent = new Intent(this, EditProfileActivity.class);
+                startActivity(editProfileIntent);
                 return true;
+                
+            case R.id.action_CreateAppointment:
+            	Intent createAppointmentIntent = new Intent(this, CreateAppointmentActivity.class);
+            	startActivity(createAppointmentIntent);
+            	return true;
 
             default:
                 return super.onOptionsItemSelected(item);

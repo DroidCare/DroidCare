@@ -13,11 +13,11 @@
     <application
         android:allowBackup="true"
         android:icon="@drawable/ic_logo"
-	android:label="@string/app_name"
-	android:theme="@style/Theme.AppCompat.Light"
-        android:screenOrientation="portrait" >
+        android:label="@string/app_name"
+        android:screenOrientation="portrait"
+        android:theme="@style/Theme.AppCompat.Light" >
         <activity
-            android:name="com.droidcare.boundary.TitleActivity"
+            android:name=".boundary.TitleActivity"
             android:label="@string/app_name" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -26,54 +26,58 @@
             </intent-filter>
         </activity>
         <activity
-            android:name="com.droidcare.boundary.LoginActivity"
+            android:name=".boundary.LoginActivity"
             android:label="@string/title_activity_login"
             android:noHistory="true"
-            android:parentActivityName="com.droidcare.boundary.TitleActivity" >
+            android:parentActivityName=".boundary.TitleActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.boundary.TitleActivity" />
         </activity>
         <activity
-            android:name="com.droidcare.boundary.RegisterActivity"
+            android:name=".boundary.RegisterActivity"
             android:label="@string/title_activity_register"
             android:noHistory="true"
-            android:parentActivityName="com.droidcare.boundary.TitleActivity" >
+            android:parentActivityName=".boundary.TitleActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.boundary.HomeActivity" />
         </activity>
         <activity
-            android:name="com.droidcare.boundary.HomeActivity"
+            android:name=".boundary.HomeActivity"
             android:label="@string/title_activity_home" >
         </activity>
         <activity
-            android:name="com.droidcare.boundary.EditProfileActivity"
+            android:name=".boundary.EditProfileActivity"
             android:label="@string/title_activity_edit_profile"
-            android:parentActivityName="com.droidcare.boundary.HomeActivity" >
-            <meta-data
-				android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.droidcare.boundary.HomeActivity" />        
-        </activity>
-        <activity
-            android:name="com.droidcare.boundary.AppointmentDetailsActivity"
-            android:label="@string/title_activity_appointment_details"
-            android:parentActivityName="com.droidcare.boundary.HomeActivity" >
+            android:parentActivityName=".boundary.HomeActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.boundary.HomeActivity" />
         </activity>
         <activity
-            android:name="com.droidcare.boundary.EditAppointmentActivity"
+            android:name=".boundary.AppointmentDetailsActivity"
+            android:label="@string/title_activity_appointment_details"
+            android:parentActivityName=".boundary.HomeActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.droidcare.boundary.HomeActivity" />
+        </activity>
+        <activity
+            android:name=".boundary.EditAppointmentActivity"
             android:label="@string/title_activity_edit_appointment" >
         </activity>
         <activity
-            android:name="com.droidcare.boundary.ForgetPasswordActivity"
+            android:name=".boundary.ForgetPasswordActivity"
             android:label="@string/title_activity_forget_password"
-            android:parentActivityName="com.droidcare.boundary.LoginActivity" >
+            android:parentActivityName=".boundary.LoginActivity" >
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.droidcare.boundary.LoginActivity" />
+        </activity>
+        <activity
+            android:name="com.droidcare.boundary.CreateAppointmentActivity"
+            android:label="@string/title_activity_create_appointment" >
         </activity>
     </application>
 
