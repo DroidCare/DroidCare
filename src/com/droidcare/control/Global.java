@@ -27,7 +27,7 @@ public class Global {
     public static String USER_FORGET_URL = USER_URL + "forget";
 
 	public static String USER_APPOINTMENT_URL = APPOINTMENT_URL + "user";
-	public static String GET_APPOINTMENT_ATTACH_URL = APPOINTMENT_URL + "attachment/";
+	public static String APPOINTMENT_ATTACH_URL = APPOINTMENT_URL + "attachment/";
 
     public static String APPOINTMENT_CANCEL_URL = APPOINTMENT_URL + "cancel";
     public static String APPOINTMENT_STATUS_URL = APPOINTMENT_URL + "status";

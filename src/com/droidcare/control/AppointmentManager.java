@@ -352,9 +352,23 @@ public abstract class AppointmentManager {
 		}
 	}
 	
-	public void getAttachment (FollowUpAppointment followUpAppointment) {
-		// @pciang : implement this, will be called when AppointmentDetailsActivity and EditAppointmentActivity is opened!
-		String result = "";
-		followUpAppointment.setAttachment(result);
+	public void getAttachment (FollowUpAppointment followUpAppointment, OnFinishListener onFinishListener) {
+        new SimpleHttpPost() {
+            private FollowUpAppointment appointment;
+            private OnFinishListener listener;
+            public SimpleHttpPost init(FollowUpAppointment appointment, OnFinishListener listener) {
+                this.appointment = appointment;
+                this.listener = listener;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                String result = "";
+                appointment.setAttachment(result);
+
+                listener.onFinish(responseText);
+            }
+        }.init(followUpAppointment, onFinishListener)
+                .send(Global.APPOINTMENT_ATTACH_URL + followUpAppointment.getId());
 	}
 }
