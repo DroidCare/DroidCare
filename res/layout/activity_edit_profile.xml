@@ -7,34 +7,39 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:layout_width="match_parent"
     android:layout_height="wrap_content" >
-    <LinearLayout
+    
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
 
-        <LinearLayout
+       <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/passport_label"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:text="@string/LabelText_passport" />
+            android:orientation="vertical"
+            android:id="@+id/passport_layout"
+            android:layout_below="@+id/passport_layout" >
 
-            <EditText
-                android:id="@+id/passport_field"
-                android:inputType="text"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content" />
-
+            <EditText 
+	            android:id="@+id/passport_field"
+	            android:inputType="text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/edittext_top_bg"
+	            android:padding="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:hint="@string/LabelText_passport"
+	            android:textColorHint="#B5B5B5"
+	            android:drawableLeft="@drawable/passport"/>
         </LinearLayout>
         <LinearLayout
+            android:id="@+id/name_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="5dp"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/passport_layout" >
             <TextView
                 android:id="@+id/name_label"
                 android:layout_width="125dp"
@@ -48,27 +53,32 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/address_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/address_label"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:text="@string/LabelText_address" />
-
-            <EditText
-                android:id="@+id/address_field"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="text" />
+            android:orientation="vertical"
+            android:layout_below="@+id/name_layout" >
+            <EditText 
+	            android:id="@+id/address_field"
+	            android:inputType="text"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/edittext_top_bg"
+	            android:padding="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:hint="@string/LabelText_address"
+	            android:textColorHint="#B5B5B5"
+	            android:drawableLeft="@drawable/address"/>
         </LinearLayout>
         
        <LinearLayout
+           	android:id="@+id/country_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal" 
+            android:layout_marginBottom="15dp"
+            android:layout_below="@+id/address_layout">
             <TextView
                 android:id="@+id/country_label"
                 android:layout_width="125dp"
@@ -76,17 +86,19 @@
                 android:gravity="center_vertical"
                 android:text="@string/LabelText_country" />
             <Spinner
-                    android:id="@+id/country_field"
-                    android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:entries="@array/Country_values" />
+                android:id="@+id/country_field"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:entries="@array/Country_values" />
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/email_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/country_layout" >
             <TextView
                 android:id="@+id/email_label"
                 android:layout_width="125dp"
@@ -100,10 +112,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/dob_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/email_layout" >
             <TextView
                 android:id="@+id/dob_label"
                 android:layout_width="125dp"
@@ -116,10 +130,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/gender_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="7dp"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/dob_layout" >
             <TextView
                 android:id="@+id/gender_label"
                 android:layout_width="125dp"
@@ -132,9 +148,12 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/nationality_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="15dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/gender_layout" >
             <TextView
                 android:id="@+id/nationality_label"
                 android:layout_width="125dp"
@@ -149,60 +168,72 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/old_password_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-
-            <TextView
-                android:id="@+id/old_password_label"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:text="@string/LabelText_OldPassword" />
-            <EditText
-                android:id="@+id/old_password_field"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+            android:orientation="vertical"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/nationality_layout" >
+			<EditText 
+	            android:id="@+id/old_password_field"
+	            android:inputType="textPassword"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/edittext_top_bg"
+	            android:padding="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:hint="@string/LabelText_Password"
+	            android:textColorHint="#B5B5B5"
+	            android:drawableLeft="@drawable/password"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/password_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/password_label"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:text="@string/LabelText_Password" />
-            <EditText
-                android:id="@+id/password_field"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
+            android:orientation="vertical"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/old_password_layout" >
+			<EditText 
+	            android:id="@+id/password_field"
+	            android:inputType="textPassword"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/edittext_top_bg"
+	            android:padding="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:hint="@string/LabelText_Password"
+	            android:textColorHint="#B5B5B5"
+	            android:drawableLeft="@drawable/password"/>
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/confirm_password_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
-            <TextView
-                android:id="@+id/confirm_label"
-                android:layout_width="125dp"
-                android:layout_height="wrap_content"
-                android:text="@string/LabelText_Confirm" />
-            <EditText
-                android:id="@+id/confirm_field"
-                android:layout_width="fill_parent"
-                android:layout_height="wrap_content"
-                android:inputType="textPassword" />
-
+            android:orientation="vertical"
+            android:layout_marginBottom="5dp"
+            android:layout_below="@+id/password_layout"  >
+            <EditText 
+	            android:id="@+id/confirm_field"
+	            android:inputType="textPassword"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/edittext_top_bg"
+	            android:padding="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:hint="@string/LabelText_Confirm"
+	            android:textColorHint="#B5B5B5"
+	            android:drawableLeft="@drawable/confirmpassword"/>
         </LinearLayout>
         
         <LinearLayout
+            android:id="@+id/notification_layout"
            	android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="15dp"
-            android:orientation="horizontal" >
+            android:layout_marginBottom="20dp"
+            android:orientation="horizontal"
+            android:layout_below="@+id/confirm_password_layout" >
             
             <TextView
                 android:id="@+id/notification_label"
@@ -227,26 +258,34 @@
         </LinearLayout>
 
         <LinearLayout
+            android:id="@+id/btnUpdate_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal" >
+            android:orientation="horizontal"
+            android:layout_below="@+id/notification_layout" >
             <View
                 android:layout_width="0dp"
                 android:layout_height="0dp"
                 android:layout_weight="1" />
-            <Button
-                android:id="@+id/update_btn"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/update_btn"
-                android:onClick="doUpdateProfile" />
+            <Button 
+	            android:id="@+id/update_btn"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:padding="10dp"
+	            android:layout_margin="4dp"
+	            android:text="@string/update_btn"
+	            android:onClick="doUpdateProfile"
+	            style="@style/DefaultButtonText"
+	            android:background="@drawable/button_default_bg"
+	        />
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/update_messages" >
+            android:id="@+id/update_messages"
+         >
         </LinearLayout>
-    </LinearLayout>
+    </RelativeLayout>
 </ScrollView>
