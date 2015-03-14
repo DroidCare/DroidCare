@@ -55,7 +55,7 @@ public class FollowUpAppointment extends Appointment {
 	 */
 	public String getAttachment () {
 		if (this.attachment.isEmpty()) {
-			Global.getAppointmentManager().getAttachment(this);
+			// Global.getAppointmentManager().getAttachment(this);
 		}
 		
 		return this.attachment;
