@@ -258,22 +258,41 @@
                 android:text="@string/TEST_AppointmentRemarks" />
         </LinearLayout>
         
-        <Button
-            android:id="@+id/Button_EditAppointment"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="8dp"
-            android:layout_gravity="center"
-            android:onClick="openEditAppointment"
-            android:text="@string/Button_Edit_Appointment" />
-        
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal"
+            android:layout_gravity="center" >
+	        <Button 
+		        android:id="@+id/Button_EditAppointment"
+		        android:layout_width="match_parent"
+		        android:layout_height="wrap_content"
+		        android:padding="10dp"
+		        android:layout_margin="4dp"
+		        android:text="@string/Button_Edit_Appointment"
+		        android:onClick="openEditAppointment"
+		        style="@style/DefaultButtonText"
+		        android:background="@drawable/button_default_bg"
+		   />
+       	</LinearLayout> 
+       
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:layout_gravity="center" >
         <Button
             android:id="@+id/Button_CancelAppointment"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:onClick="cancelAppointment"
-            android:text="@string/Button_Cancel_Appointment" />
+		    android:layout_width="match_parent"
+		    android:layout_height="wrap_content"
+		    android:padding="10dp"
+		    android:layout_margin="4dp"
+		    android:text="@string/Button_Cancel_Appointment"
+		    android:onClick="cancelAppointment"
+		    style="@style/DefaultButtonText"
+		    android:background="@drawable/button_default_bg" />
+        </LinearLayout>
         
         <Button
             android:id="@+id/Button_AcceptAppointment"
