@@ -6,7 +6,6 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 import com.droidcare.*;
-import com.droidcare.control.*;
 import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
@@ -34,6 +33,10 @@ import org.json.JSONObject;
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
+    public interface OnFinishListener {
+        public abstract void onFinish(String responseText);
+    }
+
 	/**
 	 *  This method definition is overriding the onReceive method in BroadcastReceiver. The method
 	 *  defines what to do when an "ALARM" is on. It notifies the user through local notification,
@@ -54,12 +57,22 @@ public class AlarmReceiver extends BroadcastReceiver {
 				// SMS notification is NOT IMPLEMENTED AS FOR NOW
 				String notificationType = Global.getUserManager().getUser().getNotification();
 				if (notificationType.equalsIgnoreCase("email")) {
-					sendEmailNotification(appointment);
+					sendEmailNotification(appointment, new OnFinishListener() {
+                        @Override
+                        public void onFinish(String responseText) {
+                            // Do nothing
+                        }
+                    });
 				} else if (notificationType.equalsIgnoreCase("sms")) {
 					sendSMSNotification(context, appointment);
 				} else if (notificationType.equalsIgnoreCase("all")) {
 					sendSMSNotification(context, appointment);
-					sendEmailNotification(appointment);
+					sendEmailNotification(appointment, new OnFinishListener() {
+                        @Override
+                        public void onFinish(String responseText) {
+                            // Do nothing
+                        }
+                    });
 				}
 			} 
 			// ALARM for a just-finished appointment
@@ -200,12 +213,23 @@ public class AlarmReceiver extends BroadcastReceiver {
 	private byte reverseByte(byte b) {
         return (byte) ((b & 0xF0) >> 4 | (b & 0x0F) << 4);
     }
-	
+
 	/**
 	 * This method is responsible for sending a Email notification to the user's registered email.
 	 * @param appointment	an {@link Appointment} object whose information will be used in the Email notification content.
 	 */
-	private void sendEmailNotification (Appointment appointment) {
-		// @pciang : please implement the POST / GET request to the PHP EMAIL HANDLER
+	private void sendEmailNotification (Appointment appointment, OnFinishListener onFinishListener) {
+        new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
+                , new Pair<String, String>("session_id", Global.getAppSession().getString("session_id"))) {
+            private OnFinishListener listener;
+            public SimpleHttpPost init(OnFinishListener listener) {
+                this.listener = listener;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                listener.onFinish(responseText);
+            }
+        }.init(onFinishListener).send(Global.APPOINTMENT_NOTIFY_URL);
 	}
 }
