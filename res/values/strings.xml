@@ -100,6 +100,7 @@
     <string name="Label_AppointmentConsultant">Consultant</string>
     <string name="Label_AppointmentStatus">Status</string>
     <string name="Label_AppointmentAttachment">Attachment</string>
+    <string name="Label_AppointmentPatient">Patient</string>
     <string name="AppointmentAttachmentDescription">Appointment Attachment</string>
     <string name="Label_AppointmentRemarks">Remarks</string>
     <string name="TEST_AppointmentID">239</string>
@@ -111,6 +112,7 @@
     <string name="TEST_AppointmentDateTime">Monday, 9 March 2015/14.00</string>
     <string name="TEST_AppointmentHealthIssue">Dental problem asdhjasgdajhsgdajhsgdajhsgdajhsgdajhsdgajhsd</string>
     <string name="TEST_AppointmentConsultant">Dr. Andrew Tan</string>
+    <string name="TEST_AppointmentPatient">Kenrick</string>
     <string name="TEST_AppointmentRemarks">Lalalalalalalalallaksdjalksjdalksjdlkqwjelqkwjelkasjdlkasjd</string>
     <string name="title_activity_create_appointment">CreateAppointmentActivity</string>
     <string name="Label_ConsultantName">Consultant</string>

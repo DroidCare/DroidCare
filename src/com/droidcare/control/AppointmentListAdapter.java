@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -38,7 +39,7 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 	private class ViewHolder {
 		// ALL VIEWS THAT NEED TO BE CUSTOMIZED ARE PUT HERE
 		TextView appointmentIdText, appointmentTypeText, appointmentDateTimeText,
-				 appointmentHealthIssueText, appointmentConsultantText;
+				 appointmentHealthIssueText, appointmentConsultantText, appointmentPatientText;
 	}
 	
 	@Override
@@ -54,12 +55,22 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 			convertView = mInflater.inflate(R.layout.appointment_list_item, parent, false);
 			holder = new ViewHolder();
 			
+			// Different layout for different user
+			if (Global.getUserManager().getUser().getType().equalsIgnoreCase("patient")) {
+				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentPatient)).setVisibility(View.VISIBLE);
+				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentConsultant)).setVisibility(View.GONE);
+			} else if (Global.getUserManager().getUser().getType().equalsIgnoreCase("consultant")) {
+				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentPatient)).setVisibility(View.GONE);
+				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentConsultant)).setVisibility(View.VISIBLE);
+			}
+			
 			// Take all views needed to be customized here
 			holder.appointmentIdText = (TextView) convertView.findViewById(R.id.Field_AppointmentID);
 			holder.appointmentTypeText = (TextView) convertView.findViewById(R.id.Field_AppointmentType);
 			holder.appointmentDateTimeText = (TextView) convertView.findViewById(R.id.Field_AppointmentDateTime);
 			holder.appointmentHealthIssueText = (TextView) convertView.findViewById(R.id.Field_AppointmentHealthIssue);
 			holder.appointmentConsultantText = (TextView) convertView.findViewById(R.id.Field_AppointmentConsultant);
+			holder.appointmentPatientText = (TextView) convertView.findViewById(R.id.Field_AppointmentPatient);
 			convertView.setTag(holder);
 		} else {
 			holder = (ViewHolder) convertView.getTag();
@@ -75,6 +86,7 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 			holder.appointmentDateTimeText.setText(dateTimeString);
 			holder.appointmentHealthIssueText.setText(appointment.getHealthIssue());
 			holder.appointmentConsultantText.setText(appointment.getConsultantName());
+			holder.appointmentPatientText.setText(appointment.getPatientName());
 		}
 		
 		return convertView;

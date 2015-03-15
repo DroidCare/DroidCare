@@ -48,6 +48,7 @@
 	    
 	 </LinearLayout>
 	 <LinearLayout
+	    android:id="@+id/LL_AppointmentConsultant"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginBottom="3dp"        
@@ -64,6 +65,26 @@
 	        android:layout_width="wrap_content"
 	        android:layout_height="wrap_content"
 	        android:text="@string/TEST_AppointmentConsultant" />
+	    
+	 </LinearLayout>
+	 <LinearLayout
+	    android:id="@+id/LL_AppointmentPatient"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"        
+        android:orientation="horizontal" >
+        
+	    <TextView
+	        android:id="@+id/Label_AppointmentPatient"
+	        android:layout_width="90dp"
+	        android:layout_height="wrap_content"
+	        android:text="@string/Label_AppointmentPatient" />
+	    
+	    <TextView
+	        android:id="@+id/Field_AppointmentPatient"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/TEST_AppointmentPatient" />
 	    
 	 </LinearLayout>
 	 <LinearLayout
