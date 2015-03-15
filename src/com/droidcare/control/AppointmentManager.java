@@ -367,7 +367,7 @@ public abstract class AppointmentManager {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
                         case 0:
-                            appointment.setAttachment(responseText);
+                            appointment.setAttachment(response.getString("message"));
                             break;
                         default:
                             break;
