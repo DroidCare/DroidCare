@@ -146,6 +146,8 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	public boolean onPrepareOptionsMenu (Menu menu) {
 	    if (Global.getUserManager().getUser().getType().equalsIgnoreCase("consultant")) {
+		MenuItem item = menu.findItem(R.id.action_overflow);
+	    	item.setVisible(false);
 	        menu.getItem(0).setEnabled(false);
 	    }
 	    
