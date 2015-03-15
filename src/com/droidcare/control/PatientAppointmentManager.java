@@ -36,6 +36,14 @@ public class PatientAppointmentManager extends AppointmentManager {
 	 * Add Patient specific methods here
 	 * create, modify, cancel
 	 */
+    
+    public void createAppointment (Appointment appointment) {
+    	// USE POLYMORPHISM DEPENDING ON THE APPOINTMENT TYPE
+    }
+    
+    public void editAppointment (Appointment appointment) {
+    	// USE POLYMORPHISM DEPENDING ON THE APPOINTMENT TYPE
+    }
 	
 	/**
 	 * Cancels a pending {@link Appointment} object.

@@ -146,6 +146,9 @@ public class CreateAppointmentActivity extends Activity {
     	// Key: Consultant Name - Specialization
     	// Value: Consultant ID
     	
+    	// How to make it easy to get the consultant ID and the consultant name for later stage?
+    	// HashMap of Int, ArrayList<String>?
+    	
     	// Reset the HashMap for each fetch
     	this.consultantDetails.clear();
     	
@@ -284,17 +287,27 @@ public class CreateAppointmentActivity extends Activity {
 	// Submit CREATE request to PHP
 	public void onCreateAppointment (View v) {
 		// USE APPOINTMENT MANAGER TO HANDLE CREATING APPOINTMENT
+		// ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment();
+		
 		// Check empty fields first
 		
 		int patientId = Global.getUserManager().getUser().getId(),
 			consultantId = this.consultantId;
 		
-		String 	dateTime;
-		String 	healthIssue = ((TextView) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
+		String 	patientName = Global.getUserManager().getUser().getFullName(),
+				// PROBLEM IN GETTING CONSULTANT NAME
+				dateTime = this.date + " " + this.time,
+				healthIssue = ((TextView) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
 				attachment = this.attachmentImageString,
 				type = this.type,
 				sessionId = Global.getUserManager().getUser().getSessionId();
 		
-		// Global.getAppointmentManager().addPendingAppointment(appointment);
+		if (type.equalsIgnoreCase(Appointment.NORMAL)) {
+			//Appointment appointment = new Appointment(0, patientId, consultantId, )
+		}
+		
+		// When the appointment creation is done, go back to HOME ACTIVITY and RE-FETCH APPOINTMENT DATA
+		Global.getAppointmentManager().retrieveAppointmentList(null);
+		this.finish();
 	}
 }

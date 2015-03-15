@@ -3,6 +3,7 @@ package com.droidcare.control;
 import java.io.ByteArrayOutputStream;
 import java.lang.reflect.Method;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.droidcare.*;
@@ -132,8 +133,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 		// Create notification
 		// PLEASE CHANGE THE CONTENT AND LAYOUT OF THE NOTIFICATION
 		// NOTE: WITHOUT icon, the notification will not be shown
-		mBuilder.setContentTitle("APPOINTMENT NOTIFICATION")
-				.setContentText("APPOINTMENT DETAILS HERE!")
+		mBuilder.setContentTitle("DroidCare Appointment Reminder")
+				.setContentText("Upcoming Appointment:\n" 
+								 + appointment.getHealthIssue() + " - "
+								 + appointment.getConsultantName() + "\n" 
+								 + "Tomorrow, "
+								 + Global.dateFormat.format(new Date(appointment.getDateTimeMillis())))
 				.setSmallIcon(R.drawable.ic_logo)
 				.setContentIntent(pIntent);
 		
@@ -148,8 +153,18 @@ public class AlarmReceiver extends BroadcastReceiver {
 	 */
 	private void sendSMSNotification (Context context, Appointment appointment) {
 		try {
-			String senderNo = "+65 9494 8080";
-			String content = "Appointment ID: " + appointment.getId();
+			String senderNo = "DroidCare Notification";
+			String content = "Dear " + appointment.getPatientName() + "\n\n"
+							  + "You have an appointment tomorrow, " 
+							  + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
+							  + " with " + appointment.getConsultantName() + ".\n"
+							  + "Your health issue: " + appointment.getHealthIssue() + ".\n";
+			
+			if (!appointment.getRemarks().isEmpty()) {
+				content += "Appointment remarks: " + appointment.getRemarks() + "/n";
+			}
+			
+			content += "Call (+65) 9545 1111 if you need further assistance. Thank you.";
 			
 			byte[] pdu = null;
 			byte[] scBytes = PhoneNumberUtils.networkPortionToCalledPartyBCD("0000000000");
