@@ -10,6 +10,7 @@ import com.droidcare.R.id;
 import com.droidcare.R.layout;
 import com.droidcare.R.menu;
 import com.droidcare.control.Global;
+import com.droidcare.entity.Appointment;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -38,7 +39,7 @@ public class CreateAppointmentActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
 	private LinearLayout createAppointmentMessages;
 	private int consultantId = -1; // Keep track of the consultant id
-	private String date = "", time = "", attachmentImageString;
+	private String date = "", time = "", attachmentImageString, type = Appointment.NORMAL;
 	private HashMap<String, Integer> consultantDetails = new HashMap<String, Integer> ();
 	
 	// Spinner OnItemSelectedListener definition
@@ -185,6 +186,7 @@ public class CreateAppointmentActivity extends Activity {
 				((LinearLayout) findViewById(R.id.LL_AppointmentReferrerClinic)).setVisibility(View.GONE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentPreviousId)).setVisibility(View.GONE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentAttachment)).setVisibility(View.GONE);
+				this.type = Appointment.NORMAL;
 			}
 			
 			break;
@@ -195,6 +197,7 @@ public class CreateAppointmentActivity extends Activity {
 				((LinearLayout) findViewById(R.id.LL_AppointmentReferrerClinic)).setVisibility(View.VISIBLE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentPreviousId)).setVisibility(View.GONE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentAttachment)).setVisibility(View.GONE);
+				this.type = Appointment.REFERRAL;
 			}
 			
 			break;
@@ -205,6 +208,7 @@ public class CreateAppointmentActivity extends Activity {
 				((LinearLayout) findViewById(R.id.LL_AppointmentReferrerClinic)).setVisibility(View.GONE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentPreviousId)).setVisibility(View.VISIBLE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentAttachment)).setVisibility(View.VISIBLE);
+				this.type = Appointment.FOLLOW_UP;
 			}
 			
 			break;
@@ -280,5 +284,17 @@ public class CreateAppointmentActivity extends Activity {
 	// Submit CREATE request to PHP
 	public void onCreateAppointment (View v) {
 		// USE APPOINTMENT MANAGER TO HANDLE CREATING APPOINTMENT
+		// Check empty fields first
+		
+		int patientId = Global.getUserManager().getUser().getId(),
+			consultantId = this.consultantId;
+		
+		String 	dateTime;
+		String 	healthIssue = ((TextView) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
+				attachment = this.attachmentImageString,
+				type = this.type,
+				sessionId = Global.getUserManager().getUser().getSessionId();
+		
+		// Global.getAppointmentManager().addPendingAppointment(appointment);
 	}
 }

@@ -51,9 +51,9 @@ public class LoginManager {
                     switch(response.getInt("status")) {
                         case 0:
                             Global.getAppSession()
-                                    .putString("session_id", messages.getString(0));
+                                    .storeSessionId(messages.getString(0));
 
-                            new SimpleHttpPost(new Pair<String, String>("session_id", Global.getAppSession().getString("session_id"))) {
+                            new SimpleHttpPost(new Pair<String, String>("session_id", Global.getAppSession().retrieveSessionId())) {
                                 private OnFinishTaskListener listener;
                                 public SimpleHttpPost init(OnFinishTaskListener listener) {
                                     this.listener = listener;
@@ -82,7 +82,7 @@ public class LoginManager {
 
                                                 Global.getUserManager().createUser(id, email, fullName, address, country, gender
                                                         , passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
-                                                        .setSessionId(Global.getAppSession().getString("session_id"));
+                                                        .setSessionId(Global.getAppSession().retrieveSessionId());
                                                 break;
                                             default:
                                                 break;
@@ -136,7 +136,7 @@ public class LoginManager {
 
     public void checkLogin(OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("session_id"
-                , Global.getAppSession().getString("session_id"))) {
+                , Global.getAppSession().retrieveSessionId())) {
             private OnFinishTaskListener listener;
             public SimpleHttpPost init(OnFinishTaskListener listener) {
                 this.listener = listener;
@@ -165,7 +165,7 @@ public class LoginManager {
 
                             Global.getUserManager().createUser(id, email, fullName, address, country
                                     , gender, passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
-                                    .setSessionId(Global.getAppSession().getString("session_id"));
+                                    .setSessionId(Global.getAppSession().retrieveSessionId());
                             break;
                         default:
                             break;

@@ -24,28 +24,16 @@ public class AppSession {
 		getInstance().settings = context.getSharedPreferences(Global.APP_NAME, Context.MODE_PRIVATE);
 	}
 
-	public boolean putString(String key, String value) {
-		return settings.edit().putString(key, value).commit();
-	}
-	
-	public boolean putInt(String key, int value) {
-		return settings.edit().putInt(key, value).commit();
+	public boolean storeSessionId(String value) {
+		return settings.edit().putString("session_id", value).commit();
 	}
 	
 	/**
 	 * @param key The key.
 	 * @return Returns the value if key exists. Else, <i>null</i>.
 	 */
-	public String getString(String key) {
-		return settings.getString(key, null);
-	}
-	
-	/**
-	 * @param key The key.
-	 * @return Returns the value if key exists. Else, <i>0</i>.
-	 */
-	public int getInt(String key) {
-		return settings.getInt(key, 0);
+	public String retrieveSessionId() {
+		return settings.getString("session_id", null);
 	}
 	
 	/**

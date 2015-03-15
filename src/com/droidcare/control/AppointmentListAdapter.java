@@ -82,7 +82,8 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 			
 			// Customize the view based on each appointment details
 			holder.appointmentIdText.setText("" + appointment.getId());
-			holder.appointmentTypeText.setText(appointment.getType());
+			holder.appointmentTypeText.setText(appointment.getType().substring(0, 1).toUpperCase() 
+					  						   + appointment.getType().substring(1));
 			holder.appointmentDateTimeText.setText(dateTimeString);
 			holder.appointmentHealthIssueText.setText(appointment.getHealthIssue());
 			holder.appointmentConsultantText.setText(appointment.getConsultantName());

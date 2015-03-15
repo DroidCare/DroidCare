@@ -133,8 +133,10 @@ public class AppointmentDetailsActivity extends Activity {
 		
 		// POPULATE GENERAL DATA
 		((TextView) findViewById(R.id.Field_AppointmentId)).setText("" + appointment.getId());
-		((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus());
-		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointment.getType());
+		((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus().substring(0, 1).toUpperCase() 
+				  													    + appointment.getStatus().substring(1));
+		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointment.getType().substring(0, 1).toUpperCase() 
+																	  + appointment.getType().substring(1));
 		((TextView) findViewById(R.id.Field_AppointmentConsultantName)).setText(appointment.getConsultantName());
 		((TextView) findViewById(R.id.Field_AppointmentPatientName)).setText(appointment.getPatientName());
 		((TextView) findViewById(R.id.Field_AppointmentDateTime)).setText(dateTimeString);
