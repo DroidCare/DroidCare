@@ -36,7 +36,8 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_home);
-
+		actionBar = getActionBar();
+		actionBar.setSubtitle("Welcome, "+ Global.getUserManager().getUser().getFullName()+"!");
 
         if(!Global.firstInitialization) {
             ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);

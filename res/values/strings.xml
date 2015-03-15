@@ -32,7 +32,7 @@
     <string name="LabelText_country">Country</string>
     <string name="LabelText_dob">Date of birth</string>
     <string name="ButtonText_dob">Input</string>
-    <string name="title_activity_home">Home</string>
+    <string name="title_activity_home">DroidCare</string>
     <string name="LabelText_gender">Gender</string>
     <string name="dob_field">Pick a date:</string>
 
