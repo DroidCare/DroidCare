@@ -363,8 +363,17 @@ public abstract class AppointmentManager {
             }
             @Override
             public void onFinish(String responseText) {
-                String result = "";
-                appointment.setAttachment(result);
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            appointment.setAttachment(responseText);
+                            break;
+                        default:
+                            break;
+                    }
+                } catch (JSONException e) {
+                }
 
                 listener.onFinish(responseText);
             }
