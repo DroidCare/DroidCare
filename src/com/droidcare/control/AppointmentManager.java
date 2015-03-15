@@ -352,7 +352,7 @@ public abstract class AppointmentManager {
 		}
 	}
 	
-	public void getAttachment (FollowUpAppointment followUpAppointment, OnFinishListener onFinishListener) {
+	public void fetchAttachment (FollowUpAppointment followUpAppointment, OnFinishListener onFinishListener) {
         new SimpleHttpPost() {
             private FollowUpAppointment appointment;
             private OnFinishListener listener;
