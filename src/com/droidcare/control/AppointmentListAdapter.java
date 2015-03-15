@@ -57,11 +57,11 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 			
 			// Different layout for different user
 			if (Global.getUserManager().getUser().getType().equalsIgnoreCase("patient")) {
-				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentPatient)).setVisibility(View.VISIBLE);
-				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentConsultant)).setVisibility(View.GONE);
-			} else if (Global.getUserManager().getUser().getType().equalsIgnoreCase("consultant")) {
 				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentPatient)).setVisibility(View.GONE);
 				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentConsultant)).setVisibility(View.VISIBLE);
+			} else if (Global.getUserManager().getUser().getType().equalsIgnoreCase("consultant")) {
+				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentPatient)).setVisibility(View.VISIBLE);
+				((LinearLayout) convertView.findViewById(R.id.LL_AppointmentConsultant)).setVisibility(View.GONE);
 			}
 			
 			// Take all views needed to be customized here
