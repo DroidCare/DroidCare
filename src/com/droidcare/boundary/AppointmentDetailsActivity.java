@@ -84,10 +84,14 @@ public class AppointmentDetailsActivity extends Activity {
 			((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
 			((LinearLayout) findViewById(R.id.LL_AppointmentRemarksEditable)).setVisibility(View.GONE);
+			((LinearLayout) findViewById(R.id.LL_AppointmentConsultantName)).setVisibility(View.VISIBLE);
+			((LinearLayout) findViewById(R.id.LL_AppointmentPatientName)).setVisibility(View.GONE);
 		} else if (this.userType.equalsIgnoreCase("consultant")) {
 			((Button) findViewById(R.id.Button_EditAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_CancelAppointment)).setVisibility(View.GONE);
 			((LinearLayout) findViewById(R.id.LL_AppointmentRemarks)).setVisibility(View.GONE);
+			((LinearLayout) findViewById(R.id.LL_AppointmentConsultantName)).setVisibility(View.GONE);
+			((LinearLayout) findViewById(R.id.LL_AppointmentPatientName)).setVisibility(View.VISIBLE);
 		}
 		
 		// Regardless of the type of user, if it is a NON-PENDING appointment, no button is showed
@@ -132,6 +136,7 @@ public class AppointmentDetailsActivity extends Activity {
 		((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus());
 		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointment.getType());
 		((TextView) findViewById(R.id.Field_AppointmentConsultantName)).setText(appointment.getConsultantName());
+		((TextView) findViewById(R.id.Field_AppointmentPatientName)).setText(appointment.getPatientName());
 		((TextView) findViewById(R.id.Field_AppointmentDateTime)).setText(dateTimeString);
 		((TextView) findViewById(R.id.Field_AppointmentHealthIssue)).setText(appointment.getHealthIssue());
 		((TextView) findViewById(R.id.Field_AppointmentRemarks)).setText(appointment.getRemarks());

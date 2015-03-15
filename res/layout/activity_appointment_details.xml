@@ -155,6 +155,26 @@
         </LinearLayout>
         
         <LinearLayout
+            android:id="@+id/LL_AppointmentPatientName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="horizontal" >
+            
+            <TextView
+                android:id="@+id/LabelText_AppointmentPatientName"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:text="@string/Label_AppointmentPatient" />
+            
+            <TextView 
+                android:id="@+id/Field_AppointmentPatientName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/TEST_AppointmentPatient" />
+        </LinearLayout>
+        
+        <LinearLayout
             android:id="@+id/LL_AppointmentDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
