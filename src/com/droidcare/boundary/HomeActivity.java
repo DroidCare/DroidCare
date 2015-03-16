@@ -40,58 +40,55 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		super.onCreate(savedInstanceState);
         requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_home);
+		
 		actionBar = getActionBar();
-
-        assertNotNull(actionBar);
-
 		actionBar.setSubtitle("Welcome, "+ Global.getUserManager().getUser().getFullName()+"!");
-
-        if(!Global.firstInitialization) {
-            ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);
-            pd.show();
-
-            Global.initAppointmentManager();
-            AppointmentManager appointmentManager = Global.getAppointmentManager();
-            appointmentManager.clearRejectedAppointments();
-            appointmentManager.clearAcceptedAppointments();
-            appointmentManager.clearFinishedAppointments();
-            appointmentManager.clearPendingAppointments();
-
-            Global.getAppointmentManager().retrieveAppointmentList(new AppointmentManager.OnFinishListener() {
-                private ProgressDialog pd;
-                public AppointmentManager.OnFinishListener init(ProgressDialog pd) {
-                    this.pd = pd;
-                    return this;
-                }
-
-                @Override
-                public void onFinish(String responseText) {
-                    try {
-                        JSONObject response = new JSONObject(responseText);
-                        switch(response.getInt("status")) {
-                            case 0:
-                                Global.firstInitialization = true;
-                                Global.getAppointmentManager().setAllAlarms(HomeActivity.this);
-
-                                pd.dismiss();
-                                break;
-                            default:
-                                break;
-                        }
-                    // Do nothing on exception
-                    } catch (JSONException e) {
-                    }
-                }
-            }.init(pd));
-        }
 	}
 
     @Override
     protected void onResume() {
         super.onResume();
 
-        ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);
+        ProgressDialog pd = ProgressDialog.show(this, null, "Loading...", true);
         pd.show();
+
+        if (Global.firstInitialization) {
+        	Global.initAppointmentManager();
+        }
+        
+        AppointmentManager appointmentManager = Global.getAppointmentManager();
+        appointmentManager.clearRejectedAppointments();
+        appointmentManager.clearAcceptedAppointments();
+        appointmentManager.clearFinishedAppointments();
+        appointmentManager.clearPendingAppointments();
+        
+        // Retrieve AppointmentList every time in HomeActivity
+        // So that any just-accepted / just-rejected appointments are also updated 
+        Global.getAppointmentManager().retrieveAppointmentList(new AppointmentManager.OnFinishListener() {
+            private ProgressDialog pd;
+            public AppointmentManager.OnFinishListener init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+
+            @Override
+            public void onFinish(String responseText) {
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            Global.getAppointmentManager().setAllAlarms(HomeActivity.this);
+
+                            pd.dismiss();
+                            break;
+                        default:
+                            break;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+            }
+        }.init(pd));
 
         user = Global.getUserManager().getUser();
 
@@ -126,8 +123,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
             public void onPageScrollStateChanged(int arg0) {
             }
         });
-
-        pd.dismiss();
     }
 
 	// Swipe view listener

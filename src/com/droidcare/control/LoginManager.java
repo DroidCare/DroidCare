@@ -124,10 +124,6 @@ public class LoginManager {
                 Global.getUserManager().removeUser();
                 Global.getAppSession().clearAll();
                 Global.firstInitialization = false;
-//                Global.getAppointmentManager().clearRejectedAppointments();
-//                Global.getAppointmentManager().clearPendingAppointments();
-//                Global.getAppointmentManager().clearFinishedAppointments();
-//                Global.getAppointmentManager().clearAcceptedAppointments();
 
                 listener.onFinishTask(responseText);
             }
