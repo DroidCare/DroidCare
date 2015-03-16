@@ -211,7 +211,7 @@
 		        android:text="@string/Label_AppointmentPreviousID" />
 		    
 		    <EditText
-		        android:id="@+id/FIeld_AppointmentPreviousId"
+		        android:id="@+id/Field_AppointmentPreviousId"
 		        android:layout_width="190dp"
 		        android:layout_height="wrap_content"
 		        android:inputType="numberDecimal" />

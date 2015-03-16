@@ -43,13 +43,16 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                     , new Pair<String, String>("status", Appointment.ACCEPTED)
                     , new Pair<String, String>("remarks", appointment.getRemarks())
                     , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
+            	
                 private OnFinishListener listener;
                 private Appointment appointment;
+                
                 public SimpleHttpPost init(OnFinishListener listener, Appointment appointment) {
                     this.listener = listener;
                     this.appointment = appointment;
                     return this;
                 }
+                
                 @Override
                 public void onFinish(String responseText) {
                     try {

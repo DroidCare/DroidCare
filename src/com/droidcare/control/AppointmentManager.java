@@ -1,6 +1,7 @@
 package com.droidcare.control;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -161,6 +162,13 @@ public abstract class AppointmentManager {
 	                                }
                                 }
                             }
+                            
+                            // Sort based on the dateTimeMillis -> ASCENDING
+                            // Smaller dateTimeMillis = closer appointment date and time
+                            Collections.sort(AppointmentManager.this.acceptedAppointments);
+                            Collections.sort(AppointmentManager.this.pendingAppointments);
+                            Collections.sort(AppointmentManager.this.rejectedAppointments);
+                            Collections.sort(AppointmentManager.this.finishedAppointments);
 
                             break;
                             

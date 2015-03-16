@@ -11,6 +11,8 @@ import com.droidcare.R.layout;
 import com.droidcare.R.menu;
 import com.droidcare.control.Global;
 import com.droidcare.entity.Appointment;
+import com.droidcare.entity.FollowUpAppointment;
+import com.droidcare.entity.ReferralAppointment;
 
 import android.app.Activity;
 import android.app.DialogFragment;
@@ -29,6 +31,7 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RadioButton;
@@ -320,17 +323,32 @@ public class CreateAppointmentActivity extends Activity {
 		String 	patientName = Global.getUserManager().getUser().getFullName(),
 				consultantName = this.consultantName,
 				dateTime = this.date + " " + this.time,
-				healthIssue = ((TextView) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
-				attachment = this.attachmentImageString,
+				healthIssue = ((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
 				type = this.type,
 				sessionId = Global.getUserManager().getUser().getSessionId();
 		
+		// Let the appointment ID be any integer since the appointment list will be re-fetched when the user
+		// goes back to the home activity
 		if (type.equalsIgnoreCase(Appointment.NORMAL)) {
-			//Appointment appointment = new Appointment(0, patientId, consultantId, )
+			Appointment appointment = new Appointment(-1, patientId, consultantId, dateTime, patientName,
+													  consultantName, healthIssue, type, "", Appointment.PENDING);
+		} else if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
+			String 	referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString(),
+					referrerClinic = ((EditText) findViewById(R.id.Field_AppointmentReferrerClinic)).getText().toString();
+			
+			ReferralAppointment appointment = new ReferralAppointment(-1, patientId, consultantId, dateTime, patientName,
+																	  consultantName, healthIssue, type, "", Appointment.PENDING,
+																	  referrerName, referrerClinic);
+		} else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
+			String attachment = this.attachmentImageString;
+			int previousId = Integer.parseInt(((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString());
+			
+			FollowUpAppointment appointment = new FollowUpAppointment(-1, patientId, consultantId, dateTime, patientName,
+																	  consultantName, healthIssue, type, "", Appointment.PENDING,
+																	  attachment, previousId);
 		}
 		
-		// When the appointment creation is done, go back to HOME ACTIVITY and RE-FETCH APPOINTMENT DATA
-		Global.getAppointmentManager().retrieveAppointmentList(null);
+		// When the appointment creation is done, go back to HOME ACTIVITY
 		this.finish();
 	}
 }

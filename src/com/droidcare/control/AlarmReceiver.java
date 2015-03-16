@@ -245,6 +245,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             public void onFinish(String responseText) {
                 listener.onFinish(responseText);
             }
-        }.init(onFinishListener).send(Global.APPOINTMENT_NOTIFY_URL);
+        }.init(onFinishListener).send(Global.APPOINTMENT_NOTIFY_REMINDER_URL);
 	}
 }

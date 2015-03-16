@@ -358,10 +358,12 @@ public class AppointmentDetailsActivity extends Activity {
 		        ((ConsultantAppointmentManager) Global.getAppointmentManager()).rejectAppointment(appointment
 		                , new ConsultantAppointmentManager.OnFinishListener() {
 		            private ProgressDialog pd;
+		            
 		            public ConsultantAppointmentManager.OnFinishListener init(ProgressDialog pd) {
 		                this.pd = pd;
 		                return this;
 		            }
+		            
 		            @Override
 		            public void onFinish(String responseText) {
 		                pd.dismiss();

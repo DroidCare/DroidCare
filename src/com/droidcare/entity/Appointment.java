@@ -22,7 +22,7 @@ import android.util.Log;
  * {@link ReferralAppointment} class.
  */
 
-public class Appointment implements Parcelable {
+public class Appointment implements Parcelable, Comparable<Appointment> {
 	/**
 	 * Appointment status.
 	 */
@@ -221,6 +221,12 @@ public class Appointment implements Parcelable {
 	 */
 	public void setRemarks (String remarks) {
 		this.remarks = remarks;
+	}
+	
+	// COMPARABLE IMPLEMENTATION
+	@Override
+	public int compareTo(Appointment a) {
+		return new Long(this.dateTimeMillis).compareTo(new Long(a.getDateTimeMillis()));
 	}
 	
 	// PARCELABLE IMPLEMENTATION -> provide a way to send an object from one activity / fragment to another
