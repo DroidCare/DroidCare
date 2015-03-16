@@ -56,20 +56,49 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                 @Override
                 public void onFinish(String responseText) {
                     try {
-                        JSONObject response = new JSONObject(responseText);
+                        final JSONObject response = new JSONObject(responseText);
                         switch(response.getInt("status")) {
                             case 0:
-                                appointment.setStatus(Appointment.ACCEPTED);
-                                ConsultantAppointmentManager.this.removePendingAppointment(appointment);
-                                ConsultantAppointmentManager.this.addAcceptedAppointment(appointment);
+                                new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
+                                        , new Pair<String, String> ("session_id", Global.getUserManager().getUser().getSessionId())
+                                        , new Pair<String, String>("status", Appointment.ACCEPTED)
+                                        , new Pair<String, String>("remarks", appointment.getRemarks()) ) {
+                                    private OnFinishListener listener;
+                                    private Appointment appointment;
+                                    public SimpleHttpPost init(Appointment appointment, OnFinishListener listener) {
+                                        this.appointment = appointment;
+                                        this.listener = listener;
+                                        return this;
+                                    }
+                                    @Override
+                                    public void onFinish(String responseText) {
+                                        try {
+                                            JSONObject response = new JSONObject(responseText);
+                                            switch(response.getInt("status")) {
+                                                case 0:
+                                                    appointment.setStatus(Appointment.ACCEPTED);
+                                                    ConsultantAppointmentManager.this.removePendingAppointment(appointment);
+                                                    ConsultantAppointmentManager.this.addRejectedAppointment(appointment);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                        // Do nothing on exception
+                                        } catch (JSONException e) {
+                                        }
+
+                                        listener.onFinish(responseText);
+                                    }
+                                }.init(appointment, listener).send(Global.APPOINTMENT_NOTIFY_STATUS_URL);
+
                                 break;
+
                             default:
                                 break;
                         }
                     // Do nothing on exception
                     } catch (JSONException e) {
                     }
-                    listener.onFinish(responseText);
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_STATUS_URL);
 		}
@@ -99,9 +128,41 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                         JSONObject response = new JSONObject(responseText);
                         switch(response.getInt("status")) {
                             case 0:
-                                appointment.setStatus(Appointment.REJECTED);
-                                ConsultantAppointmentManager.this.removePendingAppointment(appointment);
-                                ConsultantAppointmentManager.this.addRejectedAppointment(appointment);
+//                                appointment.setStatus(Appointment.REJECTED);
+//                                ConsultantAppointmentManager.this.removePendingAppointment(appointment);
+//                                ConsultantAppointmentManager.this.addRejectedAppointment(appointment);
+                                new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
+                                        , new Pair<String, String> ("session_id", Global.getUserManager().getUser().getSessionId())
+                                        , new Pair<String, String>("status", Appointment.REJECTED)
+                                        , new Pair<String, String>("remarks", appointment.getRemarks()) ) {
+                                    private OnFinishListener listener;
+                                    private Appointment appointment;
+                                    public SimpleHttpPost init(Appointment appointment, OnFinishListener listener) {
+                                        this.appointment = appointment;
+                                        this.listener = listener;
+                                        return this;
+                                    }
+                                    @Override
+                                    public void onFinish(String responseText) {
+                                        try {
+                                            JSONObject response = new JSONObject(responseText);
+                                            switch(response.getInt("status")) {
+                                                case 0:
+                                                    appointment.setStatus(Appointment.REJECTED);
+                                                    ConsultantAppointmentManager.this.removePendingAppointment(appointment);
+                                                    ConsultantAppointmentManager.this.addRejectedAppointment(appointment);
+                                                    break;
+                                                default:
+                                                    break;
+                                            }
+                                            // Do nothing on exception
+                                        } catch (JSONException e) {
+                                        }
+
+                                        listener.onFinish(responseText);
+                                    }
+                                }.init(appointment, listener).send(Global.APPOINTMENT_NOTIFY_STATUS_URL);
+
                                 break;
                             default:
                                 break;
@@ -109,7 +170,6 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                     // Do nothing on exception
                     } catch (JSONException e) {
                     }
-                    listener.onFinish(responseText);
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_STATUS_URL);
 		}
