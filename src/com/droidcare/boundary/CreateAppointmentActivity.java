@@ -39,16 +39,17 @@ public class CreateAppointmentActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
 	private LinearLayout createAppointmentMessages;
 	private int consultantId = -1; // Keep track of the consultant id
-	private String date = "", time = "", attachmentImageString, type = Appointment.NORMAL;
-	private HashMap<String, Integer> consultantDetails = new HashMap<String, Integer> ();
+	private String consultantName = "", date = "", time = "", attachmentImageString, type = Appointment.NORMAL;
+	private ArrayList<ConsultantDetails> consultants;
 	
 	// Spinner OnItemSelectedListener definition
 	private OnItemSelectedListener onConsultantSelectedListener = new OnItemSelectedListener () {
 
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			CreateAppointmentActivity.this.consultantId = CreateAppointmentActivity.this.consultantDetails
-														  .get(parent.getItemAtPosition(position).toString());
+			// Get the correct position in ArrayList consultants
+			CreateAppointmentActivity.this.consultantId = CreateAppointmentActivity.this.consultants.get(position).id;
+			CreateAppointmentActivity.this.consultantName = CreateAppointmentActivity.this.consultants.get(position).name;
 			
 			// Fetch availability time if BOTH DATE AND CONSULTANT'S NAME ARE ALREADY SELECTED (Consultant ID exists!)
 			if (!CreateAppointmentActivity.this.date.isEmpty() && CreateAppointmentActivity.this.consultantId >= 0) {
@@ -132,6 +133,18 @@ public class CreateAppointmentActivity extends Activity {
         this.createAppointmentMessages.removeAllViews();
     }
 	
+	/* PRIVATE CLASS */
+	private class ConsultantDetails {
+		private int id;
+		private String name, specialization;
+		
+		private ConsultantDetails (int id, String name, String specialization) {
+			this.id = id;
+			this.name = name;
+			this.specialization = specialization;
+		}
+	}
+	
 	// Debugging purpose
     private void putMessage(String message) {
         TextView textView = new TextView(this);
@@ -146,20 +159,30 @@ public class CreateAppointmentActivity extends Activity {
     	// Key: Consultant Name - Specialization
     	// Value: Consultant ID
     	
-    	// How to make it easy to get the consultant ID and the consultant name for later stage?
-    	// HashMap of Int, ArrayList<String>?
+    	// PUSH ALL CONSULTANT INFO FROM PHP REQUEST TO THIS ARRAY LIST
+    	this.consultants = new ArrayList<ConsultantDetails> ();
     	
-    	// Reset the HashMap for each fetch
-    	this.consultantDetails.clear();
+    	// Together with the ArrayList above, also push a String -> Consultant Name + " - " + Consultant Specialization
+    	// To populate the spinner
+    	ArrayList<String> consultantSpinnerData = new ArrayList<String> ();
     	
-    	// Default value is consultant name = "", consultant id = -1
-    	// In case the user chooses the blank option again
-    	this.consultantDetails.put("", -1);
+    	// LOOPING HERE
+    	// Add data to those ArrayLists (the order must be the same between the two list)
+    	//
+    	// Skeleton:
+    	// For each JSON entry:
+    	//  	int id = JSONArray[i]["id"]
+    	//		String name = JSONArray[i]["name"], specialization = JSONArray[i]["specialization"]
+    	// 		ConsultantDetails c = new ConsultantDetails(id, name, specialization);
+    	//		this.consultants.add(c);
+    	//		consultantSpinnerData.add(name + " - " + specialization);
     	
+	    /* -------------------------------------------------------------------------- */
+	    	
     	// Populate Consultant Name Spinner
 		Spinner consultantSpinner = (Spinner) findViewById(R.id.Spinner_ConsultantName);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, 
-									   new ArrayList<String> (this.consultantDetails.keySet()));
+									   consultantSpinnerData);
 		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 		consultantSpinner.setAdapter(adapter);
     }
@@ -295,7 +318,7 @@ public class CreateAppointmentActivity extends Activity {
 			consultantId = this.consultantId;
 		
 		String 	patientName = Global.getUserManager().getUser().getFullName(),
-				// PROBLEM IN GETTING CONSULTANT NAME
+				consultantName = this.consultantName,
 				dateTime = this.date + " " + this.time,
 				healthIssue = ((TextView) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
 				attachment = this.attachmentImageString,
