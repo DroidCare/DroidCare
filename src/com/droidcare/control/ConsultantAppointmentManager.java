@@ -37,6 +37,7 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 	 * @param appointment	a pending {@link Appointment} object to be accepted by the consultant.
 	 */
 	public void acceptAppointment (Appointment appointment, OnFinishListener onFinishListener) {
+		// NEED TO SEND EMAIL NOTIFICATION TO THE USER!
 		if (appointment.getStatus().equalsIgnoreCase(Appointment.PENDING)) {
             new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
                     , new Pair<String, String>("status", Appointment.ACCEPTED)
@@ -76,6 +77,7 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 	 * @param appointment	a pending {@link Appointment} object to be rejected by the consultant.
 	 */
 	public void rejectAppointment (Appointment appointment, OnFinishListener onFinishListener) {
+		// NEED TO SEND EMAIL NOTIFICATION TO THE USER!
 		if (appointment.getStatus().equalsIgnoreCase(Appointment.PENDING)) {
             new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
                     , new Pair<String, String>("status", Appointment.REJECTED)

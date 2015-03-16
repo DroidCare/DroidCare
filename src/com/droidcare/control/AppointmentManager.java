@@ -78,8 +78,7 @@ public abstract class AppointmentManager {
                 return null;
             } else {
                 return instance = Global.getUserManager().getUser().getType().equalsIgnoreCase("patient") ?
-                        new PatientAppointmentManager()
-                        : new ConsultantAppointmentManager();
+                        new PatientAppointmentManager() : new ConsultantAppointmentManager();
             }
         }
         
@@ -127,7 +126,7 @@ public abstract class AppointmentManager {
                                         patientName = params.getString("patient_name"),
                                         consultantName = params.getString("consultant_name"),
                                         healthIssue = params.getString("health_issue"),
-                                        // attachment = params.getString("attachment"),
+                                        attachment = params.getString("attachment"),
                                         type = params.getString("type"),
                                         referrerName = params.getString("referrer_name"),
                                         referrerClinic = params.getString("referrer_clinic"),
@@ -146,7 +145,7 @@ public abstract class AppointmentManager {
                                 } else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
                                 	appointment = new FollowUpAppointment(id, patientId
                                 			, consultantId, dateTime, patientName, consultantName, healthIssue
-                                			, type, remarks, status, "", previousId);
+                                			, type, remarks, status, attachment, previousId);
                                 }
                                 
                                 // DOUBLE CHECK
@@ -350,34 +349,5 @@ public abstract class AppointmentManager {
 		for (Appointment a: this.acceptedAppointments) {
 			Global.getAlarmSetter().setAlarm(context, a);
 		}
-	}
-	
-	public void fetchAttachment (FollowUpAppointment followUpAppointment, OnFinishListener onFinishListener) {
-        new SimpleHttpPost() {
-            private FollowUpAppointment appointment;
-            private OnFinishListener listener;
-            public SimpleHttpPost init(FollowUpAppointment appointment, OnFinishListener listener) {
-                this.appointment = appointment;
-                this.listener = listener;
-                return this;
-            }
-            @Override
-            public void onFinish(String responseText) {
-                try {
-                    JSONObject response = new JSONObject(responseText);
-                    switch(response.getInt("status")) {
-                        case 0:
-                            appointment.setAttachment(response.getString("message"));
-                            break;
-                        default:
-                            break;
-                    }
-                } catch (JSONException e) {
-                }
-
-                listener.onFinish(responseText);
-            }
-        }.init(followUpAppointment, onFinishListener)
-                .send(Global.APPOINTMENT_ATTACH_URL + followUpAppointment.getId());
-	}
+	}	
 }
