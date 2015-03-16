@@ -20,9 +20,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
+import android.view.Window;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import static junit.framework.Assert.assertNotNull;
 
 public class HomeActivity extends FragmentActivity implements ActionBar.TabListener {
 	private ViewPager viewPager;
@@ -35,8 +38,12 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+        requestWindowFeature(Window.FEATURE_ACTION_BAR);
 		setContentView(R.layout.activity_home);
 		actionBar = getActionBar();
+
+        assertNotNull(actionBar);
+
 		actionBar.setSubtitle("Welcome, "+ Global.getUserManager().getUser().getFullName()+"!");
 
         if(!Global.firstInitialization) {
