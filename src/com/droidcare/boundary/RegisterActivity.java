@@ -143,7 +143,7 @@ public class RegisterActivity extends Activity {
             valid = 0;
         } 
         
-        if (password != null && password.length() < RegisterManager.passwordMinLength) {
+        if (password != null && password.length() < RegisterManager.PASSWORD_MINIMUM_LENGTH) {
             putMessage("Password is too short!");
             valid = 0;
         } 

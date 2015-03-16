@@ -4,7 +4,7 @@ import android.util.Pair;
 
 public class RegisterManager {
     private static RegisterManager instance = new RegisterManager();
-    public static final int passwordMinLength = 6;
+    public static final int PASSWORD_MINIMUM_LENGTH = 6;
 
     private RegisterManager() {}
 

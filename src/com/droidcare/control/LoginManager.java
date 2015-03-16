@@ -13,7 +13,7 @@ public class LoginManager {
                             PASSWORD_TOO_SHORT = 0xA0000003,
                             VALID_FORM = 0xA0000000;
 
-    public static final int passwordMinLength = 6;
+    public static final int PASSWORD_MINIMUM_LENGTH = 6;
 
     private static LoginManager instance = new LoginManager();
 
@@ -26,7 +26,7 @@ public class LoginManager {
     public int validateForm(String email, String password) {
         return email == null || email.isEmpty() ? EMAIL_EMPTY
                 : password == null || password.isEmpty() ? PASSWORD_EMPTY
-                : password.length() < passwordMinLength ? PASSWORD_TOO_SHORT
+                : password.length() < PASSWORD_MINIMUM_LENGTH ? PASSWORD_TOO_SHORT
                 : VALID_FORM;
     }
 

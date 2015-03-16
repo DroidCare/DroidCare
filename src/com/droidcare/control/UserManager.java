@@ -52,10 +52,6 @@ public class UserManager {
                 , notification);
     }
 
-    public User createUser() {
-        return user = new User();
-    }
-
     public void editProfile(String password, String address, String country, String passportNumber
             , String nationality, String notificationTypeString, OnFinishListener onFinishListener) {
         new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())
