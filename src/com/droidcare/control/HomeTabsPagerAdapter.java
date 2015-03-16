@@ -24,7 +24,7 @@ import android.util.Log;
  * @pciang: Hi, can I be your co-author? :)
  */
 
-public class HomeTabsPagerAdapter extends FragmentStatePagerAdapter {
+public class HomeTabsPagerAdapter extends FragmentPagerAdapter {
 	private final int NO_OF_TABS = 4;
 	
 	public HomeTabsPagerAdapter (FragmentManager fm) {

@@ -153,7 +153,7 @@ public abstract class AppointmentManager {
                                 if (appointment != null) {
 	                                if (appointment.getStatus().equalsIgnoreCase(Appointment.ACCEPTED)) {
 	                                    addAcceptedAppointment(appointment);
-	                                } else if (appointment.getStatus().equalsIgnoreCase(Appointment.REJECTED)) {
+                                    } else if (appointment.getStatus().equalsIgnoreCase(Appointment.REJECTED)) {
 	                                	addRejectedAppointment(appointment);
 	                                } else if (appointment.getStatus().equalsIgnoreCase(Appointment.FINISHED)) {
 	                                	addFinishedAppointment(appointment);
@@ -165,10 +165,10 @@ public abstract class AppointmentManager {
                             
                             // Sort based on the dateTimeMillis -> ASCENDING
                             // Smaller dateTimeMillis = closer appointment date and time
-                            Collections.sort(AppointmentManager.this.acceptedAppointments);
-                            Collections.sort(AppointmentManager.this.pendingAppointments);
-                            Collections.sort(AppointmentManager.this.rejectedAppointments);
-                            Collections.sort(AppointmentManager.this.finishedAppointments);
+//                            Collections.sort(AppointmentManager.this.acceptedAppointments);
+//                            Collections.sort(AppointmentManager.this.pendingAppointments);
+//                            Collections.sort(AppointmentManager.this.rejectedAppointments);
+//                            Collections.sort(AppointmentManager.this.finishedAppointments);
 
                             break;
                             

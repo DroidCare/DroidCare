@@ -10,6 +10,7 @@ import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
@@ -42,7 +43,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		setContentView(R.layout.activity_home);
 		
 		actionBar = getActionBar();
-		actionBar.setSubtitle("Welcome, "+ Global.getUserManager().getUser().getFullName()+"!");
+		actionBar.setSubtitle("Welcome, " + Global.getUserManager().getUser().getFullName() + "!");
 	}
 
     @Override
@@ -52,7 +53,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading...", true);
         pd.show();
 
-        if (Global.firstInitialization) {
+        if (!Global.firstInitialization) {
         	Global.initAppointmentManager();
         }
         
@@ -75,16 +76,15 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
             public void onFinish(String responseText) {
                 try {
                     JSONObject response = new JSONObject(responseText);
-                    switch(response.getInt("status")) {
+                    switch (response.getInt("status")) {
                         case 0:
                             Global.getAppointmentManager().setAllAlarms(HomeActivity.this);
-
                             pd.dismiss();
                             break;
                         default:
                             break;
                     }
-                // Do nothing on exception
+                    // Do nothing on exception
                 } catch (JSONException e) {
                 }
             }
@@ -104,10 +104,12 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
         actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
 
         // Adding tabs
+        Log.d("DEBUGGING", "before addtab" + System.currentTimeMillis());
         for (String n : tabs) {
             Tab t = actionBar.newTab().setText(n).setTabListener(HomeActivity.this);
             actionBar.addTab(t);
         }
+        Log.d("DEBUGGING", "after addtab" + System.currentTimeMillis());
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override

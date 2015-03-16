@@ -27,6 +27,10 @@ public class TitleActivity extends Activity {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
+
+    public void clearSession(View view) {
+        Global.getAppSession().clearAll();
+    }
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {

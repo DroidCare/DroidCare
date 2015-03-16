@@ -28,6 +28,8 @@ import com.droidcare.entity.*;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import static junit.framework.Assert.assertTrue;
+
 public class AppointmentDetailsActivity extends Activity {
 	private Appointment appointment;
 	private String userType = Global.getUserManager().getUser().getType();
@@ -101,7 +103,9 @@ public class AppointmentDetailsActivity extends Activity {
 			
 			((Button) findViewById(R.id.Button_EditAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_CancelAppointment)).setVisibility(View.GONE);
-		}
+            ((LinearLayout) findViewById(R.id.LL_AppointmentRemarks)).setVisibility(View.VISIBLE);
+            ((LinearLayout) findViewById(R.id.LL_AppointmentRemarksEditable)).setVisibility(View.GONE);
+        }
 		
 		// Showing LinearLayout depending on the appointment type
 		LinearLayout 	lPreviousId = (LinearLayout) findViewById(R.id.LL_AppointmentPreviousId),
@@ -264,56 +268,56 @@ public class AppointmentDetailsActivity extends Activity {
 				// Loading progress bar
 		        ProgressDialog pd = ProgressDialog.show(AppointmentDetailsActivity.this, null, "Accepting appointment ...", true);
 		        pd.show();
-		        
-		        
-				((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(appointment
-		                , new ConsultantAppointmentManager.OnFinishListener() {
-		            private ProgressDialog pd;
-		            public ConsultantAppointmentManager.OnFinishListener init(ProgressDialog pd) {
-		                this.pd = pd;
-		                return this;
-		            }
-		
-		            @Override
-		            public void onFinish(String responseText) {
-		                pd.dismiss();
-		                try {
-		                    JSONObject response = new JSONObject(responseText);
-		                    switch(response.getInt("status")) {
-		                        case 0:
-		                            Toast toast = Toast.makeText(AppointmentDetailsActivity.this
-		                                    , "Appointment accepted", Toast.LENGTH_SHORT);
-		                            toast.show();
-		                            
-		                            // Go back to the details view and update the status and remarks
-		                    		((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus());
-		                    		((TextView) findViewById(R.id.Field_AppointmentRemarks)).setText(appointment.getRemarks());
-		                    		((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
-		                			((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
-		                			((LinearLayout) findViewById(R.id.LL_AppointmentRemarksEditable)).setVisibility(View.GONE);
-		                			((LinearLayout) findViewById(R.id.LL_AppointmentRemarks)).setVisibility(View.VISIBLE);
-		                            
-		                            break;
-		                        default:
-		                            Toast onFailToast = Toast.makeText(AppointmentDetailsActivity.this
-		                                    , "Failed to accept appointment", Toast.LENGTH_SHORT);
-		                            onFailToast.show();
-		                            
-		                            // Go back to the details view and update the status and remarks
-		                    		((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus());
-		                    		((TextView) findViewById(R.id.Field_AppointmentRemarks)).setText(appointment.getRemarks());
-		                    		((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
-		                			((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
-		                			((LinearLayout) findViewById(R.id.LL_AppointmentRemarksEditable)).setVisibility(View.GONE);
-		                			((LinearLayout) findViewById(R.id.LL_AppointmentRemarks)).setVisibility(View.VISIBLE);
-		                            
-		                            break;
-		                    }
-		                // Do nothing on exception
-		                } catch (JSONException e) {
-		                }
-		            }
-		        }.init(pd));
+
+                ((ConsultantAppointmentManager) Global.getAppointmentManager()).acceptAppointment(appointment
+                        , new ConsultantAppointmentManager.OnFinishListener() {
+                    private ProgressDialog pd;
+
+                    public ConsultantAppointmentManager.OnFinishListener init(ProgressDialog pd) {
+                        this.pd = pd;
+                        return this;
+                    }
+
+                    @Override
+                    public void onFinish(String responseText) {
+                        pd.dismiss();
+                        try {
+                            JSONObject response = new JSONObject(responseText);
+                            switch (response.getInt("status")) {
+                                case 0:
+                                    Toast toast = Toast.makeText(AppointmentDetailsActivity.this
+                                            , "Appointment accepted", Toast.LENGTH_SHORT);
+                                    toast.show();
+
+                                    // Go back to the details view and update the status and remarks
+                                    ((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus());
+                                    ((TextView) findViewById(R.id.Field_AppointmentRemarks)).setText(appointment.getRemarks());
+                                    ((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
+                                    ((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
+                                    ((LinearLayout) findViewById(R.id.LL_AppointmentRemarksEditable)).setVisibility(View.GONE);
+                                    ((LinearLayout) findViewById(R.id.LL_AppointmentRemarks)).setVisibility(View.VISIBLE);
+
+                                    break;
+                                default:
+                                    Toast onFailToast = Toast.makeText(AppointmentDetailsActivity.this
+                                            , "Failed to accept appointment", Toast.LENGTH_SHORT);
+                                    onFailToast.show();
+
+                                    // Go back to the details view and update the status and remarks
+                                    ((TextView) findViewById(R.id.Field_AppointmentStatus)).setText(appointment.getStatus());
+                                    ((TextView) findViewById(R.id.Field_AppointmentRemarks)).setText(appointment.getRemarks());
+                                    ((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
+                                    ((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
+                                    ((LinearLayout) findViewById(R.id.LL_AppointmentRemarksEditable)).setVisibility(View.GONE);
+                                    ((LinearLayout) findViewById(R.id.LL_AppointmentRemarks)).setVisibility(View.VISIBLE);
+
+                                    break;
+                            }
+                            // Do nothing on exception
+                        } catch (JSONException e) {
+                        }
+                    }
+                }.init(pd));
 			}
 		});
 		
