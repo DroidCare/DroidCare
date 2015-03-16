@@ -16,6 +16,9 @@
         android:label="@string/app_name"
         android:screenOrientation="portrait"
         android:theme="@style/Theme.AppCompat.Light" >
+        
+        <receiver android:name=".AlarmReceiver" />
+        
         <activity
             android:name=".boundary.TitleActivity"
             android:label="@string/app_name" >
