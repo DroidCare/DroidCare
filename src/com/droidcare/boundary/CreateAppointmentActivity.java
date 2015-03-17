@@ -162,27 +162,12 @@ public class CreateAppointmentActivity extends Activity {
     
     // FETCH CONSULTANT DETAILS WITH THE SAME LOCATION!!
     private void fetchConsultantDetails () {
-    	// Push String result to this.consultantDetails with the format:
-    	// Key: Consultant Name - Specialization
-    	// Value: Consultant ID
-    	
     	// PUSH ALL CONSULTANT INFO FROM PHP REQUEST TO THIS ARRAY LIST
     	this.consultants = new ArrayList<ConsultantDetails> ();
     	
     	// Together with the ArrayList above, also push a String -> Consultant Name + " - " + Consultant Specialization
     	// To populate the spinner
     	ArrayList<String> consultantSpinnerData = new ArrayList<String> ();
-    	
-    	// LOOPING HERE
-    	// Add data to those ArrayLists (the order must be the same between the two list)
-    	//
-    	// Skeleton:
-    	// For each JSON entry:
-    	//  	int id = JSONArray[i]["id"]
-    	//		String name = JSONArray[i]["name"], specialization = JSONArray[i]["specialization"]
-    	// 		ConsultantDetails c = new ConsultantDetails(id, name, specialization);
-    	//		this.consultants.add(c);
-    	//		consultantSpinnerData.add(name + " - " + specialization);
     	
 	    /* -------------------------------------------------------------------------- */
 
@@ -202,15 +187,25 @@ public class CreateAppointmentActivity extends Activity {
                     switch(response.getInt("status")) {
                         case 0:
                             JSONArray messages = response.getJSONArray("message");
+                            
+                            for (int i = 0; i < messages.length(); i++) {
+                            	JSONObject params = messages.getJSONObject(i);
+                            	ConsultantDetails c = new ConsultantDetails(params.getInt("id"),
+                            												params.getString("full_name"),
+                            												params.getString("specialization"));
+                            	
+                            	// Store each Consultant's data -> same order for both array
+                            	CreateAppointmentActivity.this.consultants.add(c);
+                            	consultantSpinnerData.add(c.name + " - " + c.specialization);
+                            }
 
                             // Populate Consultant Name Spinner
                             Spinner consultantSpinner = (Spinner) findViewById(R.id.Spinner_ConsultantName);
                             ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this
                                     , android.R.layout.simple_spinner_item, consultantSpinnerData);
+                            
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             consultantSpinner.setAdapter(adapter);
-
-                            // Continue here
 
                             break;
                         default:
