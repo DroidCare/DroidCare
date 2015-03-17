@@ -124,6 +124,7 @@ public class LoginManager {
                 Global.getUserManager().removeUser();
                 Global.getAppSession().clearAll();
                 Global.firstInitialization = false;
+                AppointmentManager.removeManager();
 
                 listener.onFinishTask(responseText);
             }

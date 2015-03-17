@@ -357,5 +357,9 @@ public abstract class AppointmentManager {
 		for (Appointment a: this.acceptedAppointments) {
 			Global.getAlarmSetter().setAlarm(context, a);
 		}
-	}	
+	}
+
+    public static void removeManager() {
+        instance = null;
+    }
 }
