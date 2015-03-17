@@ -15,7 +15,7 @@
         android:icon="@drawable/ic_logo"
         android:label="@string/app_name"
         android:screenOrientation="portrait"
-        android:theme="@style/Theme.Appcompat.Light" >
+        android:theme="@style/Theme.AppCompat.Light" >
         
         <receiver android:name=".control.AlarmReceiver" />
         

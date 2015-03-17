@@ -3,6 +3,9 @@ package com.droidcare.boundary;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import com.droidcare.R;
@@ -222,16 +225,14 @@ public class CreateAppointmentActivity extends Activity {
     
     // FETCH CONSULTANT AVAILABILITY ONLY AFTER THE CONSULTANT AND DATE ARE ALREADY CHOSEN
     private void fetchConsultantAvailability () {
-    	// Response returns time string for a given date
-    	// Push all time to dateList
-    	ArrayList<String> dateList = new ArrayList<String> ();
+    	ArrayList<String> timeList = new ArrayList<String> ();
 
         // Kasih date donk mas
         String dateString = "";
         new SimpleHttpPost(){
-            private ArrayList<String> dateList;
+            private ArrayList<String> timeList;
             public SimpleHttpPost init(ArrayList<String> dateList) {
-                this.dateList = dateList;
+                this.timeList = timeList;
                 return this;
             }
             @Override
@@ -240,12 +241,29 @@ public class CreateAppointmentActivity extends Activity {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
                         case 0:
-                            JSONArray messages = response.getJSONArray("message");
+                            JSONArray time = response.getJSONArray("message");
+                            
+                            for (int i = 0; i < time.length(); i++) {
+                            	String t = time.getString(i);
+                            	
+                            	// A way to get the time only
+                            	// Make a Date object and Calendar object, then retrieve whatever is needed
+                            	try {
+                            		Date d = Global.dateFormat.parse(t);
+                            		GregorianCalendar c = new GregorianCalendar();
+                            		
+                                	c.setTime(d);
+                                	timeList.add(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
+                            	} catch (Exception e) {
+                            		e.printStackTrace();
+                            	}
+                            }
 
                             // Populate Appointment Time Spinner
                             Spinner timeSpinner = (Spinner) findViewById(R.id.Spinner_AppointmentTime);
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this
-                                    , android.R.layout.simple_spinner_item, dateList);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this,
+                            								   android.R.layout.simple_spinner_item, timeList);
+                            
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             timeSpinner.setAdapter(adapter);
                             break;
@@ -256,8 +274,8 @@ public class CreateAppointmentActivity extends Activity {
                 } catch (JSONException e) {
                 }
             }
-        }.init(dateList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
-                , Global.getUserManager().getUser().getId()
+        }.init(timeList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
+                , consultantId
                 , dateString));
 
     }
