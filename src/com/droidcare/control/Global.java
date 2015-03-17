@@ -25,6 +25,7 @@ public class Global {
 	public static String USER_UPDATE_URL = USER_URL + "update";
 	public static String USER_LOGOUT_URL = USER_URL + "logout";
     public static String USER_FORGET_URL = USER_URL + "forget";
+    public static String USER_CONSULTANT_URL = USER_URL + "consultant";
 
 	public static String USER_APPOINTMENT_URL = APPOINTMENT_URL + "user";
 	public static String APPOINTMENT_ATTACH_URL = APPOINTMENT_URL + "attachment/";
@@ -32,7 +33,6 @@ public class Global {
     public static String APPOINTMENT_CANCEL_URL = APPOINTMENT_URL + "cancel";
     public static String APPOINTMENT_STATUS_URL = APPOINTMENT_URL + "status";
     public static String APPOINTMENT_NOTIFY_REMINDER_URL = APPOINTMENT_URL + "notify";
-    public static String APPOINTMENT_NOTIFY_STATUS_URL = APPOINTMENT_URL + "status";
 
     public static boolean firstInitialization = false;
 	

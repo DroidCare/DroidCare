@@ -6,22 +6,22 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import com.droidcare.R;
-import com.droidcare.R.id;
-import com.droidcare.R.layout;
-import com.droidcare.R.menu;
 import com.droidcare.control.Global;
+import com.droidcare.control.SimpleHttpPost;
 import com.droidcare.entity.Appointment;
 import com.droidcare.entity.FollowUpAppointment;
 import com.droidcare.entity.ReferralAppointment;
 
 import android.app.Activity;
 import android.app.DialogFragment;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.util.Log;
+import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -37,6 +37,10 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class CreateAppointmentActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
@@ -181,13 +185,44 @@ public class CreateAppointmentActivity extends Activity {
     	//		consultantSpinnerData.add(name + " - " + specialization);
     	
 	    /* -------------------------------------------------------------------------- */
-	    	
-    	// Populate Consultant Name Spinner
-		Spinner consultantSpinner = (Spinner) findViewById(R.id.Spinner_ConsultantName);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item, 
-									   consultantSpinnerData);
-		adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-		consultantSpinner.setAdapter(adapter);
+
+        ProgressDialog pd = ProgressDialog.show(this, null, "Loading list of available consultant in your country...", true);
+        new SimpleHttpPost(new Pair<String, String>("location", Global.getUserManager().getUser().getCountry())) {
+            private ProgressDialog pd;
+            private ArrayList<String> consultantSpinnerData;
+            public SimpleHttpPost init(ProgressDialog pd, ArrayList<String> consultantSpinnerData) {
+                this.pd = pd;
+                this.consultantSpinnerData = consultantSpinnerData;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            JSONArray messages = response.getJSONArray("message");
+
+                            // Populate Consultant Name Spinner
+                            Spinner consultantSpinner = (Spinner) findViewById(R.id.Spinner_ConsultantName);
+                            ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this
+                                    , android.R.layout.simple_spinner_item, consultantSpinnerData);
+                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                            consultantSpinner.setAdapter(adapter);
+
+                            // Continue here
+
+                            break;
+                        default:
+                            break;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+
+                pd.dismiss();
+            }
+        }.init(pd, consultantSpinnerData).send(Global.USER_CONSULTANT_URL);
     }
     
     // FETCH CONSULTANT AVAILABILITY ONLY AFTER THE CONSULTANT AND DATE ARE ALREADY CHOSEN
@@ -243,7 +278,7 @@ public class CreateAppointmentActivity extends Activity {
 			break;
 			
 		default:
-			Log.d("RADIO GROUP APPOINTMENT TYPE", "SOMETHING WRONG!");
+			Log.d("DEBUGGING", "SOMETHING WRONG!");
 			break;
 		}
 	}
