@@ -79,6 +79,41 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
                     switch (response.getInt("status")) {
                         case 0:
                             Global.getAppointmentManager().setAllAlarms(HomeActivity.this);
+
+                            user = Global.getUserManager().getUser();
+
+                            // List Fragment Initialization
+                            viewPager = (ViewPager) findViewById(R.id.pager);
+                            actionBar = getActionBar();
+                            actionBar.removeAllTabs();
+
+                            mAdapter = new HomeTabsPagerAdapter(getSupportFragmentManager());
+
+                            viewPager.setAdapter(mAdapter);
+                            actionBar.setHomeButtonEnabled(false);
+                            actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
+
+                            // Adding tabs
+                            for (String n : tabs) {
+                                Tab t = actionBar.newTab().setText(n).setTabListener(HomeActivity.this);
+                                actionBar.addTab(t);
+                            }
+
+                            viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
+                                @Override
+                                public void onPageSelected(int position) {
+                                    actionBar.setSelectedNavigationItem(position);
+                                }
+
+                                @Override
+                                public void onPageScrolled(int arg0, float arg1, int arg2) {
+                                }
+
+                                @Override
+                                public void onPageScrollStateChanged(int arg0) {
+                                }
+                            });
+
                             pd.dismiss();
                             break;
                         default:
@@ -89,42 +124,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
                 }
             }
         }.init(pd));
-
-        user = Global.getUserManager().getUser();
-
-        // List Fragment Initialization
-        viewPager = (ViewPager) findViewById(R.id.pager);
-        actionBar = getActionBar();
-        actionBar.removeAllTabs();
-
-        mAdapter = new HomeTabsPagerAdapter(getSupportFragmentManager());
-
-        viewPager.setAdapter(mAdapter);
-        actionBar.setHomeButtonEnabled(false);
-        actionBar.setNavigationMode(ActionBar.NAVIGATION_MODE_TABS);
-
-        // Adding tabs
-        Log.d("DEBUGGING", "before addtab" + System.currentTimeMillis());
-        for (String n : tabs) {
-            Tab t = actionBar.newTab().setText(n).setTabListener(HomeActivity.this);
-            actionBar.addTab(t);
-        }
-        Log.d("DEBUGGING", "after addtab" + System.currentTimeMillis());
-
-        viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageSelected(int position) {
-                actionBar.setSelectedNavigationItem(position);
-            }
-
-            @Override
-            public void onPageScrolled(int arg0, float arg1, int arg2) {
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int arg0) {
-            }
-        });
     }
 
 	// Swipe view listener

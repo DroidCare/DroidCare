@@ -71,6 +71,7 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                     // Do nothing on exception
                     } catch (JSONException e) {
                     }
+                    listener.onFinish(responseText);
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_STATUS_URL);
 		}
@@ -110,6 +111,7 @@ public class ConsultantAppointmentManager extends AppointmentManager {
                     // Do nothing on exception
                     } catch (JSONException e) {
                     }
+                    listener.onFinish(responseText);
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_STATUS_URL);
 		}
