@@ -113,13 +113,13 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
                                 public void onPageScrollStateChanged(int arg0) {
                                 }
                             });
-
-                            pd.dismiss();
                             break;
                         default:
                             break;
                     }
-                    // Do nothing on exception
+                    
+                    pd.dismiss();
+                // Do nothing on exception
                 } catch (JSONException e) {
                 }
             }
