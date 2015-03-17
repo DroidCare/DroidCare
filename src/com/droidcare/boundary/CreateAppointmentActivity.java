@@ -230,41 +230,13 @@ public class CreateAppointmentActivity extends Activity {
     	// Response returns time string for a given date
     	// Push all time to dateList
     	ArrayList<String> dateList = new ArrayList<String> ();
-
-        // Kasih date donk mas
-        String dateString = "";
-        new SimpleHttpPost(){
-            private ArrayList<String> dateList;
-            public SimpleHttpPost init(ArrayList<String> dateList) {
-                this.dateList = dateList;
-                return this;
-            }
-            @Override
-            public void onFinish(String responseText) {
-                try {
-                    JSONObject response = new JSONObject(responseText);
-                    switch(response.getInt("status")) {
-                        case 0:
-                            JSONArray messages = response.getJSONArray("message");
-
-                            // Populate Appointment Time Spinner
-                            Spinner timeSpinner = (Spinner) findViewById(R.id.Spinner_AppointmentTime);
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this
-                                    , android.R.layout.simple_spinner_item, dateList);
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            timeSpinner.setAdapter(adapter);
-                            break;
-                        default:
-                            break;
-                    }
-                // Do nothing on exception
-                } catch (JSONException e) {
-                }
-            }
-        }.init(dateList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
-                , Global.getUserManager().getUser().getId()
-                , dateString));
-
+    	
+    	// Populate Appointment Time Spinner
+    	Spinner timeSpinner = (Spinner) findViewById(R.id.Spinner_AppointmentTime);
+    	ArrayAdapter<String> adapter = new ArrayAdapter<String> (this, android.R.layout.simple_spinner_item,
+    								   dateList);
+    	adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+    	timeSpinner.setAdapter(adapter);
     }
 	
 	// Display the correct layout depending on which appointment type is chosen
