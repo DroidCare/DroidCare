@@ -172,21 +172,19 @@ public class CreateAppointmentActivity extends Activity {
     	// PUSH ALL CONSULTANT INFO FROM PHP REQUEST TO THIS ARRAY LIST
     	this.consultants = new ArrayList<ConsultantDetails> ();
     	
-    	// Together with the ArrayList above, also push a String -> Consultant Name + " - " + Consultant Specialization
-    	// To populate the spinner
-    	ArrayList<String> consultantSpinnerData = new ArrayList<String> ();
-    	
 	    /* -------------------------------------------------------------------------- */
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading list of available consultant in your country...", true);
         new SimpleHttpPost(new Pair<String, String>("location", Global.getUserManager().getUser().getCountry())) {
             private ProgressDialog pd;
             private ArrayList<String> consultantSpinnerData;
-            public SimpleHttpPost init(ProgressDialog pd, ArrayList<String> consultantSpinnerData) {
+            
+            public SimpleHttpPost init(ProgressDialog pd) {
                 this.pd = pd;
-                this.consultantSpinnerData = consultantSpinnerData;
+                this.consultantSpinnerData = new ArrayList<String> ();
                 return this;
             }
+            
             @Override
             public void onFinish(String responseText) {
                 try {
@@ -203,7 +201,7 @@ public class CreateAppointmentActivity extends Activity {
                             	
                             	// Store each Consultant's data -> same order for both array
                             	CreateAppointmentActivity.this.consultants.add(c);
-                            	consultantSpinnerData.add(c.name + " - " + c.specialization);
+                            	this.consultantSpinnerData.add(c.name + " - " + c.specialization);
                             }
 
                             // Populate Consultant Name Spinner
@@ -215,6 +213,7 @@ public class CreateAppointmentActivity extends Activity {
                             consultantSpinner.setAdapter(adapter);
 
                             break;
+                            
                         default:
                             break;
                     }
@@ -224,7 +223,7 @@ public class CreateAppointmentActivity extends Activity {
 
                 pd.dismiss();
             }
-        }.init(pd, consultantSpinnerData).send(Global.USER_CONSULTANT_URL);
+        }.init(pd).send(Global.USER_CONSULTANT_URL);
     }
     
     // FETCH CONSULTANT AVAILABILITY ONLY AFTER THE CONSULTANT AND DATE ARE ALREADY CHOSEN
