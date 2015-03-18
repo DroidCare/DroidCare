@@ -10,7 +10,6 @@ import java.util.HashMap;
 
 import com.droidcare.R;
 import com.droidcare.control.Global;
-import com.droidcare.control.PatientAppointmentManager;
 import com.droidcare.control.SimpleHttpPost;
 import com.droidcare.entity.Appointment;
 import com.droidcare.entity.FollowUpAppointment;
@@ -43,7 +42,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,7 +49,7 @@ import org.json.JSONObject;
 
 public class CreateAppointmentActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
-	private LinearLayout createAppointmentMessages = (LinearLayout) findViewById(R.id.LL_CreateAppointmentMessages);
+	private LinearLayout createAppointmentMessages;
 	private int consultantId = -1; // Keep track of the consultant id
 	private String consultantName = "", date = "", time = "", attachmentImageString = "", type = Appointment.NORMAL;
 	private ArrayList<ConsultantDetails> consultants;
@@ -103,7 +101,6 @@ public class CreateAppointmentActivity extends Activity {
 		setContentView(R.layout.activity_create_appointment);
 		
 		this.initializeView();
-		this.clearMessages();
 	}
 
 	@Override
@@ -183,13 +180,11 @@ public class CreateAppointmentActivity extends Activity {
         new SimpleHttpPost(new Pair<String, String>("location", Global.getUserManager().getUser().getCountry())) {
             private ProgressDialog pd;
             private ArrayList<String> consultantSpinnerData;
-            
             public SimpleHttpPost init(ProgressDialog pd, ArrayList<String> consultantSpinnerData) {
                 this.pd = pd;
                 this.consultantSpinnerData = consultantSpinnerData;
                 return this;
             }
-            
             @Override
             public void onFinish(String responseText) {
                 try {
@@ -235,18 +230,16 @@ public class CreateAppointmentActivity extends Activity {
     	ArrayList<String> timeList = new ArrayList<String> ();
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading consultant's availability...", true);
+        // Kasih date donk mas
         String dateString = this.date;
-        
         new SimpleHttpPost(){
             private ArrayList<String> timeList;
             private ProgressDialog pd;
-            
             public SimpleHttpPost init(ProgressDialog pd, ArrayList<String> timeList) {
                 this.pd = pd;
                 this.timeList = timeList;
                 return this;
             }
-            
             @Override
             public void onFinish(String responseText) {
                 try {
@@ -279,19 +272,17 @@ public class CreateAppointmentActivity extends Activity {
                             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
                             timeSpinner.setAdapter(adapter);
                             break;
-                            
                         default:
                             break;
                     }
                 // Do nothing on exception
                 } catch (JSONException e) {
                 }
-                
                 pd.dismiss();
             }
         }.init(pd, timeList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
-																	                , consultantId
-																	                , dateString));
+                , consultantId
+                , dateString));
 
     }
 	
@@ -422,37 +413,28 @@ public class CreateAppointmentActivity extends Activity {
 		// Validity checking
 		if (consultantName.isEmpty()) {
 			valid = 0;
-			putMessage("You must choose a consultant!");
 		}
 		
 		if (this.date.isEmpty()) {
 			valid = 0;
-			putMessage("You must choose a date!");
 		}
 		
 		if (this.time.isEmpty()) {
 			valid = 0;
-			putMessage("You must choose a time!");
 		}
 		
 		if (healthIssue.isEmpty()) {
 			valid = 0;
-			putMessage("You must fill in your health issue!");
 		}
 		
 		if (type.isEmpty()) {
 			valid = 0;
-			putMessage("You must choose the type of the appointment!");
 		}
 		
 		// Let the appointment ID be any integer since the appointment list will be re-fetched when the user
 		// goes back to the home activity
         String  referrerName = "",
-                referrerClinic = "",
-        		attachment = "",
-        		prevId = "";
-        
-        // If it is not a follow-up, any ID is acceptable -> not used when this appointment is fetched later
+                referrerClinic = "";
         int previousId = -1;
 		if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
 			referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString();
@@ -460,87 +442,81 @@ public class CreateAppointmentActivity extends Activity {
 			
 			if (referrerName.isEmpty()) {
 				valid = 0;
-				putMessage("You must fill in the referrer's name!");
 			}
 			
 			if (referrerClinic.isEmpty()) {
 				valid = 0;
-				putMessage("You must fill in the referrer's clinic name!");
 			}
 		} else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
-			attachment = this.attachmentImageString;
-			prevId = ((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString();
+			String attachment = this.attachmentImageString;
+			String prevId = ((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString();
 			
 			if (attachment.isEmpty()) {
 				valid = 0;
-				putMessage("You must choose a proof image!");
 			}
 			
 			if (prevId.isEmpty()) {
-				valid = 0;
-				putMessage("You must the previous appointment's ID!");
+				previousId = Integer.parseInt(prevId);
 			}
 		}
 		
-		if (valid == 1) {
-			ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
-			((PatientAppointmentManager) Global.getAppointmentManager())
-										 .createAppointment(patientId, consultantId, dateTime,
-												 			healthIssue, attachment, type, referrerName,
-															referrerClinic, prevId, sessionId, new PatientAppointmentManager.OnFinishListener() {
-	            
-	        	private ProgressDialog pd;
-	            public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd) {
-	                this.pd = pd;
-	                return this;
-	            }
-	
-	            @Override
-	            public void onFinish(String responseText) {
-	                pd.dismiss();
-	                try {
-	                    JSONObject response = new JSONObject(responseText);
-	                    switch (response.getInt("status")) {
-	                        case 0:
-	                            pd.dismiss();
-	                            new AlertDialog.Builder(CreateAppointmentActivity.this)
-	                                    .setIcon(android.R.drawable.ic_dialog_info)
-	                                    .setTitle(null)
-	                                    .setMessage("You have successfully created an appointment!")
-	                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
-	                                        @Override
-	                                        public void onClick(DialogInterface dialog, int which) {
-	                                            CreateAppointmentActivity.this.finish();
-	                                        }
-	                                    })
-	                                    .show();
-	                            
-	                            break;
-	                            
-	                        default:
-	                        	pd.dismiss();
-	                            new AlertDialog.Builder(CreateAppointmentActivity.this)
-	                                    .setIcon(android.R.drawable.ic_dialog_info)
-	                                    .setTitle(null)
-	                                    .setMessage("Failed to create appointment!")
-	                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
-	                                        @Override
-	                                        public void onClick(DialogInterface dialog, int which) {
-	                                            // Do nothing
-	                                        }
-	                                    })
-	                                    .show();
-	                            
-	                            break;
-	                    }
-	                    // Do nothing on exception
-	                } catch (JSONException e) {
-	                }
-	                
-	                pd.dismiss();
-	                Log.d("DEBUGGING", "create appointment = " + responseText);
-	            }
-	        }.init(pd));
-		}		
+		// When the appointment creation is done, go back to HOME ACTIVITY
+        ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
+        new SimpleHttpPost(new Pair<String, String>("patient_id", "" + patientId)
+                , new Pair<String, String>("consultant_id", "" + consultantId)
+                , new Pair<String, String>("date_time", dateTime)
+                , new Pair<String, String>("health_issue", healthIssue)
+                , new Pair<String, String>("attachment", attachmentImageString)
+                , new Pair<String, String>("type", type)
+                , new Pair<String, String>("referrer_name", referrerName)
+                , new Pair<String, String>("referrer_clinic", referrerClinic)
+                , new Pair<String, String>("previous_id", "" + (previousId == -1 ? "" : previousId))
+                , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId()) ) {
+            private ProgressDialog pd;
+            public SimpleHttpPost init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            pd.dismiss();
+                            new AlertDialog.Builder(CreateAppointmentActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setTitle(null)
+                                    .setMessage("You have successfully created an appointment!")
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            CreateAppointmentActivity.this.finish();
+                                        }
+                                    })
+                                    .show();
+                            return;
+                        default:
+                            pd.dismiss();
+                            new AlertDialog.Builder(CreateAppointmentActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setTitle(null)
+                                    .setMessage("Failed to create appointment!")
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Do nothing
+                                        }
+                                    })
+                                    .show();
+                            return;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+                pd.dismiss();
+                Log.d("DEBUGGING", "create appointment = " + responseText);
+            }
+        }.init(pd).send(Global.APPOINTMENT_NEW_URL);
 	}
 }
