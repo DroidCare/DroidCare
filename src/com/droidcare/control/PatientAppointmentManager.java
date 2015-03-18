@@ -2,6 +2,7 @@ package com.droidcare.control;
 
 import com.droidcare.*;
 import com.droidcare.control.*;
+import com.droidcare.control.RegisterManager.OnFinishTaskListener;
 import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
@@ -56,6 +57,7 @@ public class PatientAppointmentManager extends AppointmentManager {
                     , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
                 private OnFinishListener listener;
                 private Appointment appointment;
+                
                 public SimpleHttpPost init(OnFinishListener listener, Appointment appointment) {
                     this.listener = listener;
                     this.appointment = appointment;
@@ -80,5 +82,32 @@ public class PatientAppointmentManager extends AppointmentManager {
                 }
             }.init(onFinishListener, appointment).send(Global.APPOINTMENT_CANCEL_URL);
 		}
+	}
+
+	public void createAppointment (int patientId, int consultantId, String dateTime, String healthIssue,
+								   String attachment, String type, String referrerName, String referrerClinic,
+								   String previousId, String sessionId, OnFinishListener listener) {
+		new SimpleHttpPost(	new Pair<String, String>("patient_id", "" + patientId),
+							new Pair<String, String>("consultant_id", "" + consultantId),
+							new Pair<String, String>("date_time", dateTime),
+							new Pair<String, String>("health_issue", healthIssue),
+							new Pair<String, String>("attachment", attachment),
+							new Pair<String, String>("type", type),
+							new Pair<String, String>("referrer_name", referrerName),
+							new Pair<String, String>("referrer_clinic", referrerClinic),
+							new Pair<String, String>("previous_id", previousId) ) {
+			
+			private OnFinishListener listener;
+			
+			public SimpleHttpPost init(OnFinishListener listener) {
+                this.listener = listener;
+                return this;
+            }
+			
+			@Override
+            public void onFinish(String responseText) {
+                listener.onFinish(responseText);
+            }
+        }.init(listener).send(Global.APPOINTMENT_NEW_URL);		
 	}
 }
