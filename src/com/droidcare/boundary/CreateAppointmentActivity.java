@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import java.util.HashMap;
 
 import com.droidcare.R;
+import com.droidcare.control.AppointmentManager;
 import com.droidcare.control.Global;
 import com.droidcare.control.SimpleHttpPost;
 import com.droidcare.entity.Appointment;
@@ -462,61 +463,54 @@ public class CreateAppointmentActivity extends Activity {
 		
 		// When the appointment creation is done, go back to HOME ACTIVITY
         ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
-        new SimpleHttpPost(new Pair<String, String>("patient_id", "" + patientId)
-                , new Pair<String, String>("consultant_id", "" + consultantId)
-                , new Pair<String, String>("date_time", dateTime)
-                , new Pair<String, String>("health_issue", healthIssue)
-                , new Pair<String, String>("attachment", attachmentImageString)
-                , new Pair<String, String>("type", type)
-                , new Pair<String, String>("referrer_name", referrerName)
-                , new Pair<String, String>("referrer_clinic", referrerClinic)
-                , new Pair<String, String>("previous_id", "" + (previousId == -1 ? "" : previousId))
-                , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId()) ) {
+        Global.getAppointmentManager().createAppointment(patientId, consultantId
+                , dateTime, healthIssue, attachmentImageString, type, referrerName, referrerClinic
+                , previousId, new AppointmentManager.OnFinishListener() {
             private ProgressDialog pd;
-            public SimpleHttpPost init(ProgressDialog pd) {
+            public AppointmentManager.OnFinishListener init(ProgressDialog pd) {
                 this.pd = pd;
                 return this;
             }
+
             @Override
             public void onFinish(String responseText) {
+                pd.dismiss();
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
                         case 0:
-                            pd.dismiss();
                             new AlertDialog.Builder(CreateAppointmentActivity.this)
                                     .setIcon(android.R.drawable.ic_dialog_info)
                                     .setTitle(null)
-                                    .setMessage("You have successfully created an appointment!")
-                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
+                                    .setMessage("You have successfully created an appointment.")
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
+                                            dialog.dismiss();
                                             CreateAppointmentActivity.this.finish();
                                         }
                                     })
                                     .show();
                             return;
                         default:
-                            pd.dismiss();
                             new AlertDialog.Builder(CreateAppointmentActivity.this)
-                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setIcon(android.R.drawable.ic_dialog_alert)
                                     .setTitle(null)
-                                    .setMessage("Failed to create appointment!")
-                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
+                                    .setMessage("Failed to create an appointment!")
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
                                         @Override
                                         public void onClick(DialogInterface dialog, int which) {
-                                            // Do nothing
+                                            dialog.dismiss();
+                                            CreateAppointmentActivity.this.finish();
                                         }
                                     })
                                     .show();
                             return;
                     }
-                // Do nothing on exception
                 } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-                pd.dismiss();
-                Log.d("DEBUGGING", "create appointment = " + responseText);
             }
-        }.init(pd).send(Global.APPOINTMENT_NEW_URL);
+        }.init(pd));
 	}
 }
