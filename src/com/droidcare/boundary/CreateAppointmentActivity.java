@@ -11,6 +11,7 @@ import java.util.HashMap;
 import com.droidcare.R;
 import com.droidcare.control.AppointmentManager;
 import com.droidcare.control.Global;
+import com.droidcare.control.PatientAppointmentManager;
 import com.droidcare.control.SimpleHttpPost;
 import com.droidcare.entity.Appointment;
 import com.droidcare.entity.FollowUpAppointment;
@@ -50,7 +51,7 @@ import org.json.JSONObject;
 
 public class CreateAppointmentActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
-	private LinearLayout createAppointmentMessages;
+	private LinearLayout createAppointmentMessages = (LinearLayout) findViewById(R.id.LL_CreateAppointmentMessages);
 	private int consultantId = -1; // Keep track of the consultant id
 	private String consultantName = "", date = "", time = "", attachmentImageString = "", type = Appointment.NORMAL;
 	private ArrayList<ConsultantDetails> consultants;
@@ -435,7 +436,10 @@ public class CreateAppointmentActivity extends Activity {
 		// Let the appointment ID be any integer since the appointment list will be re-fetched when the user
 		// goes back to the home activity
         String  referrerName = "",
-                referrerClinic = "";
+                referrerClinic = "",
+                attachment = "",
+                prevId = "";
+        
         int previousId = -1;
 		if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
 			referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString();
@@ -449,25 +453,27 @@ public class CreateAppointmentActivity extends Activity {
 				valid = 0;
 			}
 		} else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
-			String attachment = this.attachmentImageString;
-			String prevId = ((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString();
+			attachment = this.attachmentImageString;
+			prevId = ((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString();
 			
 			if (attachment.isEmpty()) {
 				valid = 0;
 			}
 			
 			if (prevId.isEmpty()) {
+				valid = 0;
+			} else {
 				previousId = Integer.parseInt(prevId);
 			}
 		}
 		
 		// When the appointment creation is done, go back to HOME ACTIVITY
         ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
-        Global.getAppointmentManager().createAppointment(patientId, consultantId
-                , dateTime, healthIssue, attachmentImageString, type, referrerName, referrerClinic
-                , previousId, new AppointmentManager.OnFinishListener() {
+        ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment(patientId, consultantId
+                , dateTime, healthIssue, attachment, type, referrerName, referrerClinic
+                , previousId, new PatientAppointmentManager.OnFinishListener() {
             private ProgressDialog pd;
-            public AppointmentManager.OnFinishListener init(ProgressDialog pd) {
+            public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd) {
                 this.pd = pd;
                 return this;
             }
