@@ -51,7 +51,7 @@ import org.json.JSONObject;
 
 public class CreateAppointmentActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
-	private LinearLayout createAppointmentMessages = (LinearLayout) findViewById(R.id.LL_CreateAppointmentMessages);
+	private LinearLayout createAppointmentMessages;
 	private int consultantId = -1; // Keep track of the consultant id
 	private String consultantName = "", date = "", time = "", attachmentImageString = "", type = Appointment.NORMAL;
 	private ArrayList<ConsultantDetails> consultants;
@@ -101,7 +101,7 @@ public class CreateAppointmentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_appointment);
-		
+        createAppointmentMessages = (LinearLayout) findViewById(R.id.LL_CreateAppointmentMessages);
 		this.initializeView();
 	}
 
