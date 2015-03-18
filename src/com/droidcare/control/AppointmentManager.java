@@ -12,6 +12,7 @@ import com.droidcare.control.*;
 import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.util.Log;
 import android.util.Pair;
@@ -361,5 +362,31 @@ public abstract class AppointmentManager {
 
     public static void removeManager() {
         instance = null;
+    }
+
+    public void createAppointment(int patientId, int consultantId
+            , String dateTime, String healthIssue, String attachment
+            , String type, String referrerName, String referrerClinic
+            , int previousId, OnFinishListener onFinishListener) {
+        new SimpleHttpPost(new Pair<String, String>("patient_id", "" + patientId)
+                , new Pair<String, String>("consultant_id", "" + consultantId)
+                , new Pair<String, String>("date_time", dateTime)
+                , new Pair<String, String>("health_issue", healthIssue)
+                , new Pair<String, String>("attachment", attachment)
+                , new Pair<String, String>("type", type)
+                , new Pair<String, String>("referrer_name", referrerName)
+                , new Pair<String, String>("referrer_clinic", referrerClinic)
+                , new Pair<String, String>("previous_id", "" + (previousId == -1 ? "" : previousId))
+                , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId()) ) {
+            private OnFinishListener listener;
+            public SimpleHttpPost init(OnFinishListener listener) {
+                this.listener = listener;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                listener.onFinish(responseText);
+            }
+        }.init(onFinishListener).send(Global.APPOINTMENT_NEW_URL);
     }
 }
