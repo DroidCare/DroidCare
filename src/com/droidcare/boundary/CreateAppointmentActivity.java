@@ -49,7 +49,7 @@ public class CreateAppointmentActivity extends Activity {
 	private static final int SELECT_PICTURE = 1;
 	private LinearLayout createAppointmentMessages;
 	private int consultantId = -1; // Keep track of the consultant id
-	private String consultantName = "", date = "", time = "", attachmentImageString, type = Appointment.NORMAL;
+	private String consultantName = "", date = "", time = "", attachmentImageString = "", type = Appointment.NORMAL;
 	private ArrayList<ConsultantDetails> consultants;
 	
 	// Spinner OnItemSelectedListener definition
@@ -228,7 +228,7 @@ public class CreateAppointmentActivity extends Activity {
     	ArrayList<String> timeList = new ArrayList<String> ();
 
         // Kasih date donk mas
-        String dateString = "";
+        String dateString = this.date;
         new SimpleHttpPost(){
             private ArrayList<String> timeList;
             public SimpleHttpPost init(ArrayList<String> dateList) {
@@ -392,36 +392,63 @@ public class CreateAppointmentActivity extends Activity {
 		// ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment();
 		
 		// Check empty fields first
+		int valid = 1;
 		
 		int patientId = Global.getUserManager().getUser().getId(),
 			consultantId = this.consultantId;
 		
 		String 	patientName = Global.getUserManager().getUser().getFullName(),
 				consultantName = this.consultantName,
-				dateTime = this.date + " " + this.time,
+				dateTime = this.date + " " + this.time + ":00",
 				healthIssue = ((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
 				type = this.type,
 				sessionId = Global.getUserManager().getUser().getSessionId();
 		
+		// Validity checking
+		if (consultantName.isEmpty()) {
+			valid = 0;
+		}
+		
+		if (this.date.isEmpty()) {
+			valid = 0;
+		}
+		
+		if (this.time.isEmpty()) {
+			valid = 0;
+		}
+		
+		if (healthIssue.isEmpty()) {
+			valid = 0;
+		}
+		
+		if (type.isEmpty()) {
+			valid = 0;
+		}
+		
 		// Let the appointment ID be any integer since the appointment list will be re-fetched when the user
 		// goes back to the home activity
-		if (type.equalsIgnoreCase(Appointment.NORMAL)) {
-			Appointment appointment = new Appointment(-1, patientId, consultantId, dateTime, patientName,
-													  consultantName, healthIssue, type, "", Appointment.PENDING);
-		} else if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
+		if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
 			String 	referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString(),
 					referrerClinic = ((EditText) findViewById(R.id.Field_AppointmentReferrerClinic)).getText().toString();
 			
-			ReferralAppointment appointment = new ReferralAppointment(-1, patientId, consultantId, dateTime, patientName,
-																	  consultantName, healthIssue, type, "", Appointment.PENDING,
-																	  referrerName, referrerClinic);
+			if (referrerName.isEmpty()) {
+				valid = 0;
+			}
+			
+			if (referrerClinic.isEmpty()) {
+				valid = 0;
+			}
 		} else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
 			String attachment = this.attachmentImageString;
-			int previousId = Integer.parseInt(((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString());
+			String prevId = ((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString();
 			
-			FollowUpAppointment appointment = new FollowUpAppointment(-1, patientId, consultantId, dateTime, patientName,
-																	  consultantName, healthIssue, type, "", Appointment.PENDING,
-																	  attachment, previousId);
+			if (attachment.isEmpty()) {
+				valid = 0;
+			}
+			
+			if (prevId.isEmpty()) {
+				int previousId = Integer.parseInt(prevId);
+			}
 		}
 		
 		// When the appointment creation is done, go back to HOME ACTIVITY
