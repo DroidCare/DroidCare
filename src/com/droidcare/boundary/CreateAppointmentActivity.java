@@ -101,6 +101,7 @@ public class CreateAppointmentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_appointment);
+		
         createAppointmentMessages = (LinearLayout) findViewById(R.id.LL_CreateAppointmentMessages);
 		this.initializeView();
 	}
