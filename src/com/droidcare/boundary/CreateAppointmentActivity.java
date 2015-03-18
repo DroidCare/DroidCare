@@ -16,8 +16,10 @@ import com.droidcare.entity.FollowUpAppointment;
 import com.droidcare.entity.ReferralAppointment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.net.Uri;
@@ -227,11 +229,14 @@ public class CreateAppointmentActivity extends Activity {
     private void fetchConsultantAvailability () {
     	ArrayList<String> timeList = new ArrayList<String> ();
 
+        ProgressDialog pd = ProgressDialog.show(this, null, "Loading consultant's availability...", true);
         // Kasih date donk mas
         String dateString = this.date;
         new SimpleHttpPost(){
             private ArrayList<String> timeList;
-            public SimpleHttpPost init(ArrayList<String> dateList) {
+            private ProgressDialog pd;
+            public SimpleHttpPost init(ProgressDialog pd, ArrayList<String> timeList) {
+                this.pd = pd;
                 this.timeList = timeList;
                 return this;
             }
@@ -273,8 +278,9 @@ public class CreateAppointmentActivity extends Activity {
                 // Do nothing on exception
                 } catch (JSONException e) {
                 }
+                pd.dismiss();
             }
-        }.init(timeList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
+        }.init(pd, timeList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
                 , consultantId
                 , dateString));
 
@@ -427,9 +433,12 @@ public class CreateAppointmentActivity extends Activity {
 		
 		// Let the appointment ID be any integer since the appointment list will be re-fetched when the user
 		// goes back to the home activity
+        String  referrerName = "",
+                referrerClinic = "";
+        int previousId = -1;
 		if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
-			String 	referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString(),
-					referrerClinic = ((EditText) findViewById(R.id.Field_AppointmentReferrerClinic)).getText().toString();
+			referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString();
+			referrerClinic = ((EditText) findViewById(R.id.Field_AppointmentReferrerClinic)).getText().toString();
 			
 			if (referrerName.isEmpty()) {
 				valid = 0;
@@ -447,11 +456,67 @@ public class CreateAppointmentActivity extends Activity {
 			}
 			
 			if (prevId.isEmpty()) {
-				int previousId = Integer.parseInt(prevId);
+				previousId = Integer.parseInt(prevId);
 			}
 		}
 		
 		// When the appointment creation is done, go back to HOME ACTIVITY
-		this.finish();
+        ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
+        new SimpleHttpPost(new Pair<String, String>("patient_id", "" + patientId)
+                , new Pair<String, String>("consultant_id", "" + consultantId)
+                , new Pair<String, String>("date_time", dateTime)
+                , new Pair<String, String>("health_issue", healthIssue)
+                , new Pair<String, String>("attachment", attachmentImageString)
+                , new Pair<String, String>("type", type)
+                , new Pair<String, String>("referrer_name", referrerName)
+                , new Pair<String, String>("referrer_clinic", referrerClinic)
+                , new Pair<String, String>("previous_id", "" + (previousId == -1 ? "" : previousId))
+                , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId()) ) {
+            private ProgressDialog pd;
+            public SimpleHttpPost init(ProgressDialog pd) {
+                this.pd = pd;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                try {
+                    JSONObject response = new JSONObject(responseText);
+                    switch(response.getInt("status")) {
+                        case 0:
+                            pd.dismiss();
+                            new AlertDialog.Builder(CreateAppointmentActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setTitle(null)
+                                    .setMessage("You have successfully created an appointment!")
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            CreateAppointmentActivity.this.finish();
+                                        }
+                                    })
+                                    .show();
+                            return;
+                        default:
+                            pd.dismiss();
+                            new AlertDialog.Builder(CreateAppointmentActivity.this)
+                                    .setIcon(android.R.drawable.ic_dialog_info)
+                                    .setTitle(null)
+                                    .setMessage("Failed to create appointment!")
+                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener(){
+                                        @Override
+                                        public void onClick(DialogInterface dialog, int which) {
+                                            // Do nothing
+                                        }
+                                    })
+                                    .show();
+                            return;
+                    }
+                // Do nothing on exception
+                } catch (JSONException e) {
+                }
+                pd.dismiss();
+                Log.d("DEBUGGING", "create appointment = " + responseText);
+            }
+        }.init(pd).send(Global.APPOINTMENT_NEW_URL);
 	}
 }

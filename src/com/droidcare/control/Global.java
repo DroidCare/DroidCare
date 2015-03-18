@@ -34,6 +34,7 @@ public class Global {
     public static String APPOINTMENT_STATUS_URL = APPOINTMENT_URL + "status";
     public static String APPOINTMENT_NOTIFY_REMINDER_URL = APPOINTMENT_URL + "notify";
     public static String APPOINTMENT_TIMESLOT_URL = APPOINTMENT_URL + "timeslot";
+    public static String APPOINTMENT_NEW_URL = APPOINTMENT_URL + "new";
 
     public static boolean firstInitialization = false;
 	
