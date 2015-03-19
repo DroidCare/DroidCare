@@ -13,27 +13,49 @@ import com.droidcare.entity.*;
 
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Manages the current user of the application.
+ *
+ */
+
 public class UserManager {
-	
-	// Force singleton
+	/**
+	 * An instance of {@link UserManager}. This class applies the Singleton design pattern
+	 */
 	private static UserManager instance = new UserManager();
 	
+	/**
+	 * An instance of {@link User} class which stores information of the current application user
+	 */
 	private User user;
 	
+	/**
+	 * Constructs a {@link UserManager} object
+	 */
 	private UserManager() {
 		this.user = null;
 	}
 	
+	/**
+	 * Returns {@link #instance}
+	 * @return {@link #instance}
+	 */
 	public static UserManager getInstance() {
 		return instance;
 	}
 	
+	/**
+	 * Returns {@link #user}
+	 * @return {@link #user}
+	 */
 	public User getUser() {
 		return user;
 	}
 	
 	/**
-	 * Call this method when user is logging out from the app.
+	 * Removes the current {@link User} instance in {@link #user}
 	 */
 	public void removeUser() {
 		user = null;
@@ -42,7 +64,22 @@ public class UserManager {
     public interface OnFinishListener {
         public abstract void onFinish(String responseText);
     }
-
+    
+    /**
+     * Creates a new {@link User} object based on the given data
+     * @param id				the user's ID
+     * @param email				the user's email
+     * @param fullName			the user's full name
+     * @param address			the user's address
+     * @param country			the user's country
+     * @param gender			the user's gender
+     * @param passportNumber	the user's passport number
+     * @param nationality		the user's nationality
+     * @param dateOfBirth		the user's date of birth
+     * @param type				the user's type
+     * @param notification		the user's notification means preferences
+     * @return					the created {@link User} object
+     */
     public User createUser(int id, String email, String fullName, String address, String country
             , String gender, String passportNumber, String nationality
             , String dateOfBirth, String type, String notification) {
@@ -51,7 +88,17 @@ public class UserManager {
                 , gender, passportNumber, nationality, dateOfBirth, type
                 , notification);
     }
-
+    
+    /**
+     * Edit the profile information of the current application user
+     * @param password					the user's new password
+     * @param address					the user's new address
+     * @param country					the user's new country
+     * @param passportNumber			the user's new passport number
+     * @param nationality				the user's new nationality
+     * @param notificationTypeString	the user's new notification means preferences
+     * @param onFinishListener			an instance of OnFinishListener determining what to do after the user's profile is updated
+     */
     public void editProfile(String password, String address, String country, String passportNumber
             , String nationality, String notificationTypeString, OnFinishListener onFinishListener) {
         new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())

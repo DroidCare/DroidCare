@@ -29,19 +29,36 @@ import android.widget.TextView;
  */
 
 public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
+	/**
+	 * The context of the appointment list
+	 */
 	private Context context;
 	
+	/**
+	 * Constructs a {@link AppointmentListAdapter} object
+	 * @param context	the context of this appointment list
+	 * @param items		the items to be displayed in the list
+	 */
 	public AppointmentListAdapter (Context context, List<Appointment> items) {
 		super(context, android.R.layout.simple_list_item_1, items);
 		this.context = context;
 	}
 	
+	/**
+	 * 
+	 * @author Edwin Candinegara
+	 * A class which holds all views used in the Appointment List
+	 *
+	 */
 	private class ViewHolder {
 		// ALL VIEWS THAT NEED TO BE CUSTOMIZED ARE PUT HERE
 		TextView appointmentIdText, appointmentTypeText, appointmentDateTimeText,
 				 appointmentHealthIssueText, appointmentConsultantText, appointmentPatientText;
 	}
 	
+	/**
+	 * Sets up the content of each list item
+	 */
 	@Override
 	public View getView (int position, View convertView, ViewGroup parent) {
 		// Getting the corresponding appointment based on the position on the list

@@ -2,12 +2,28 @@ package com.droidcare.control;
 
 import android.util.Pair;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Contains the logic for registering a new patient user.
+ *
+ */
+
 public class RegisterManager {
+	/**
+	 * An instance of {@link RegisterManager} class. This is based on the Singleton design pattern.
+	 */
     private static RegisterManager instance = new RegisterManager();
+    
+    /**
+     * A constant defining the minimum length of a password
+     */
     public static final int PASSWORD_MINIMUM_LENGTH = 6;
 
-    private RegisterManager() {}
-
+    /**
+     * Returns {@link #instance}
+     * @return {@link #instance}
+     */
     public static RegisterManager getInstance() {
         return instance;
     }
@@ -15,7 +31,21 @@ public class RegisterManager {
     public interface OnFinishTaskListener {
         public abstract void onFinishTask(String responseText);
     }
-
+    
+    /**
+     * Registers a new patient user and creates a new entry in the database
+     * @param passportNumber			the new user's passport number
+     * @param fullName					the new user's full name
+     * @param address					the new user's address
+     * @param country					the new user's country
+     * @param email						the new user's email
+     * @param dateOfBirth				the new user's date of birth
+     * @param gender					the new user's gender
+     * @param nationality				the new user's nationality
+     * @param password					the new user's password
+     * @param notificationTypeString	the new user's preferences of notification means
+     * @param onFinishTaskListener		an instance of OnFinishTaskListener determining what to do after the new user has been registered
+     */
     public void registerUser(	String passportNumber
     							, String fullName
     							, String address

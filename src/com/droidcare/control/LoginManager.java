@@ -11,13 +11,10 @@ public class LoginManager {
     public static final int EMAIL_EMPTY = 0xA0000001,
                             PASSWORD_EMPTY = 0xA0000002,
                             PASSWORD_TOO_SHORT = 0xA0000003,
-                            VALID_FORM = 0xA0000000;
-
-    public static final int PASSWORD_MINIMUM_LENGTH = 6;
+                            VALID_FORM = 0xA0000000,
+    						PASSWORD_MINIMUM_LENGTH = 6;
 
     private static LoginManager instance = new LoginManager();
-
-    private LoginManager() {}
 
     public static LoginManager getInstance() {
         return instance;

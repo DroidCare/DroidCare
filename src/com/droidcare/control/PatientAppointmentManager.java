@@ -33,11 +33,19 @@ public class PatientAppointmentManager extends AppointmentManager {
         public abstract void onFinish(String responseText);
     }
 
-	/*
-	 * Add Patient specific methods here
-	 * create, modify, cancel
-	 */
-    
+    /**
+     * Creates a new appointment and stores it into the database
+     * @param patientId			the patient's ID
+     * @param consultantId		the consultant's ID
+     * @param dateTime			the appointment's date and time
+     * @param healthIssue		the patient's health issue
+     * @param attachment		the Base64 encoded image attachment string if it is a follow-up appointment 
+     * @param type				the appointment type
+     * @param referrerName		the referrer's name if it is a referral appointment
+     * @param referrerClinic	the referrer's clinic if it is a referral appointment
+     * @param previousId		the previous appointment ID if it is a follow-up appointment
+     * @param onFinishListener	an OnFinishListener object determining what to do after the new appointment is stored in the database
+     */
     public void createAppointment(int patientId, int consultantId
             , String dateTime, String healthIssue, String attachment
             , String type, String referrerName, String referrerClinic

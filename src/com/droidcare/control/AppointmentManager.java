@@ -359,7 +359,10 @@ public abstract class AppointmentManager {
 			Global.getAlarmSetter().setAlarm(context, a);
 		}
 	}
-
+	
+	/**
+	 * Remove the current {@link AppointmentManager} instance
+	 */
     public static void removeManager() {
         instance = null;
     }
