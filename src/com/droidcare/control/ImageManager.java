@@ -52,6 +52,13 @@ public class ImageManager {
 	 */
 	public Bitmap decodeImageBase64 (String encodedImage) {
 		byte[] imageByte = Base64.decode(encodedImage, 0);
+		
+		/*
+		BitmapFactory.Options o = new BitmapFactory.Options();
+		o.inPurgeable = true;
+		o.inInputShareable = true;
+		*/
+		
 		return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
 	}
 }

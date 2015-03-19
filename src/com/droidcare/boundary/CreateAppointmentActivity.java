@@ -2,6 +2,7 @@ package com.droidcare.boundary;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -24,6 +25,7 @@ import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -374,10 +376,21 @@ public class CreateAppointmentActivity extends Activity {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
 			Uri imageUri = data.getData();
+			Bitmap imageBitmap = getThumbnail(imageUri);
+			
+			if (imageBitmap != null) {
+				this.attachmentImageString = Global.getImageManager().encodeImageBase64(imageBitmap);
+				((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setVisibility(View.VISIBLE);
+				((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setImageBitmap(imageBitmap);
+			}
+			
+			
+			
+			/*
 			try {
 				Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
 				this.attachmentImageString = Global.getImageManager().encodeImageBase64(bitmap);
-				
+			
 				// Set thumbnail
 				((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setVisibility(View.VISIBLE);
 				((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setImageBitmap(bitmap);
@@ -386,7 +399,51 @@ public class CreateAppointmentActivity extends Activity {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			*/
 		}
+	}
+	
+	/* http://stackoverflow.com/questions/3879992/get-bitmap-from-an-uri-android */
+	private Bitmap getThumbnail (Uri uri) {
+		final int THUMBNAIL_SIZE = 280;
+		try {
+			InputStream input = this.getContentResolver().openInputStream(uri);
+			BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();
+			
+			onlyBoundsOptions.inJustDecodeBounds = true;
+			BitmapFactory.decodeStream(input, null, onlyBoundsOptions);
+			input.close();
+			
+			if ((onlyBoundsOptions.outWidth == -1) || (onlyBoundsOptions.outHeight == -1)) return null;
+			
+			int originalSize = (onlyBoundsOptions.outHeight > onlyBoundsOptions.outWidth) ?
+								onlyBoundsOptions.outHeight : onlyBoundsOptions.outWidth;
+			double ratio = (originalSize > THUMBNAIL_SIZE) ? (originalSize / THUMBNAIL_SIZE) : 1.0;
+			
+			BitmapFactory.Options bitmapOptions = new BitmapFactory.Options();
+	        bitmapOptions.inSampleSize = getPowerOfTwoForSampleRatio(ratio);
+	        bitmapOptions.inDither = true;
+	        bitmapOptions.inPreferredConfig = Bitmap.Config.ARGB_8888;
+	        
+	        input = this.getContentResolver().openInputStream(uri);
+	        Bitmap bitmap = BitmapFactory.decodeStream(input, null, bitmapOptions);
+	        input.close();
+	        
+	        return bitmap;
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return null;
+	}
+	
+	private int getPowerOfTwoForSampleRatio (double ratio) {
+		int k = Integer.highestOneBit((int) Math.floor(ratio));
+		if (k == 0) return 1;
+		else return k;
 	}
 	
 	// Submit CREATE request to PHP
