@@ -188,6 +188,8 @@ public class CreateAppointmentActivity extends Activity {
             
             @Override
             public void onFinish(String responseText) {
+                CreateAppointmentActivity.this.consultants.add(new ConsultantDetails(-1, "", ""));
+                consultantSpinnerData.add("");
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -205,19 +207,20 @@ public class CreateAppointmentActivity extends Activity {
                             	this.consultantSpinnerData.add(c.name + " - " + c.specialization);
                             }
 
-                            // Populate Consultant Name Spinner
-                            Spinner consultantSpinner = (Spinner) findViewById(R.id.Spinner_ConsultantName);
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this
-                                    , android.R.layout.simple_spinner_item, consultantSpinnerData);
-                            
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            consultantSpinner.setAdapter(adapter);
-
                             break;
                             
                         default:
                             break;
                     }
+
+                    // Populate Consultant Name Spinner
+                    Spinner consultantSpinner = (Spinner) findViewById(R.id.Spinner_ConsultantName);
+                    ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this
+                            , android.R.layout.simple_spinner_item, consultantSpinnerData);
+
+                    adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                    consultantSpinner.setAdapter(adapter);
+
                 // Do nothing on exception
                 } catch (JSONException e) {
                 }
@@ -226,7 +229,7 @@ public class CreateAppointmentActivity extends Activity {
             }
         }.init(pd).send(Global.USER_CONSULTANT_URL);
     }
-    
+
     // FETCH CONSULTANT AVAILABILITY ONLY AFTER THE CONSULTANT AND DATE ARE ALREADY CHOSEN
     private void fetchConsultantAvailability () {
     	ArrayList<String> timeList = new ArrayList<String> ();
@@ -244,6 +247,7 @@ public class CreateAppointmentActivity extends Activity {
             }
             @Override
             public void onFinish(String responseText) {
+                timeList.add("");
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -253,26 +257,8 @@ public class CreateAppointmentActivity extends Activity {
                             for (int i = 0; i < time.length(); i++) {
                             	String t = time.getString(i);
                             	
-                            	// A way to get the time only
-                            	// Make a Date object and Calendar object, then retrieve whatever is needed
-                            	try {
-                            		Date d = Global.dateFormat.parse(t);
-                            		GregorianCalendar c = new GregorianCalendar();
-                            		
-                                	c.setTime(d);
-                                	timeList.add(c.get(Calendar.HOUR_OF_DAY) + ":" + c.get(Calendar.MINUTE));
-                            	} catch (Exception e) {
-                            		e.printStackTrace();
-                            	}
+                            	timeList.add(t.substring(t.indexOf(" ") + 1));
                             }
-
-                            // Populate Appointment Time Spinner
-                            Spinner timeSpinner = (Spinner) findViewById(R.id.Spinner_AppointmentTime);
-                            ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this,
-                            								   android.R.layout.simple_spinner_item, timeList);
-                            
-                            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                            timeSpinner.setAdapter(adapter);
                             break;
                         default:
                             break;
@@ -280,18 +266,27 @@ public class CreateAppointmentActivity extends Activity {
                 // Do nothing on exception
                 } catch (JSONException e) {
                 }
+
+                // Populate Appointment Time Spinner
+                Spinner timeSpinner = (Spinner) findViewById(R.id.Spinner_AppointmentTime);
+                ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this,
+                        android.R.layout.simple_spinner_item, timeList);
+
+                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+                timeSpinner.setAdapter(adapter);
+
                 pd.dismiss();
             }
         }.init(pd, timeList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
                 , consultantId
                 , dateString));
-
     }
 	
 	// Display the correct layout depending on which appointment type is chosen
 	public void onAppointmentTypeClicked (View v) {
 		boolean checked = ((RadioButton) v).isChecked();
-		
+
+        this.clearMessages();
 		switch (v.getId()) {
 		case R.id.Radio_NormalAppointment:
 			if (checked) {
@@ -327,7 +322,7 @@ public class CreateAppointmentActivity extends Activity {
 			break;
 			
 		default:
-			Log.d("DEBUGGING", "SOMETHING WRONG!");
+			Log.d("DEBUGGING", "SUM TING WONG!");
 			break;
 		}
 	}
@@ -345,7 +340,7 @@ public class CreateAppointmentActivity extends Activity {
 
 			@Override
 			public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-				((Button) btn).setText(String.format("%04d/%02d/%02d", year, monthOfYear + 1, dayOfMonth));
+				((Button) btn).setText(String.format("%04d-%02d-%02d", year, monthOfYear + 1, dayOfMonth));
 				CreateAppointmentActivity.this.date = ((Button) findViewById(R.id.Field_AppointmentDate)).getText().toString();
 				
 				// Fetch availability time if BOTH DATE AND CONSULTANT'S NAME ARE ALREADY SELECTED
@@ -407,7 +402,7 @@ public class CreateAppointmentActivity extends Activity {
 		
 		String 	patientName = Global.getUserManager().getUser().getFullName(),
 				consultantName = this.consultantName,
-				dateTime = this.date + " " + this.time + ":00",
+				dateTime = this.date + " " + this.time,
 				healthIssue = ((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
 				type = this.type,
 				sessionId = Global.getUserManager().getUser().getSessionId();
@@ -415,18 +410,22 @@ public class CreateAppointmentActivity extends Activity {
 		// Validity checking
 		if (consultantName.isEmpty()) {
 			valid = 0;
+            putMessage("Consultant Name must not be empty!");
 		}
 		
 		if (this.date.isEmpty()) {
 			valid = 0;
+            putMessage("Date must not be empty!");
 		}
 		
 		if (this.time.isEmpty()) {
 			valid = 0;
+            putMessage("Time must not be empty!");
 		}
 		
 		if (healthIssue.isEmpty()) {
 			valid = 0;
+            putMessage("Health issue must not be empty!");
 		}
 		
 		if (type.isEmpty()) {
@@ -447,10 +446,12 @@ public class CreateAppointmentActivity extends Activity {
 			
 			if (referrerName.isEmpty()) {
 				valid = 0;
+                putMessage("Referrer\'s name must not be empty!");
 			}
 			
 			if (referrerClinic.isEmpty()) {
 				valid = 0;
+                putMessage("Referrer\'s clinic must not be empty!");
 			}
 		} else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
 			attachment = this.attachmentImageString;
@@ -458,65 +459,69 @@ public class CreateAppointmentActivity extends Activity {
 			
 			if (attachment.isEmpty()) {
 				valid = 0;
+                putMessage("Attachment must not be empty!");
 			}
 			
 			if (prevId.isEmpty()) {
 				valid = 0;
+                putMessage("Previous appointment id must not be empty!");
 			} else {
 				previousId = Integer.parseInt(prevId);
 			}
 		}
 		
 		// When the appointment creation is done, go back to HOME ACTIVITY
-        ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
-        ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment(patientId, consultantId
-                , dateTime, healthIssue, attachment, type, referrerName, referrerClinic
-                , previousId, new PatientAppointmentManager.OnFinishListener() {
-            private ProgressDialog pd;
-            public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd) {
-                this.pd = pd;
-                return this;
-            }
+        if(valid == 1) {
+            ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
+            ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment(patientId, consultantId
+                    , dateTime, healthIssue, attachment, type, referrerName, referrerClinic
+                    , previousId, new PatientAppointmentManager.OnFinishListener() {
+                private ProgressDialog pd;
 
-            @Override
-            public void onFinish(String responseText) {
-                pd.dismiss();
-                try {
-                    JSONObject response = new JSONObject(responseText);
-                    switch(response.getInt("status")) {
-                        case 0:
-                            new AlertDialog.Builder(CreateAppointmentActivity.this)
-                                    .setIcon(android.R.drawable.ic_dialog_info)
-                                    .setTitle(null)
-                                    .setMessage("You have successfully created an appointment.")
-                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            CreateAppointmentActivity.this.finish();
-                                        }
-                                    })
-                                    .show();
-                            return;
-                        default:
-                            new AlertDialog.Builder(CreateAppointmentActivity.this)
-                                    .setIcon(android.R.drawable.ic_dialog_alert)
-                                    .setTitle(null)
-                                    .setMessage("Failed to create an appointment!")
-                                    .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
-                                        @Override
-                                        public void onClick(DialogInterface dialog, int which) {
-                                            dialog.dismiss();
-                                            CreateAppointmentActivity.this.finish();
-                                        }
-                                    })
-                                    .show();
-                            return;
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
+                public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd) {
+                    this.pd = pd;
+                    return this;
                 }
-            }
-        }.init(pd));
+
+                @Override
+                public void onFinish(String responseText) {
+                    pd.dismiss();
+                    try {
+                        JSONObject response = new JSONObject(responseText);
+                        switch (response.getInt("status")) {
+                            case 0:
+                                new AlertDialog.Builder(CreateAppointmentActivity.this)
+                                        .setIcon(android.R.drawable.ic_dialog_info)
+                                        .setTitle(null)
+                                        .setMessage("You have successfully created an appointment.")
+                                        .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                                CreateAppointmentActivity.this.finish();
+                                            }
+                                        })
+                                        .show();
+                                return;
+                            default:
+                                new AlertDialog.Builder(CreateAppointmentActivity.this)
+                                        .setIcon(android.R.drawable.ic_dialog_alert)
+                                        .setTitle(null)
+                                        .setMessage("Failed to create an appointment!")
+                                        .setNeutralButton(R.string.Button_OK, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialog, int which) {
+                                                dialog.dismiss();
+                                            }
+                                        })
+                                        .show();
+                                return;
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }.init(pd));
+        }
 	}
 }
