@@ -41,7 +41,8 @@ public class ImageManager {
                 || image.compress(Bitmap.CompressFormat.PNG, 100, baos));
 		
 		byte[] b = baos.toByteArray();
-		String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+		String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT)
+                .replace("\n", "").replace("\r", "");
 		
 		// Sent this encoded STRING to the PHP server
 		return imageEncoded;
