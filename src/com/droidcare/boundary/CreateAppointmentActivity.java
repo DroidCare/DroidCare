@@ -99,7 +99,7 @@ public class CreateAppointmentActivity extends Activity {
 		}
 	};
 	
-	@Override
+	@Override	
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_create_appointment);
@@ -108,6 +108,7 @@ public class CreateAppointmentActivity extends Activity {
 		this.initializeView();
 	}
 
+	
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
 		// Inflate the menu; this adds items to the action bar if it is present.
@@ -115,6 +116,7 @@ public class CreateAppointmentActivity extends Activity {
 		return true;
 	}
 
+	
 	@Override
 	public boolean onOptionsItemSelected(MenuItem item) {
 		// Handle action bar item clicks here. The action bar will
@@ -125,8 +127,8 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	// Set which View object to be shown onCreate
+	
 	public void initializeView () {
-		this.createAppointmentMessages = (LinearLayout) findViewById(R.id.LL_CreateAppointmentMessages);
 		this.clearMessages();
 		
 		// Configure layout
@@ -146,9 +148,11 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	// Debugging purpose
+	
 	private void clearMessages() {
         this.createAppointmentMessages.removeAllViews();
     }
+	
 	
 	/* PRIVATE CLASS */
 	private class ConsultantDetails {
@@ -171,6 +175,7 @@ public class CreateAppointmentActivity extends Activity {
     }
     
     // FETCH CONSULTANT DETAILS WITH THE SAME LOCATION!!
+    
     private void fetchConsultantDetails () {
     	// PUSH ALL CONSULTANT INFO FROM PHP REQUEST TO THIS ARRAY LIST
     	this.consultants = new ArrayList<ConsultantDetails> ();
@@ -330,6 +335,7 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	// For date fragment
+	
 	public void onDateButtonClicked (View v) {
 		DialogFragment datePicker = new DatePickerFragment () {
             
@@ -364,6 +370,7 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	// For opening gallery
+	
 	public void onSelectImage (View v) {
 		Intent intent = new Intent();
 		intent.setType("image/*");
@@ -372,6 +379,7 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	// For handling the chosen attachment image + showing it to the ImageView
+	
 	public void onActivityResult (int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
@@ -404,6 +412,7 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	/* http://stackoverflow.com/questions/3879992/get-bitmap-from-an-uri-android */
+	
 	private Bitmap getThumbnail (Uri uri) {
 		final int THUMBNAIL_SIZE = 280;
 		try {
@@ -440,6 +449,7 @@ public class CreateAppointmentActivity extends Activity {
 		return null;
 	}
 	
+	
 	private int getPowerOfTwoForSampleRatio (double ratio) {
 		int k = Integer.highestOneBit((int) Math.floor(ratio));
 		if (k == 0) return 1;
@@ -447,6 +457,7 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	// Submit CREATE request to PHP
+	
 	public void onCreateAppointment (View v) {
 		// USE APPOINTMENT MANAGER TO HANDLE CREATING APPOINTMENT
 		// ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment();

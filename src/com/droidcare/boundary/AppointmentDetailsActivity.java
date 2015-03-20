@@ -31,7 +31,14 @@ import org.json.JSONObject;
 import static junit.framework.Assert.assertTrue;
 
 public class AppointmentDetailsActivity extends Activity {
+	/**
+	 * The {@link Appointment} object to be displayed
+	 */
 	private Appointment appointment;
+	
+	/**
+	 * The current user's type
+	 */
 	private String userType = Global.getUserManager().getUser().getType();
 
 	@Override
@@ -168,7 +175,6 @@ public class AppointmentDetailsActivity extends Activity {
 	 */
 	public void openEditAppointment (View v) {
 		Intent intent = new Intent(this, EditAppointmentActivity.class);
-		intent.putExtra("appointmentType", appointment.getType());
 		intent.putExtra("appointment", appointment);
 		startActivity(intent);
 	}

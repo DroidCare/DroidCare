@@ -123,5 +123,6 @@
     <string name="Label_AppointmentTime">Time</string>
     <string name="ButtonText_AppointmentAttachment">Select Attachment</string>
     <string name="ButtonText_CreateAppointment">Create Appointment</string>
+    <string name="ButtonText_EditAppointment">Edit Appointment</string>
 
 </resources>
