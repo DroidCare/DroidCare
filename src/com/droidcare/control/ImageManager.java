@@ -5,6 +5,7 @@ import java.io.ByteArrayOutputStream;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 
 /**
  * 
@@ -35,7 +36,9 @@ public class ImageManager {
 	 */
 	public String encodeImageBase64 (Bitmap image) {
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		// image.compress(Bitmap.CompressFormat.JPEG, 100, baos);
+
+		if(image.compress(Bitmap.CompressFormat.JPEG, 100, baos)
+                || image.compress(Bitmap.CompressFormat.PNG, 100, baos));
 		
 		byte[] b = baos.toByteArray();
 		String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
@@ -50,7 +53,8 @@ public class ImageManager {
 	 * @return				an image {@link Bitmap} object.
 	 */
 	public Bitmap decodeImageBase64 (String encodedImage) {
-		byte[] imageByte = Base64.decode(encodedImage, 0);
+        Log.d("DEBUGGING", "encodedImage=" + encodedImage);
+		byte[] imageByte = Base64.decode(encodedImage, Base64.DEFAULT);
 		
 		/*
 		BitmapFactory.Options o = new BitmapFactory.Options();

@@ -456,12 +456,11 @@ public class CreateAppointmentActivity extends Activity {
 			
 			if (imageBitmap != null) {
 				this.attachmentImageString = Global.getImageManager().encodeImageBase64(imageBitmap);
+                Log.d("DEBUGGING", "attach=" + attachmentImageString);
 				((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setVisibility(View.VISIBLE);
 				((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setImageBitmap(imageBitmap);
 			}
-			
-			
-			
+
 			/*
 			try {
 				Bitmap bitmap = MediaStore.Images.Media.getBitmap(getContentResolver(), imageUri);
@@ -536,9 +535,11 @@ public class CreateAppointmentActivity extends Activity {
 	 * @param v	the related View
 	 */
 	public void onCreateAppointment (View v) {
+        clearMessages();
+
 		// USE APPOINTMENT MANAGER TO HANDLE CREATING APPOINTMENT
 		// ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment();
-		
+
 		// Check empty fields first
 		int valid = 1;
 		

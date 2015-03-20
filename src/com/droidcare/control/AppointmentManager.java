@@ -109,13 +109,11 @@ public abstract class AppointmentManager {
 
             @Override
             public void onFinish(String responseText) {
-                Log.d("DEBUGGING", "responseText = " + responseText);
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
                         case 0:
                             JSONArray messages = response.getJSONArray("message");
-                            Log.d("DEBUGGING", "now starting to loop messages JSONArray length = " + messages.length());
                             for(int i = 0, size = messages.length(); i < size; ++i) {
                                 JSONObject params = messages.getJSONObject(i);
 
