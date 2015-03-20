@@ -54,6 +54,7 @@ public class Global {
 	
 	public static void init(Context context) {
 		AppSession.init(context);
+        ImageManager.init(context);
 		
 		userManager	= UserManager.getInstance();
 		appSession	= AppSession.getInstance();

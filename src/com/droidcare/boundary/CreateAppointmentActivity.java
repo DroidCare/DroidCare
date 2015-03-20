@@ -485,7 +485,7 @@ public class CreateAppointmentActivity extends Activity {
 	 * @return		the compressed image Bitmap 
 	 */
 	private Bitmap getThumbnail (Uri uri) {
-		final int THUMBNAIL_SIZE = 280;
+		final int THUMBNAIL_SIZE = 180;
 		try {
 			InputStream input = this.getContentResolver().openInputStream(uri);
 			BitmapFactory.Options onlyBoundsOptions = new BitmapFactory.Options();

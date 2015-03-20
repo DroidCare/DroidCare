@@ -240,8 +240,8 @@
 		        <ImageView
 		            android:id="@+id/ImageView_AppointmentAttachment"
 		            android:contentDescription="@string/AppointmentAttachmentDescription"
-		            android:layout_width="280px"
-		            android:layout_height="280px"
+		            android:layout_width="180dp"
+		            android:layout_height="180dp"
                     android:layout_marginBottom="20dp" />
 		        
 			    <Button
