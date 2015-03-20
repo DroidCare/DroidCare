@@ -33,6 +33,12 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Display user interface for modifying a pending appointment.
+ *
+ */
 public class EditAppointmentActivity extends Activity {
 	/**
 	 * The {@link Appointment} object to be modified
