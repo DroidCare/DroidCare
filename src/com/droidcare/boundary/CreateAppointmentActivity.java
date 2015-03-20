@@ -52,13 +52,39 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 public class CreateAppointmentActivity extends Activity {
+	/**
+	 * Constant definition for image selection for follow-up appointment type
+	 */
 	private static final int SELECT_PICTURE = 1;
+	
+	/**
+	 * A holder for error messages
+	 */
 	private LinearLayout createAppointmentMessages;
+	
+	/**
+	 * The selected consultant's ID
+	 */
 	private int consultantId = -1; // Keep track of the consultant id
+	
+	/**
+	 * consultantName = the selected consultant's name
+	 * date = the selected appointment date
+	 * time = the selected appointment time
+	 * attachmentImageString = the Base 64 encoded attachment image string
+	 * type = the appointment's type
+	 */
 	private String consultantName = "", date = "", time = "", attachmentImageString = "", type = Appointment.NORMAL;
+	
+	/**
+	 * A list of consultant details in the form of {@link ConsultantDetails} objects
+	 */
 	private ArrayList<ConsultantDetails> consultants;
 	
-	// Spinner OnItemSelectedListener definition
+	/**
+	 * An event listener for the consultant spinner. This listener updates the current value of {@link #consultantId}
+	 * and {@link #consultantName}.
+	 */
 	private OnItemSelectedListener onConsultantSelectedListener = new OnItemSelectedListener () {
 
 		@Override
@@ -86,6 +112,9 @@ public class CreateAppointmentActivity extends Activity {
 		}
 	};
 	
+	/**
+	 * An event listener for the time spinner. This listener updates the current value of {@link #time}.
+	 */
 	private OnItemSelectedListener onTimeSelectedListener = new OnItemSelectedListener () {
 
 		@Override
@@ -126,8 +155,9 @@ public class CreateAppointmentActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
-	// Set which View object to be shown onCreate
-	
+	/**
+	 * Initialize all views in the layout
+	 */
 	public void initializeView () {
 		this.clearMessages();
 		
@@ -147,18 +177,36 @@ public class CreateAppointmentActivity extends Activity {
 		((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setOnItemSelectedListener(this.onTimeSelectedListener);
 	}
 	
-	// Debugging purpose
-	
+	/**
+	 * Clear all views in {@link #createAppointmentMessages}
+	 */
 	private void clearMessages() {
         this.createAppointmentMessages.removeAllViews();
     }
 	
-	
-	/* PRIVATE CLASS */
+	/**
+	 * 
+	 * @author Edwin Candinegara
+	 * Stores relevant information of consultants which are displayed in {@link CreateAppointmentActivity#consultants}.
+	 */
 	private class ConsultantDetails {
+		/**
+		 * The consultant's ID
+		 */
 		private int id;
+		
+		/**
+		 * name = the consultant's name
+		 * specialization = the consultant's specialization
+		 */
 		private String name, specialization;
 		
+		/**
+		 * Constructs a {@link ConsultantDetails} object.
+		 * @param id				the consultant's ID
+		 * @param name				the consultant's name
+		 * @param specialization	the consultant's specialization
+		 */
 		private ConsultantDetails (int id, String name, String specialization) {
 			this.id = id;
 			this.name = name;
@@ -166,7 +214,10 @@ public class CreateAppointmentActivity extends Activity {
 		}
 	}
 	
-	// Debugging purpose
+	/**
+	 * Put an error message to {@link #createAppointmentMessages}
+	 * @param message	the error message
+	 */
     private void putMessage(String message) {
         TextView textView = new TextView(this);
         textView.setText("\u2022 " + message);
@@ -174,8 +225,9 @@ public class CreateAppointmentActivity extends Activity {
         this.createAppointmentMessages.addView(textView);
     }
     
-    // FETCH CONSULTANT DETAILS WITH THE SAME LOCATION!!
-    
+    /**
+     * Fetch the consultant details based on the patient's country
+     */
     private void fetchConsultantDetails () {
     	// PUSH ALL CONSULTANT INFO FROM PHP REQUEST TO THIS ARRAY LIST
     	this.consultants = new ArrayList<ConsultantDetails> ();
@@ -236,8 +288,10 @@ public class CreateAppointmentActivity extends Activity {
             }
         }.init(pd).send(Global.USER_CONSULTANT_URL);
     }
-
-    // FETCH CONSULTANT AVAILABILITY ONLY AFTER THE CONSULTANT AND DATE ARE ALREADY CHOSEN
+    
+    /**
+     * Fetch the consultant's time availability based on the selected date and consultant
+     */
     private void fetchConsultantAvailability () {
     	ArrayList<String> timeList = new ArrayList<String> ();
 
@@ -289,7 +343,10 @@ public class CreateAppointmentActivity extends Activity {
                 , dateString));
     }
 	
-	// Display the correct layout depending on which appointment type is chosen
+	/**
+	 * An event listener for the appointment's type radio group
+	 * @param v	the corresponding View object
+	 */
 	public void onAppointmentTypeClicked (View v) {
 		boolean checked = ((RadioButton) v).isChecked();
 
@@ -334,8 +391,10 @@ public class CreateAppointmentActivity extends Activity {
 		}
 	}
 	
-	// For date fragment
-	
+	/**
+	 * Create a {@link DatePickerFragment} from which patient can choose his/her desired date
+	 * @param v	the clicked button
+	 */
 	public void onDateButtonClicked (View v) {
 		DialogFragment datePicker = new DatePickerFragment () {
             
@@ -369,8 +428,10 @@ public class CreateAppointmentActivity extends Activity {
 		datePicker.show(getFragmentManager(), "datePicker");
 	}
 	
-	// For opening gallery
-	
+	/**
+	 * Opens a built-in activity from which patient can choose the attachment image
+	 * @param v	the related View to this event
+	 */
 	public void onSelectImage (View v) {
 		Intent intent = new Intent();
 		intent.setType("image/*");
@@ -378,8 +439,9 @@ public class CreateAppointmentActivity extends Activity {
 		startActivityForResult(Intent.createChooser(intent, "Select Picture"), SELECT_PICTURE);
 	}
 	
-	// For handling the chosen attachment image + showing it to the ImageView
-	
+	/**
+	 * Handle the result from {@link #onSelectImage(View)}
+	 */
 	public void onActivityResult (int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
@@ -412,7 +474,11 @@ public class CreateAppointmentActivity extends Activity {
 	}
 	
 	/* http://stackoverflow.com/questions/3879992/get-bitmap-from-an-uri-android */
-	
+	/**
+	 * Process the image attachment from {@link #onActivityResult(int, int, Intent)} and compress it
+	 * @param uri	the image URI
+	 * @return		the compressed image Bitmap 
+	 */
 	private Bitmap getThumbnail (Uri uri) {
 		final int THUMBNAIL_SIZE = 280;
 		try {
@@ -442,22 +508,27 @@ public class CreateAppointmentActivity extends Activity {
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		
 		return null;
 	}
 	
-	
+	/**
+	 * Get the nearest power of two of the sample ratio
+	 * @param ratio	the current ratio
+	 * @return		the nearest power of two
+	 */
 	private int getPowerOfTwoForSampleRatio (double ratio) {
 		int k = Integer.highestOneBit((int) Math.floor(ratio));
 		if (k == 0) return 1;
 		else return k;
 	}
 	
-	// Submit CREATE request to PHP
-	
+	/**
+	 * Submit request to the back-end server to create an appointment
+	 * @param v	the related View
+	 */
 	public void onCreateAppointment (View v) {
 		// USE APPOINTMENT MANAGER TO HANDLE CREATING APPOINTMENT
 		// ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment();

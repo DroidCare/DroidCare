@@ -34,13 +34,37 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
 public class EditAppointmentActivity extends Activity {
+	/**
+	 * The {@link Appointment} object to be modified
+	 */
 	private Appointment appointment;
-	private int consultantId = -1;
+	
+	/**
+	 * The selected consultant's ID
+	 */
+	private int consultantId;
+	
+	/**
+	 * consultantName = the selected consultant's name
+	 * date = the selected appointment date
+	 * time = the selected appointment time
+	 */
 	private String consultantName, date, time; 
+	
+	/**
+	 * A holder for error messages
+	 */
 	private LinearLayout editAppointmentMessages;
+	
+	/**
+	 * A list of consultant details in the form of {@link ConsultantDetails} objects
+	 */
 	private ArrayList<ConsultantDetails> consultants;
 	
-	// Spinner OnItemSelectedListener definition
+	/**
+	 * An event listener for the consultant spinner. This listener updates the current value of {@link #consultantId}
+	 * and {@link #consultantName}.
+	 */
 	private OnItemSelectedListener onConsultantSelectedListener = new OnItemSelectedListener () {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -67,6 +91,9 @@ public class EditAppointmentActivity extends Activity {
 		}
 	};
 	
+	/**
+	 * An event listener for the time spinner. This listener updates the current value of {@link #time}.
+	 */
 	private OnItemSelectedListener onTimeSelectedListener = new OnItemSelectedListener () {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -109,6 +136,9 @@ public class EditAppointmentActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Initialize all views in the layout depending on the appointment's type
+	 */
 	public void initializeView () {
 		String appointmentType = this.appointment.getType();
 		
@@ -128,7 +158,10 @@ public class EditAppointmentActivity extends Activity {
 		((Spinner) findViewById(R.id.Spinner_ConsultantName)).setOnItemSelectedListener(this.onConsultantSelectedListener);
 		((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setOnItemSelectedListener(this.onTimeSelectedListener);
 	}
-
+	
+	/**
+	 * Set the initial data of the layout depending on the current {@link #appointment} object 
+	 */
 	public void setData () {
 		String appointmentType = this.appointment.getType();
 		this.consultantId = this.appointment.getConsultantId();
@@ -158,11 +191,29 @@ public class EditAppointmentActivity extends Activity {
 		}
 	}
 	
-	/* PRIVATE CLASS */
+	/**
+	 * 
+	 * @author Edwin Candinegara
+	 * Stores relevant information of consultants which are displayed in {@link CreateAppointmentActivity#consultants}.
+	 */
 	private class ConsultantDetails {
+		/**
+		 * The consultant's ID
+		 */
 		private int id;
+		
+		/**
+		 * name = the consultant's name
+		 * specialization = the consultant's specialization
+		 */
 		private String name, specialization;
 		
+		/**
+		 * Constructs a {@link ConsultantDetails} object.
+		 * @param id				the consultant's ID
+		 * @param name				the consultant's name
+		 * @param specialization	the consultant's specialization
+		 */
 		private ConsultantDetails (int id, String name, String specialization) {
 			this.id = id;
 			this.name = name;
@@ -170,9 +221,10 @@ public class EditAppointmentActivity extends Activity {
 		}
 	}
 	
-	// FETCH CONSULTANT DETAILS WITH THE SAME LOCATION!!
+	 /**
+     * Fetch the consultant details based on the patient's country
+     */
     private void fetchConsultantDetails () {
-    	// PUSH ALL CONSULTANT INFO FROM PHP REQUEST TO THIS ARRAY LIST
     	this.consultants = new ArrayList<ConsultantDetails> ();
     	
 	    /* -------------------------------------------------------------------------- */
@@ -235,6 +287,9 @@ public class EditAppointmentActivity extends Activity {
         }.init(pd).send(Global.USER_CONSULTANT_URL);
     }
 	
+    /**
+     * Fetch the consultant's time availability based on the selected date and consultant
+     */
     private void fetchConsultantAvailability () {
     	ArrayList<String> timeList = new ArrayList<String> ();
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading consultant's availability...", true);
@@ -290,19 +345,28 @@ public class EditAppointmentActivity extends Activity {
                 , dateString));
     }
     
-	// Debugging purpose
+    /**
+	 * Clear all views in {@link #editAppointmentMessages}
+	 */
 	private void clearMessages() {
         this.editAppointmentMessages.removeAllViews();
     }
 
-	// Debugging purpose
+	/**
+	 * Put an error message to {@link #createAppointmentMessages}
+	 * @param message	the error message
+	 */
     private void putMessage(String message) {
         TextView textView = new TextView(this);
         textView.setText("\u2022 " + message);
         textView.setLayoutParams(new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         this.editAppointmentMessages.addView(textView);
     }
-
+    
+    /**
+	 * Create a {@link DatePickerFragment} from which patient can choose his/her desired date
+	 * @param v	the clicked button
+	 */
     public void onDateButtonClicked (View v) {
 		DialogFragment datePicker = new DatePickerFragment () {
             
@@ -335,8 +399,12 @@ public class EditAppointmentActivity extends Activity {
 		
 		datePicker.show(getFragmentManager(), "datePicker");
 	}
-
+    
+    /**
+	 * Submit request to the back-end server to modify the appointment
+	 * @param v	the related View
+	 */
     public void onEditAppointment (View v) {
-    	// NEED IMPLEMENTATION
+    	// USE PATIENT APPOINTMENT MANAGER!!
     }
 }
