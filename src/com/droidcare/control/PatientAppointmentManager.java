@@ -76,7 +76,8 @@ public class PatientAppointmentManager extends AppointmentManager {
      * Edit an existing pending appointment entry in database
      * @param appointment	the {@link Appointment} object to be modified
      */
-    public void editAppointment (Appointment appointment) {
+    public void editAppointment (Appointment appointment, int consultantId
+            , int patientId, String dateTime, String healthIssue, OnFinishListener onFinishListener) {
     	// USE POLYMORPHISM DEPENDING ON THE APPOINTMENT TYPE
     	String referrerName = "", referrerClinic = "", previousId = "", attachmentImage = "";
     	
@@ -91,6 +92,25 @@ public class PatientAppointmentManager extends AppointmentManager {
     		previousId = "" + f.getPreviousId();
     		attachmentImage = f.getAttachment();
     	}
+
+        new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
+                , new Pair<String, String>("patient_id", "" + patientId)
+                , new Pair<String, String>("consultant_id", "" + consultantId)
+                , new Pair<String, String>("date_time", dateTime)
+                , new Pair<String, String>("health_issue", healthIssue)
+                , new Pair<String, String>("referrer_name", referrerName)
+                , new Pair<String, String>("referrer_clinic", referrerClinic)
+                , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
+            private OnFinishListener listener;
+            public SimpleHttpPost init(OnFinishListener listener) {
+                this.listener = listener;
+                return this;
+            }
+            @Override
+            public void onFinish(String responseText) {
+                listener.onFinish(responseText);
+            }
+        }.init(onFinishListener).send(Global.APPOINTMENT_EDIT_URL);
     }
 	
 	/**

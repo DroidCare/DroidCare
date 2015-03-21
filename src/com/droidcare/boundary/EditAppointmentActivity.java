@@ -17,6 +17,7 @@ import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -427,7 +428,21 @@ public class EditAppointmentActivity extends Activity {
     	}
     	
     	if (valid == 1) {
-    		((PatientAppointmentManager) Global.getAppointmentManager()).editAppointment(this.appointment);
+            ProgressDialog pd = ProgressDialog.show(this, null, "Editing appointment...", true);
+    		((PatientAppointmentManager) Global.getAppointmentManager()).editAppointment(this.appointment
+                    , patientId , consultantId, dateTime, healthIssue
+                    , new PatientAppointmentManager.OnFinishListener() {
+                private ProgressDialog pd;
+                public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd){
+                    this.pd = pd;
+                    return this;
+                }
+                @Override
+                public void onFinish(String responseText) {
+                    pd.dismiss();
+                    Log.d("DEBUGGING", "editAppt=" + responseText);
+                }
+            }.init(pd));
     	}
     }
 }
