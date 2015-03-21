@@ -550,8 +550,7 @@ public class CreateAppointmentActivity extends Activity {
 				consultantName = this.consultantName,
 				dateTime = this.date + " " + this.time,
 				healthIssue = ((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
-				type = this.type,
-				sessionId = Global.getUserManager().getUser().getSessionId();
+				type = this.type;
 		
 		// Validity checking
 		if (consultantName.isEmpty()) {

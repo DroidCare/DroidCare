@@ -49,9 +49,9 @@ public class ImageManager {
      * Credits to:
      *      - <a href="http://stackoverflow.com/a/8490361">Stack Overflow answer</a>
      *
-     * @param dp A value in dp (density independent pixels) unit. Which we need to convert into pixels
-     * @param context Context to get resources and device specific display metrics
-     * @return A float value to represent px equivalent to dp depending on device density
+     * @param dp 		A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param context 	Context to get resources and device specific display metrics
+     * @return 			A float value to represent px equivalent to dp depending on device density
      */
     public static float convertDpToPixel(float dp, Context context){
         DisplayMetrics displayMetrics = context.getResources().getDisplayMetrics();
@@ -86,16 +86,14 @@ public class ImageManager {
 	public Bitmap decodeImageBase64 (String encodedImage) {
         Log.d("DEBUGGING", "encodedImage=" + encodedImage);
 		byte[] imageByte = Base64.decode(encodedImage, Base64.DEFAULT);
-		
-		/*
-		BitmapFactory.Options o = new BitmapFactory.Options();
-		o.inPurgeable = true;
-		o.inInputShareable = true;
-		*/
-		
 		return BitmapFactory.decodeByteArray(imageByte, 0, imageByte.length);
 	}
-
+	
+	/**
+	 * Rescales the original image bitmap
+	 * @param image	the image to be rescaled
+	 * @return		the rescaled image
+	 */
     public Bitmap rescaleImage(Bitmap image) {
         float oriWidth = image.getWidth(),
                 oriHeight = image.getHeight();
@@ -104,6 +102,6 @@ public class ImageManager {
         float scaledWidth = scaling * oriWidth,
                 scaledHeight = scaling * oriHeight;
 
-        return image.createScaledBitmap(image, (int) scaledWidth, (int) scaledHeight, true);
+        return Bitmap.createScaledBitmap(image, (int) scaledWidth, (int) scaledHeight, true);
     }
 }

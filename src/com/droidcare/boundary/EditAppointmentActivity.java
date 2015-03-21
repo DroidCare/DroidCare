@@ -193,7 +193,7 @@ public class EditAppointmentActivity extends Activity {
 			Bitmap imageBitmap = Global.getImageManager().decodeImageBase64(f.getAttachment());
 			
 			((ImageView) findViewById(R.id.Field_AppointmentAttachment)).setImageBitmap(imageBitmap);
-			((EditText) findViewById(R.id.Field_AppointmentPreviousId)).setText(f.getPreviousId());
+			((EditText) findViewById(R.id.Field_AppointmentPreviousId)).setText("" + f.getPreviousId());
 		}
 	}
 	
@@ -411,6 +411,23 @@ public class EditAppointmentActivity extends Activity {
 	 * @param v	the related View
 	 */
     public void onEditAppointment (View v) {
-    	// USE PATIENT APPOINTMENT MANAGER!!
+    	// All integers are not empty for sure
+    	int id = this.appointment.getId(),
+    		patientId = this.appointment.getPatientId(), 
+    		consultantId = this.consultantId;
+    	
+    	String dateTime = this.date + " " + this.time,
+    		   healthIssue = ((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
+    		   sessionId = Global.getUserManager().getUser().getSessionId();
+    	
+    	int valid = 1;
+    	if (healthIssue.isEmpty()) {
+    		valid = 0;
+    		putMessage("Health issue must not be empty!");
+    	}
+    	
+    	if (valid == 1) {
+    		((PatientAppointmentManager) Global.getAppointmentManager()).editAppointment(this.appointment);
+    	}
     }
 }

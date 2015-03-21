@@ -72,8 +72,25 @@ public class PatientAppointmentManager extends AppointmentManager {
         }.init(onFinishListener).send(Global.APPOINTMENT_NEW_URL);
     }
     
+    /**
+     * Edit an existing pending appointment entry in database
+     * @param appointment	the {@link Appointment} object to be modified
+     */
     public void editAppointment (Appointment appointment) {
     	// USE POLYMORPHISM DEPENDING ON THE APPOINTMENT TYPE
+    	String referrerName = "", referrerClinic = "", previousId = "", attachmentImage = "";
+    	
+    	// If that kind of appointment DOES NOT have any one of the attributes above,
+    	// send a blank String to the server
+    	if (appointment.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
+    		ReferralAppointment r = (ReferralAppointment) appointment;
+    		referrerName = r.getReferrerName();
+    		referrerClinic = r.getReferrerClinic();
+    	} else if (appointment.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
+    		FollowUpAppointment f = (FollowUpAppointment) appointment;
+    		previousId = "" + f.getPreviousId();
+    		attachmentImage = f.getAttachment();
+    	}
     }
 	
 	/**
