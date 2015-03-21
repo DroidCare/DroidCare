@@ -78,7 +78,6 @@ public class PatientAppointmentManager extends AppointmentManager {
      */
     public void editAppointment (Appointment appointment, int consultantId
             , int patientId, String dateTime, String healthIssue, OnFinishListener onFinishListener) {
-    	// USE POLYMORPHISM DEPENDING ON THE APPOINTMENT TYPE
     	String referrerName = "", referrerClinic = "", previousId = "", attachmentImage = "";
     	
     	// If that kind of appointment DOES NOT have any one of the attributes above,
@@ -87,10 +86,6 @@ public class PatientAppointmentManager extends AppointmentManager {
     		ReferralAppointment r = (ReferralAppointment) appointment;
     		referrerName = r.getReferrerName();
     		referrerClinic = r.getReferrerClinic();
-    	} else if (appointment.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
-    		FollowUpAppointment f = (FollowUpAppointment) appointment;
-    		previousId = "" + f.getPreviousId();
-    		attachmentImage = f.getAttachment();
     	}
 
         new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())

@@ -433,14 +433,17 @@ public class EditAppointmentActivity extends Activity {
                     , patientId , consultantId, dateTime, healthIssue
                     , new PatientAppointmentManager.OnFinishListener() {
                 private ProgressDialog pd;
+                
                 public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd){
                     this.pd = pd;
                     return this;
                 }
+                
                 @Override
                 public void onFinish(String responseText) {
                     pd.dismiss();
                     Log.d("DEBUGGING", "editAppt=" + responseText);
+                    EditAppointmentActivity.this.finish();
                 }
             }.init(pd));
     	}
