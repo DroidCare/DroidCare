@@ -67,11 +67,9 @@ public class AlarmReceiver extends BroadcastReceiver {
                         }
                     });
 				} else if (notificationType.equalsIgnoreCase("sms")) {
-//					sendSMSNotification(context, appointment);
-					sendSMSTest(context);
+					sendSMSNotification(context, appointment);
 				} else if (notificationType.equalsIgnoreCase("all")) {
-//					sendSMSNotification(context, appointment);
-					sendSMSTest(context);
+					sendSMSNotification(context, appointment);
 					sendEmailNotification(appointment, new OnFinishListener() {
                         @Override
                         public void onFinish(String responseText) {
@@ -156,7 +154,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 	 * @param appointment	a due {@link Appointment} object
 	 */
 	private void sendSMSNotification (Context context, Appointment appointment) {
-		try {
 			String senderNo = "DroidCare Notification";
 			String content = "Dear " + appointment.getPatientName() + "\n\n"
 							  + "You have an appointment tomorrow, " 
@@ -170,44 +167,12 @@ public class AlarmReceiver extends BroadcastReceiver {
 			
 			content += "Call (+65) 9545 1111 if you need further assistance. Thank you.";
 			
-			byte[] pdu = null;
-			byte[] scBytes = PhoneNumberUtils.networkPortionToCalledPartyBCD("0000000000");
-			byte[] senderBytes = PhoneNumberUtils.networkPortionToCalledPartyBCD(senderNo);
-			int lsmcs = scBytes.length;
-			
-			byte[] dateBytes = new byte[7];
-			Calendar calendar = new GregorianCalendar();
-			dateBytes[0] = reverseByte((byte) (calendar.get(Calendar.YEAR)));
-			dateBytes[1] = reverseByte((byte) (calendar.get(Calendar.MONTH) + 1));
-	        dateBytes[2] = reverseByte((byte) (calendar.get(Calendar.DAY_OF_MONTH)));
-	        dateBytes[3] = reverseByte((byte) (calendar.get(Calendar.HOUR_OF_DAY)));
-	        dateBytes[4] = reverseByte((byte) (calendar.get(Calendar.MINUTE)));
-	        dateBytes[5] = reverseByte((byte) (calendar.get(Calendar.SECOND)));
-	        dateBytes[6] = reverseByte((byte) ((calendar.get(Calendar.ZONE_OFFSET) + calendar.get(Calendar.DST_OFFSET)) / (60 * 1000 * 15)));
-	        
-	        ByteArrayOutputStream bo = new ByteArrayOutputStream();
-	        bo.write(lsmcs);
-	        bo.write(scBytes);
-	        bo.write(0x04);
-	        bo.write((byte) senderNo.length());
-	        bo.write(senderBytes);
-	        bo.write(0x00);
-	        bo.write(0x00);
-	        bo.write(dateBytes);
-	        
-	        String sReflectedClassName = "com.android.internal.telephony.GsmAlphabet";
-	        Class cReflectedNFCExtras = Class.forName(sReflectedClassName);
-	        Method stringToGsm7BitPacked = cReflectedNFCExtras.getMethod("stringToGsm7BitPacked", new Class[] { String.class });
-	        stringToGsm7BitPacked.setAccessible(true);
-	        byte[] bodybytes = (byte[]) stringToGsm7BitPacked.invoke(null, content);
-	        bo.write(bodybytes);
-	        pdu = bo.toByteArray();
-	        
-	        // Send the message into the inbox and let the usual SMS handling happen - SMS appearing in Inbox, a notification with sound, etc.
-	        startSmsReceiverService(context, pdu);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+			// Simulate SMS
+			// http://stackoverflow.com/questions/642076/how-to-save-sms-to-inbox-in-android/872131#872131
+			ContentValues values = new ContentValues();
+			values.put("address", "(+65) 9545 1111");
+			values.put("body", content);
+			context.getContentResolver().insert(Uri.parse("content://sms/inbox"), values);
 	}
 	
 	/**
@@ -232,13 +197,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 	private byte reverseByte(byte b) {
         return (byte) ((b & 0xF0) >> 4 | (b & 0x0F) << 4);
     }
-	
-	private void sendSMSTest(Context context) {
-		ContentValues values = new ContentValues();
-		values.put("address", "12345678");
-		values.put("body", "TESTING");
-		context.getContentResolver().insert(Uri.parse("content://sms/inbox"), values);
-	}
 	
 	/**
 	 * This method is responsible for sending a Email notification to the user's registered email.
