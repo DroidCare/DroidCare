@@ -52,8 +52,8 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 	 */
 	private class ViewHolder {
 		// ALL VIEWS THAT NEED TO BE CUSTOMIZED ARE PUT HERE
-		TextView appointmentIdText, appointmentTypeText, appointmentDateTimeText,
-				 appointmentHealthIssueText, appointmentConsultantText, appointmentPatientText;
+		private TextView appointmentIdText, appointmentTypeText, appointmentDateTimeText,
+				 		 appointmentHealthIssueText, appointmentConsultantText, appointmentPatientText;
 	}
 	
 	/**
