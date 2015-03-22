@@ -72,7 +72,7 @@
 			
 			<TextView
 				android:id="@+id/LabelText_AppointmentDateTime"
-				android:layout_width="wrap_content"
+				android:layout_width="150dp"
 				android:layout_height="wrap_content"
 				android:text="@string/Label_AppointmentDateTime" />
 			
@@ -215,7 +215,7 @@
 		        android:id="@+id/LabelText_AppointmentAttachment"
 		        android:layout_width="150dp"
 		        android:layout_height="fill_parent"
-		        android:gravity="center"
+		        android:gravity="center_vertical"
 		        android:text="@string/Label_AppointmentAttachment" />
             <ImageView
                 android:id="@+id/ImageView_AppointmentAttachment"
