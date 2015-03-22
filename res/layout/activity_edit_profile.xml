@@ -182,7 +182,7 @@
 	            android:background="@drawable/edittext_top_bg"
 	            android:padding="10dp"
 	            android:layout_marginBottom="10dp"
-	            android:hint="@string/LabelText_Password"
+	            android:hint="@string/LabelText_OldPassword"
 	            android:textColorHint="#B5B5B5"
 	            android:drawableLeft="@drawable/password"/>
         </LinearLayout>
