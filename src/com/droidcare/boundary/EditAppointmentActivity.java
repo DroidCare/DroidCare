@@ -34,6 +34,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
 
+import static junit.framework.Assert.assertNotNull;
+
 /**
  * 
  * @author Edwin Candinegara
@@ -177,10 +179,11 @@ public class EditAppointmentActivity extends Activity {
 		String dateTime = Global.dateFormat.format(new Date(this.appointment.getDateTimeMillis())); 
 		this.date = dateTime.substring(0, dateTime.indexOf(" "));
 		this.time = dateTime.substring(dateTime.indexOf(" ") + 1);
+        ((Button) findViewById(R.id.Field_AppointmentDate)).setText(date);
 		
 		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointmentType);
 		((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).setText(this.appointment.getHealthIssue());
-		
+
 		this.fetchConsultantDetails();
 		this.fetchConsultantAvailability();
 		
@@ -192,8 +195,8 @@ public class EditAppointmentActivity extends Activity {
 		} else if (appointmentType.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
 			FollowUpAppointment f = (FollowUpAppointment) this.appointment;
 			Bitmap imageBitmap = Global.getImageManager().decodeImageBase64(f.getAttachment());
-			
-			((ImageView) findViewById(R.id.Field_AppointmentAttachment)).setImageBitmap(imageBitmap);
+
+			((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setImageBitmap(imageBitmap);
 			((EditText) findViewById(R.id.Field_AppointmentPreviousId)).setText("" + f.getPreviousId());
 		}
 	}
@@ -237,6 +240,7 @@ public class EditAppointmentActivity extends Activity {
 	    /* -------------------------------------------------------------------------- */
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading list of available consultant in your country...", true);
+        Log.d("DEBUGGING", Global.getUserManager().getUser().getCountry());
         new SimpleHttpPost(new Pair<String, String>("location", Global.getUserManager().getUser().getCountry())) {
             private ProgressDialog pd;
             private ArrayList<String> consultantSpinnerData;
@@ -298,21 +302,21 @@ public class EditAppointmentActivity extends Activity {
      * Fetch the consultant's time availability based on the selected date and consultant
      */
     private void fetchConsultantAvailability () {
-    	ArrayList<String> timeList = new ArrayList<String> ();
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading consultant's availability...", true);
         String dateString = this.date;
         
         new SimpleHttpPost(){
             private ArrayList<String> timeList;
             private ProgressDialog pd;
-            public SimpleHttpPost init(ProgressDialog pd, ArrayList<String> timeList) {
+            public SimpleHttpPost init(ProgressDialog pd) {
                 this.pd = pd;
-                this.timeList = timeList;
+                this.timeList = new ArrayList<String>();
                 return this;
             }
             
             @Override
             public void onFinish(String responseText) {
+                timeList.add(EditAppointmentActivity.this.time);
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -321,13 +325,7 @@ public class EditAppointmentActivity extends Activity {
                             
                             for (int i = 0; i < time.length(); i++) {
                             	String t = time.getString(i);
-                            	
-                            	if (t.substring(t.indexOf(" ") + 1)
-                            		 .equalsIgnoreCase(EditAppointmentActivity.this.time)) {
-                            		timeList.add(EditAppointmentActivity.this.time);
-                            	} else {
-                            		timeList.add(t.substring(t.indexOf(" ") + 1));
-                            	}
+                                timeList.add(t.substring(t.indexOf(" ") + 1));
                             }
                             break;
                         default:
@@ -347,9 +345,7 @@ public class EditAppointmentActivity extends Activity {
 
                 pd.dismiss();
             }
-        }.init(pd, timeList).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s"
-                , consultantId
-                , dateString));
+        }.init(pd).send(Global.APPOINTMENT_TIMESLOT_URL + String.format("/%d/%s", consultantId, dateString));
     }
     
     /**
@@ -442,7 +438,6 @@ public class EditAppointmentActivity extends Activity {
                 @Override
                 public void onFinish(String responseText) {
                     pd.dismiss();
-                    Log.d("DEBUGGING", "editAppt=" + responseText);
                     EditAppointmentActivity.this.finish();
                 }
             }.init(pd));
