@@ -14,8 +14,10 @@ import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.telephony.PhoneNumberUtils;
 import android.util.Log;
@@ -65,9 +67,11 @@ public class AlarmReceiver extends BroadcastReceiver {
                         }
                     });
 				} else if (notificationType.equalsIgnoreCase("sms")) {
-					sendSMSNotification(context, appointment);
+//					sendSMSNotification(context, appointment);
+					sendSMSTest(context);
 				} else if (notificationType.equalsIgnoreCase("all")) {
-					sendSMSNotification(context, appointment);
+//					sendSMSNotification(context, appointment);
+					sendSMSTest(context);
 					sendEmailNotification(appointment, new OnFinishListener() {
                         @Override
                         public void onFinish(String responseText) {
@@ -228,7 +232,14 @@ public class AlarmReceiver extends BroadcastReceiver {
 	private byte reverseByte(byte b) {
         return (byte) ((b & 0xF0) >> 4 | (b & 0x0F) << 4);
     }
-
+	
+	private void sendSMSTest(Context context) {
+		ContentValues values = new ContentValues();
+		values.put("address", "12345678");
+		values.put("body", "TESTING");
+		context.getContentResolver().insert(Uri.parse("content://sms/inbox"), values);
+	}
+	
 	/**
 	 * This method is responsible for sending a Email notification to the user's registered email.
 	 * @param appointment	an {@link Appointment} object whose information will be used in the Email notification content.
