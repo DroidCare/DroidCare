@@ -94,7 +94,7 @@
     <string name="Label_AppointmentPreviousID">Previous ID</string>
     <string name="Label_AppointmentReferrerName">Referrer Name</string>
     <string name="Label_AppointmentReferrerClinic">Referrer Clinic</string>
-    <string name="Label_AppointmentType">Type</string>
+    <string name="Label_AppointmentType">Appointment Type</string>
     <string name="Label_AppointmentDateTime">Date/Time</string>
     <string name="Label_AppointmentHealthIssue">Health Issue</string>
     <string name="Label_AppointmentConsultant">Consultant</string>
