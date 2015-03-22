@@ -76,8 +76,8 @@ public class PatientAppointmentManager extends AppointmentManager {
      * Edit an existing pending appointment entry in database
      * @param appointment	the {@link Appointment} object to be modified
      */
-    public void editAppointment (Appointment appointment, int consultantId
-            , int patientId, String dateTime, String healthIssue, OnFinishListener onFinishListener) {
+    public void editAppointment (Appointment appointment, int patientId
+            , int consultantId, String dateTime, String healthIssue, OnFinishListener onFinishListener) {
     	String referrerName = "", referrerClinic = "", previousId = "", attachmentImage = "";
     	
     	// If that kind of appointment DOES NOT have any one of the attributes above,
