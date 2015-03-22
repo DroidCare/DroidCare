@@ -31,14 +31,45 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Activity handling user registration.
+ * 
+ */
+
 public class RegisterActivity extends Activity {
+	/**
+	 * Constants defining the user notification preferences.
+	 * SMS_NOTIFICATION = user prefers SMS
+	 * EMAIL_NOTIFICATION = user prefers Email 
+	 */
     private static final int SMS_NOTIFICATION = 1, EMAIL_NOTIFICATION = 2;
     
+    /**
+	 * Stores what is/are the preferred notification type/s in the form of int
+	 */
     private int notificationType = 0;
+    
+    /**
+     * Stores what is/are the preferred notification type/s in the form of String
+     */
     private String notificationTypeString;
+    
+    /**
+     * A {@link LinearLayout} holding error messages
+     */
 	private LinearLayout registerMessages;
+	
+	/**
+	 * A date formatter for the user's date of birth
+	 */
     private SimpleDateFormat dateOfBirthFormat = new SimpleDateFormat("yyyy/MM/dd", Locale.ENGLISH);
-
+    
+    /**
+     * Handle date fragment creation
+     * @param btn	the View firing the event
+     */
 	public void pickDateBtn (View btn) {
 		DialogFragment datePicker = new DatePickerFragment(){
             private View btn;
@@ -55,11 +86,18 @@ public class RegisterActivity extends Activity {
 		}.init(btn);
 		datePicker.show(getFragmentManager(), "datePicker");
 	}
-
+	
+	/**
+     * Clear all messages held in {@link #registerMessages}
+     */
     private void clearMessages() {
         registerMessages.removeAllViews();
     }
-
+    
+    /**
+     * Add a message to {@link #registerMessages}
+     * @param message	the message to be added into {@link #registerMessages}
+     */
     private void putMessage(String message) {
         TextView textView = new TextView(this);
         textView.setText("\u2022 " + message);
@@ -67,7 +105,11 @@ public class RegisterActivity extends Activity {
                 new LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT));
         registerMessages.addView(textView);
     }
-
+    
+    /**
+     * An event listener handling user registration
+     * @param view	the View firing the event
+     */
 	public void doRegisterUser(View view) {
         clearMessages();
 		view.setEnabled(false);
@@ -230,6 +272,10 @@ public class RegisterActivity extends Activity {
         }
     }
 	
+	/**
+     * An event listener handling which notification mode/s is/are preferred
+     * @param v		the view firing the event
+     */
 	public void onSMSNotificationClick (View v) {
 		if (((CheckBox) v).isChecked()) {
 			notificationType += SMS_NOTIFICATION;
@@ -238,6 +284,10 @@ public class RegisterActivity extends Activity {
 		}
 	}
 	
+	/**
+     * An event listener handling which notification mode/s is/are preferred
+     * @param v		the view firing the event
+     */
 	public void onEmailNotificationClick (View v) {
 		if (((CheckBox) v).isChecked()) {
 			notificationType += EMAIL_NOTIFICATION;

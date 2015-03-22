@@ -36,11 +36,6 @@ public class AppointmentDetailsActivity extends Activity {
 	 */
 	private Appointment appointment;
 	
-	/**
-	 * The current user's type
-	 */
-	private String userType = Global.getUserManager().getUser().getType();
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -48,7 +43,6 @@ public class AppointmentDetailsActivity extends Activity {
 		
 		Bundle data = getIntent().getExtras();
 		this.appointment = data.getParcelable("appointment");
-		String appointmentType = appointment.getType();
 
 		// Cancel the notification of THIS APPOINTMENT
 		// Notification ID is always the same as Appointment ID
@@ -56,12 +50,10 @@ public class AppointmentDetailsActivity extends Activity {
 		notificationManager.cancel(appointment.getId());
 		
 		// SETTING UP LAYOUT
-		this.configureLayout(appointmentType, 
-							 appointment.getStatus(),
-							 Global.getUserManager().getUser().getType());
+		this.configureLayout();
 		
 		// POPULATING THE APPOINTMENT DATA
-		this.setData(appointment);
+		this.setData();
 	}
 
 	@Override
@@ -87,15 +79,16 @@ public class AppointmentDetailsActivity extends Activity {
 	 * @param appointmentStatus	 	the current {@link Appointment} status
 	 * @param userType				the {@link User} type
 	 */
-	private void configureLayout (String appointmentType, String appointmentStatus, String userType) {
-		// Showing buttons depending on the user type
-		if (this.userType.equalsIgnoreCase("patient")) {
+	private void configureLayout () {
+		String userType = Global.getUserManager().getUser().getType();
+		
+		if (userType.equalsIgnoreCase("patient")) {
 			((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
 			((LinearLayout) findViewById(R.id.LL_AppointmentRemarksEditable)).setVisibility(View.GONE);
 			((LinearLayout) findViewById(R.id.LL_AppointmentConsultantName)).setVisibility(View.VISIBLE);
 			((LinearLayout) findViewById(R.id.LL_AppointmentPatientName)).setVisibility(View.GONE);
-		} else if (this.userType.equalsIgnoreCase("consultant")) {
+		} else if (userType.equalsIgnoreCase("consultant")) {
 			((Button) findViewById(R.id.Button_EditAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_CancelAppointment)).setVisibility(View.GONE);
 			((LinearLayout) findViewById(R.id.LL_AppointmentRemarks)).setVisibility(View.GONE);
@@ -104,7 +97,7 @@ public class AppointmentDetailsActivity extends Activity {
 		}
 		
 		// Regardless of the type of user, if it is a NON-PENDING appointment, no button is showed
-		if (!appointmentStatus.equalsIgnoreCase(Appointment.PENDING)) {
+		if (!this.appointment.getStatus().equalsIgnoreCase(Appointment.PENDING)) {
 			((Button) findViewById(R.id.Button_AcceptAppointment)).setVisibility(View.GONE);
 			((Button) findViewById(R.id.Button_RejectAppointment)).setVisibility(View.GONE);
 			
@@ -120,15 +113,15 @@ public class AppointmentDetailsActivity extends Activity {
 						lReferrerClinic = (LinearLayout) findViewById(R.id.LL_AppointmentReferrerClinic),
 						lAttachment = (LinearLayout) findViewById(R.id.LL_AppointmentAttachment);
 		
-		if (appointmentType.equalsIgnoreCase(Appointment.NORMAL)) {
+		if (this.appointment.getType().equalsIgnoreCase(Appointment.NORMAL)) {
 			lPreviousId.setVisibility(View.GONE);
 			lReferrerName.setVisibility(View.GONE);
 			lReferrerClinic.setVisibility(View.GONE);
 			lAttachment.setVisibility(View.GONE);
-		} else if (appointmentType.equalsIgnoreCase(Appointment.REFERRAL)) {
+		} else if (this.appointment.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
 			lPreviousId.setVisibility(View.GONE);
 			lAttachment.setVisibility(View.GONE);
-		} else if (appointmentType.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
+		} else if (this.appointment.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
 			lReferrerName.setVisibility(View.GONE);
 			lReferrerClinic.setVisibility(View.GONE);
 		}
@@ -138,7 +131,7 @@ public class AppointmentDetailsActivity extends Activity {
 	 * Sets the {@link Appointment} details onto the corresponding layout view.
 	 * @param appointment	the {@link Appointment) object to be displayed in details
 	 */
-	private void setData (Appointment appointment) {
+	private void setData () {
 		Date d = new Date(appointment.getDateTimeMillis());
 		String dateTimeString = Global.dateFormat.format(d);
 		

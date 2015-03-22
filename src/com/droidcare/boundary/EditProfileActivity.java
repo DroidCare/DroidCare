@@ -27,19 +27,57 @@ import com.droidcare.entity.*;
 
 import java.util.HashMap;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Activity handling edit profile.
+ *
+ */
+
 public class EditProfileActivity extends Activity {
+	/**
+	 * Constants defining the user notification preferences.
+	 * SMS_NOTIFICATION = user prefers SMS
+	 * EMAIL_NOTIFICATION = user prefers Email 
+	 */
 	private static final int SMS_NOTIFICATION = 1, EMAIL_NOTIFICATION = 2;
+	
+	/**
+	 * Stores what is/are the preferred notification type/s in the form of int
+	 */
     private int notificationType = 0;
+    
+    /**
+     * Stores what is/are the preferred notification type/s in the form of String
+     */
     private String notificationTypeString;
 	
+    /**
+     * A {@link LinearLayout} holding error messages
+     */
     private LinearLayout updateMessages;
+    
+    /**
+     * A data structure storing nationalities options
+     */
     private HashMap<String, Integer> nationalitySpinner;
+    
+    /**
+     * A data structure storing countries options
+     */
     private HashMap<String, Integer> countrySpinner;
 
+    /**
+     * Clear all messages held in {@link #updateMessages}
+     */
     public void clearMessages() {
         updateMessages.removeAllViews();
     }
 
+    /**
+     * Add a message to {@link #updateMessages}
+     * @param message	the message to be added into {@link #updateMessages}
+     */
     public void putMessage(String message) {
         TextView textView = new TextView(this);
         textView.setText("\u2022 " + message);
@@ -48,6 +86,10 @@ public class EditProfileActivity extends Activity {
         updateMessages.addView(textView);
     }
 
+    /**
+     * An event listener handling the profile update
+     * @param view
+     */
     public void doUpdateProfile(View view) {
         clearMessages();
 
@@ -179,6 +221,10 @@ public class EditProfileActivity extends Activity {
         }
     }
     
+    /**
+     * An event listener handling which notification mode/s is/are preferred
+     * @param v		the view firing the event
+     */
     public void onSMSNotificationClick (View v) {
 		if (((CheckBox) v).isChecked()) {
 			notificationType += SMS_NOTIFICATION;
@@ -187,6 +233,10 @@ public class EditProfileActivity extends Activity {
 		}
 	}
 	
+    /**
+     * An event listener handling which notification mode/s is/are preferred
+     * @param v		the view firing the event
+     */
 	public void onEmailNotificationClick (View v) {
 		if (((CheckBox) v).isChecked()) {
 			notificationType += EMAIL_NOTIFICATION;

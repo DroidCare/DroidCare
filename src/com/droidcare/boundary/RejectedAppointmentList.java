@@ -47,8 +47,7 @@ public class RejectedAppointmentList extends ListFragment {
 	}
 	
 	/**
-	 * FOR THE SAKE OF @pciang FINGERS, PLEASE HAVE A SHORTER METHOD NAME
-	 * Use a more "descriptive" word please -___-
+	 * Fetch the appointment list from {@link AppointmentManager}
 	 */
 	public void fetchList() {
 		this.rejectedAppointmentList = Global.getAppointmentManager().getRejectedAppointments();

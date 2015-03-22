@@ -14,23 +14,35 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Activity which is shown when the user opens the application.
+ */
 
 public class TitleActivity extends Activity {
+	/**
+	 * 	Constants needed for handling opening register activity intent
+	 */
 	private static final int REGISTER_ACTIVITY = 0;
 	
+	/**
+	 * An event listener opening the {@link RegisterActivity}
+	 * @param view	the View firing the event
+	 */
 	public void gotoRegisterActivity(View view) {
 		Intent intent = new Intent(this, RegisterActivity.class);
 		startActivityForResult(intent, REGISTER_ACTIVITY);
 	}
 	
+	/**
+	 * An event listener opening the {@link LoginActivity}
+	 * @param view	the View firing the event
+	 */
 	public void gotoLoginActivity(View view) {
 		Intent intent = new Intent(this, LoginActivity.class);
 		startActivity(intent);
 	}
-
-    public void clearSession(View view) {
-        Global.getAppSession().clearAll();
-    }
 	
     @Override
     protected void onCreate(Bundle savedInstanceState) {

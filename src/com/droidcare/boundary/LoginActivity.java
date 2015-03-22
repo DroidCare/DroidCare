@@ -22,13 +22,30 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Activity handling login.
+ *
+ */
+
 public class LoginActivity extends Activity {
+	/**
+	 * {@link LinearLayout} holding error messages
+	 */
 	private LinearLayout loginMessages;
 
+	/**
+	 * Clears all messages in {@link #loginMessages}
+	 */
     private void clearMessages() {
         loginMessages.removeAllViews();
     }
 
+    /**
+     * Adds a message in {@link #loginMessages}
+     * @param message
+     */
     private void putMessage(String message) {
         TextView textView = new TextView(this);
         textView.setLayoutParams(
@@ -37,6 +54,10 @@ public class LoginActivity extends Activity {
         loginMessages.addView(textView);
     }
 	
+    /**
+     * Handles login request submission
+     * @param view	the View firing the event
+     */
 	public void doLogin(View view) {
         clearMessages();
 		view.setEnabled(false);
@@ -102,6 +123,10 @@ public class LoginActivity extends Activity {
         }
 	}
 	
+	/**
+	 * An event handler opening {@link ForgetPasswordActivity}
+	 * @param v		the View object firing the event
+	 */
 	public void forgetPassword (View v) {
 		Intent intent = new Intent (this, ForgetPasswordActivity.class);
 		startActivity(intent);

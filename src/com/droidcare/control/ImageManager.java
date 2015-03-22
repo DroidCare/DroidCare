@@ -49,7 +49,7 @@ public class ImageManager {
      * Credits to:
      *      - <a href="http://stackoverflow.com/a/8490361">Stack Overflow answer</a>
      *
-     * @param dp 		A value in dp (density independent pixels) unit. Which we need to convert into pixels
+     * @param dp 		A value in dp (density independent pixels) unit which we need to convert into pixels
      * @param context 	Context to get resources and device specific display metrics
      * @return 			A float value to represent px equivalent to dp depending on device density
      */

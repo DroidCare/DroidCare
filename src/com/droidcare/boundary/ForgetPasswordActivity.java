@@ -20,6 +20,13 @@ import com.droidcare.control.*;
 import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
+/**
+ * 
+ * @author Edwin Candinegara
+ * Activity handling forget password
+ *
+ */
+
 public class ForgetPasswordActivity extends Activity {
 
 	@Override
@@ -44,6 +51,10 @@ public class ForgetPasswordActivity extends Activity {
 		return super.onOptionsItemSelected(item);
 	}
 	
+	/**
+	 * Handle request submission for forget password
+	 * @param v		the View firing the event
+	 */
 	public void forgetPassword (View v) {
 		// @pciang : SEND REQUEST TO PHP SERVER
 		String emailAddress = ((EditText) findViewById(R.id.emailAddress_field)).getText().toString();

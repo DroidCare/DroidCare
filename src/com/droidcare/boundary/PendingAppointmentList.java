@@ -57,8 +57,9 @@ public class PendingAppointmentList extends ListFragment {
 		startActivity(intent);
 	}
 	
-	// CALL THIS WHENEVER A CHANGE IS MADE IN THE APPOINTMENT LIST!!
-	// Add the new Appointment object to the list in AppointmentManager
+	/**
+	 * Fetch the appointment list from {@link AppointmentManager}
+	 */
 	public void fetchList () {
 		this.pendingAppointmentList = Global.getAppointmentManager().getPendingAppointments();
 	}

@@ -5,7 +5,8 @@ import android.content.SharedPreferences;
 
 /**
  * 
- * @author ECAND_000
+ * @author Edwin Candinegara
+ * Handles and manages the user's current app session.
  *
  */
 
