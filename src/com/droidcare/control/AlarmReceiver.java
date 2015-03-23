@@ -176,29 +176,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 	}
 	
 	/**
-	 * Starts an intent which simulates incoming SMS.
-	 * @param context	the context from which the intent is called
-	 * @param pdu		the Protocol Data Unit (PDU) format for SMS
-	 */
-	private void startSmsReceiverService (Context context, byte[] pdu) {
-		Intent intent = new Intent();
-		intent.setClassName("com.android.mms", "com.android.mms.transaction.SmsReceiverService");
-		intent.setAction("android.provider.Telephony.SMS_RECEIVED");
-		intent.putExtra("pdus", new Object[] { pdu });
-		intent.putExtra("format", "3gpp");
-		context.startService(intent);
-	}
-	
-	/**
-	 * Reverses a byte.
-	 * @param b	a byte to be reversed
-	 * @return  the reversed byte
-	 */
-	private byte reverseByte(byte b) {
-        return (byte) ((b & 0xF0) >> 4 | (b & 0x0F) << 4);
-    }
-	
-	/**
 	 * This method is responsible for sending a Email notification to the user's registered email.
 	 * @param appointment	an {@link Appointment} object whose information will be used in the Email notification content.
 	 */
