@@ -20,6 +20,9 @@ import java.net.HttpURLConnection;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Generalized class for sending HTTP POST Request to any URLs.
+ */
 public abstract class SimpleHttpPost extends AsyncTask<Void, Void, String> {
     public static final int connectionTimeout = 10000;
 
