@@ -211,10 +211,10 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
     private void doLogout() {
         ProgressDialog pd = ProgressDialog.show(this, null, "Logging out ...", true);
 
-        Global.getLoginManager().doLogoutRequest(new LoginManager.OnFinishTaskListener() {
+        Global.getLogManager().doLogoutRequest(new LogManager.OnFinishTaskListener() {
             private ProgressDialog pd;
 
-            public LoginManager.OnFinishTaskListener init(ProgressDialog pd) {
+            public LogManager.OnFinishTaskListener init(ProgressDialog pd) {
                 this.pd = pd;
                 return this;
             }

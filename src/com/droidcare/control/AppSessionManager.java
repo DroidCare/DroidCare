@@ -10,12 +10,12 @@ import android.content.SharedPreferences;
  *
  */
 
-public class AppSession {
+public class AppSessionManager {
 	
 	/**
-	 * An instance of {@link AppSession} class. This applies the Singleton design pattern
+	 * An instance of {@link AppSessionManager} class. This applies the Singleton design pattern
 	 */
-	private static AppSession instance = new AppSession();
+	private static AppSessionManager instance = new AppSessionManager();
 	
 	/**
 	 * The Android shared preferences which stores the application session
@@ -26,7 +26,7 @@ public class AppSession {
 	 * Returns {@link #instance}
 	 * @return {@link #instance}
 	 */
-	public static AppSession getInstance() {
+	public static AppSessionManager getInstance() {
 		return instance;
 	}
 	
@@ -59,7 +59,7 @@ public class AppSession {
 	 * Clears all preferences in {@link #settings}
 	 * @return {@code true} if successful, {@code false} otherwise
 	 */
-	public boolean clearAll() {
+	public boolean clearSession() {
 		return settings.edit().clear().commit();
 	}
 }

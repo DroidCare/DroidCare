@@ -7,16 +7,16 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LoginManager {
+public class LogManager {
     public static final int EMAIL_EMPTY = 0xA0000001,
                             PASSWORD_EMPTY = 0xA0000002,
                             PASSWORD_TOO_SHORT = 0xA0000003,
                             VALID_FORM = 0xA0000000,
     						PASSWORD_MINIMUM_LENGTH = 6;
 
-    private static LoginManager instance = new LoginManager();
+    private static LogManager instance = new LogManager();
 
-    public static LoginManager getInstance() {
+    public static LogManager getInstance() {
         return instance;
     }
 
@@ -47,10 +47,10 @@ public class LoginManager {
                     JSONArray messages = response.getJSONArray("message");
                     switch(response.getInt("status")) {
                         case 0:
-                            Global.getAppSession()
+                            Global.getAppSessionManager()
                                     .storeSessionId(messages.getString(0));
 
-                            new SimpleHttpPost(new Pair<String, String>("session_id", Global.getAppSession().retrieveSessionId())) {
+                            new SimpleHttpPost(new Pair<String, String>("session_id", Global.getAppSessionManager().retrieveSessionId())) {
                                 private OnFinishTaskListener listener;
                                 public SimpleHttpPost init(OnFinishTaskListener listener) {
                                     this.listener = listener;
@@ -79,7 +79,7 @@ public class LoginManager {
 
                                                 Global.getUserManager().createUser(id, email, fullName, address, country, gender
                                                         , passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
-                                                        .setSessionId(Global.getAppSession().retrieveSessionId());
+                                                        .setSessionId(Global.getAppSessionManager().retrieveSessionId());
                                                 break;
                                             default:
                                                 break;
@@ -119,7 +119,7 @@ public class LoginManager {
             @Override
             public void onFinish(String responseText) {
                 Global.getUserManager().removeUser();
-                Global.getAppSession().clearAll();
+                Global.getAppSessionManager().clearSession();
                 Global.firstInitialization = false;
                 AppointmentManager.removeManager();
 
@@ -130,7 +130,7 @@ public class LoginManager {
 
     public void checkLogin(OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("session_id"
-                , Global.getAppSession().retrieveSessionId())) {
+                , Global.getAppSessionManager().retrieveSessionId())) {
             private OnFinishTaskListener listener;
             public SimpleHttpPost init(OnFinishTaskListener listener) {
                 this.listener = listener;
@@ -159,7 +159,7 @@ public class LoginManager {
 
                             Global.getUserManager().createUser(id, email, fullName, address, country
                                     , gender, passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
-                                    .setSessionId(Global.getAppSession().retrieveSessionId());
+                                    .setSessionId(Global.getAppSessionManager().retrieveSessionId());
                             break;
                         default:
                             break;

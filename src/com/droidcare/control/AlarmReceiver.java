@@ -181,7 +181,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	 */
 	private void sendEmailNotification (Appointment appointment, OnFinishListener onFinishListener) {
         new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
-                , new Pair<String, String>("session_id", Global.getAppSession().retrieveSessionId())) {
+                , new Pair<String, String>("session_id", Global.getAppSessionManager().retrieveSessionId())) {
             private OnFinishListener listener;
             public SimpleHttpPost init(OnFinishListener listener) {
                 this.listener = listener;

@@ -60,9 +60,9 @@ public class ForgetPasswordActivity extends Activity {
 		String emailAddress = ((EditText) findViewById(R.id.emailAddress_field)).getText().toString();
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Sending email...", true);
-        Global.getLoginManager().forgetPasswordRequest(emailAddress, new LoginManager.OnFinishTaskListener() {
+        Global.getLogManager().forgetPasswordRequest(emailAddress, new LogManager.OnFinishTaskListener() {
             private ProgressDialog pd;
-            public LoginManager.OnFinishTaskListener init(ProgressDialog pd) {
+            public LogManager.OnFinishTaskListener init(ProgressDialog pd) {
                 this.pd = pd;
                 return this;
             }

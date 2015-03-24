@@ -45,22 +45,21 @@ public class Global {
 	public static String DATE_FORMAT = "yyyy-MM-dd HH:mm:ss";
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 	
-	private static AppSession appSession;
+	private static AppSessionManager appSessionManager;
 	private static UserManager userManager;
 	private static AppointmentManager appointmentManager;
-    private static LoginManager loginManager;
+    private static LogManager logManager;
     private static RegisterManager registerManager;
     private static ImageManager imageManager;
     private static AlarmSetter alarmSetter;
 	
 	public static void init(Context context) {
-		AppSession.init(context);
+		AppSessionManager.init(context);
         ImageManager.init(context);
 		
 		userManager	= UserManager.getInstance();
-		appSession	= AppSession.getInstance();
-//		appointmentManager = AppointmentManager.getInstance();
-        loginManager = LoginManager.getInstance();
+		appSessionManager = AppSessionManager.getInstance();
+        logManager = LogManager.getInstance();
         registerManager = RegisterManager.getInstance();
         imageManager = ImageManager.getInstance();
         alarmSetter = AlarmSetter.getInstance();
@@ -70,8 +69,8 @@ public class Global {
         appointmentManager = AppointmentManager.getInstance();
     }
 	
-	public static AppSession getAppSession() {
-		return appSession;
+	public static AppSessionManager getAppSessionManager() {
+		return appSessionManager;
 	}
 	
 	public static UserManager getUserManager() {
@@ -82,8 +81,8 @@ public class Global {
 		return appointmentManager;
 	}
 
-    public static LoginManager getLoginManager() {
-        return loginManager;
+    public static LogManager getLogManager() {
+        return logManager;
     }
 
     public static RegisterManager getRegisterManager() {
