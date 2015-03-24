@@ -70,7 +70,7 @@ public class CreateAppointmentActivity extends Activity {
 	private LinearLayout createAppointmentMessages;
 	
 	/**
-	 * The selected consultant's ID
+	 * The selected consultant's ID and the default previous ID value in case of follow-up appointment type
 	 */
 	private int consultantId = -1; // Keep track of the consultant id
 	
@@ -81,12 +81,44 @@ public class CreateAppointmentActivity extends Activity {
 	 * attachmentImageString = the Base 64 encoded attachment image string
 	 * type = the appointment's type
 	 */
-	private String consultantName = "", date = "", time = "", attachmentImageString = "", type = Appointment.NORMAL;
+	private String consultantName = "-", date = "", time = "-", attachmentImageString = "", type = Appointment.NORMAL, previousId = "-";
 	
 	/**
 	 * A list of consultant details in the form of {@link ConsultantDetails} objects
 	 */
 	private ArrayList<ConsultantDetails> consultants;
+	
+	/**
+	 * An event listener for the previous ID spinner. This listener updates the current value of {@link #previousId}
+	 */
+	private OnItemSelectedListener onPreviousIdSelectedListener = new OnItemSelectedListener () {
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			CreateAppointmentActivity.this.previousId = parent.getItemAtPosition(position).toString();
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			// DO NOTHING
+		}
+	};
+	
+	/**
+	 * An event listener for the time spinner. This listener updates the current value of {@link #time}.
+	 */
+	private OnItemSelectedListener onTimeSelectedListener = new OnItemSelectedListener () {
+
+		@Override
+		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+			CreateAppointmentActivity.this.time = parent.getItemAtPosition(position).toString();
+		}
+
+		@Override
+		public void onNothingSelected(AdapterView<?> parent) {
+			// DO NOTHING
+		}
+	};
 	
 	/**
 	 * An event listener for the consultant spinner. This listener updates the current value of {@link #consultantId}
@@ -111,22 +143,6 @@ public class CreateAppointmentActivity extends Activity {
 			} else {
 				((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setEnabled(false);
 			}
-		}
-
-		@Override
-		public void onNothingSelected(AdapterView<?> parent) {
-			// DO NOTHING
-		}
-	};
-	
-	/**
-	 * An event listener for the time spinner. This listener updates the current value of {@link #time}.
-	 */
-	private OnItemSelectedListener onTimeSelectedListener = new OnItemSelectedListener () {
-
-		@Override
-		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			CreateAppointmentActivity.this.time = parent.getItemAtPosition(position).toString();
 		}
 
 		@Override
@@ -179,9 +195,25 @@ public class CreateAppointmentActivity extends Activity {
 		// Fetch Consultant Details
 		this.fetchConsultantDetails();
 		
+		// Retrieve data for finished appointments -> for previous ID spinner data
+		ArrayList<String> previousIdSpinnerData = new ArrayList<String> ();
+		previousIdSpinnerData.add("-");
+		for (Appointment a: Global.getAppointmentManager().getFinishedAppointments()) {
+			previousIdSpinnerData.add("" + a.getId());
+		}
+		
+		// Set Previous ID spinner data
+        Spinner previousIdSpinner = (Spinner) findViewById(R.id.Spinner_AppointmentPreviousId);
+        ArrayAdapter<String> adapter = new ArrayAdapter<String> (CreateAppointmentActivity.this,
+                android.R.layout.simple_spinner_item, previousIdSpinnerData);
+
+        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+        previousIdSpinner.setAdapter(adapter);
+		
 		// Set onItemSelectedListener
 		((Spinner) findViewById(R.id.Spinner_ConsultantName)).setOnItemSelectedListener(this.onConsultantSelectedListener);
 		((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setOnItemSelectedListener(this.onTimeSelectedListener);
+		((Spinner) findViewById(R.id.Spinner_AppointmentPreviousId)).setOnItemSelectedListener(this.onPreviousIdSelectedListener);
 	}
 	
 	/**
@@ -255,7 +287,7 @@ public class CreateAppointmentActivity extends Activity {
             @Override
             public void onFinish(String responseText) {
                 CreateAppointmentActivity.this.consultants.add(new ConsultantDetails(-1, "", ""));
-                consultantSpinnerData.add("");
+                consultantSpinnerData.add("-");
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -315,7 +347,7 @@ public class CreateAppointmentActivity extends Activity {
             }
             @Override
             public void onFinish(String responseText) {
-                timeList.add("");
+                timeList.add("-");
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -538,9 +570,6 @@ public class CreateAppointmentActivity extends Activity {
 	public void onCreateAppointment (View v) {
         clearMessages();
 
-		// USE APPOINTMENT MANAGER TO HANDLE CREATING APPOINTMENT
-		// ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment();
-
 		// Check empty fields first
 		int valid = 1;
 		
@@ -556,7 +585,7 @@ public class CreateAppointmentActivity extends Activity {
 		Date d, timeCheck;
 		
 		// Validity checking
-		if (consultantName.isEmpty()) {
+		if (consultantName.equalsIgnoreCase("-")) {
 			valid = 0;
             putMessage("Consultant Name must not be empty!");
 		}
@@ -566,7 +595,7 @@ public class CreateAppointmentActivity extends Activity {
             putMessage("Date must not be empty!");
 		}
 		
-		if (this.time.isEmpty()) {
+		if (this.time.equalsIgnoreCase("-")) {
 			valid = 0;
             putMessage("Time must not be empty!");
 		}
@@ -599,7 +628,6 @@ public class CreateAppointmentActivity extends Activity {
                 referrerClinic = "",
                 attachment = "",
                 prevId = "";
-        int previousId = -1;
         
         // Appointment Type dependent checking
 		if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
@@ -617,18 +645,15 @@ public class CreateAppointmentActivity extends Activity {
 			}
 		} else if (type.equalsIgnoreCase(Appointment.FOLLOW_UP)) {
 			attachment = this.attachmentImageString;
-			prevId = ((EditText) findViewById(R.id.Field_AppointmentPreviousId)).getText().toString();
 			
 			if (attachment.isEmpty()) {
 				valid = 0;
                 putMessage("Attachment must not be empty!");
 			}
 			
-			if (prevId.isEmpty()) {
+			if (this.previousId.equalsIgnoreCase("-")) {
 				valid = 0;
                 putMessage("Previous appointment id must not be empty!");
-			} else {
-				previousId = Integer.parseInt(prevId);
 			}
 		}
 		
@@ -637,7 +662,7 @@ public class CreateAppointmentActivity extends Activity {
             ProgressDialog pd = ProgressDialog.show(this, null, "Creating appointment...", true);
             ((PatientAppointmentManager) Global.getAppointmentManager()).createAppointment(patientId, consultantId
                     , dateTime, healthIssue, attachment, type, referrerName, referrerClinic
-                    , previousId, new PatientAppointmentManager.OnFinishListener() {
+                    , Integer.parseInt(this.previousId), new PatientAppointmentManager.OnFinishListener() {
                 private ProgressDialog pd;
 
                 public PatientAppointmentManager.OnFinishListener init(ProgressDialog pd) {

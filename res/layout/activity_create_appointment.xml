@@ -202,19 +202,18 @@
 		    android:layout_height="wrap_content"
 		    android:layout_marginBottom="10dp"
 		    android:orientation="horizontal" >
+			
+		    <TextView
+				android:id="@+id/LabelText_AppointmentPreviousId"
+				android:layout_width="150dp"
+				android:layout_height="wrap_content"
+				android:layout_gravity="center"
+				android:text="@string/Label_AppointmentPreviousID" />
 		    
-		    <EditText 
-	           	android:id="@+id/Field_AppointmentPreviousId"
-	           	android:inputType="numberDecimal"
-	           	android:layout_width="match_parent"
-	           	android:layout_height="wrap_content"
-	           	android:background="@drawable/edittext_bottom_bg"
-	           	android:layout_marginTop="-2dp"
-	           	android:padding="10dp"
-	           	android:hint="@string/Label_AppointmentPreviousID"
-	            android:textColorHint="#B5B5B5"
-	            android:drawableLeft="@drawable/ic_previous_id"/>
-		    
+		    <Spinner
+				android:id="@+id/Spinner_AppointmentPreviousId"
+				android:layout_width="fill_parent"
+				android:layout_height="wrap_content" />
 		</LinearLayout>
 		
 		<LinearLayout
