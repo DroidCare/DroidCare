@@ -119,6 +119,7 @@ public class EditAppointmentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_appointment_activity);
+		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle b = this.getIntent().getExtras();
 		this.appointment = b.getParcelable("appointment");
@@ -141,8 +142,15 @@ public class EditAppointmentActivity extends Activity {
 		// Handle action bar item clicks here. The action bar will
 		// automatically handle clicks on the Home/Up button, so long
 		// as you specify a parent activity in AndroidManifest.xml.
-		
-		return super.onOptionsItemSelected(item);
+		switch (item.getItemId()) {
+	        case android.R.id.home:
+	            // back action bar clicked; go back to AppointmentDetails page
+	        	this.finish();
+	        	return true;
+	        default:
+	            return super.onOptionsItemSelected(item);
+		}
+		//return super.onOptionsItemSelected(item);
 	}
 	
 	/**

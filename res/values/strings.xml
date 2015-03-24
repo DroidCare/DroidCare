@@ -14,17 +14,24 @@
         <item name="android:shadowDy">1</item>
         <item name="android:shadowRadius">1</item>
     </style>
-
+    
+    <string name="title_activity_home">DroidCare</string>
+	<string name="title_activity_register">Register</string>
+	<string name="title_activity_login">Login</string>
+	<string name="title_activity_create_appointment">Create Appointment</string>
+	<string name="title_activity_edit_appointment">Edit Appointment</string>
+	<string name="title_activity_appointment_details">Appointment Details</string>
+	<string name="title_activity_forget_password">Forget Password</string>
+	<string name="title_activity_edit_profile">Edit Profile</string>
+    
     <string name="app_name">DroidCare</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_CreateAppointment">Create Appointment</string>
     <string name="ButtonText_Login">Login</string>
     <string name="ButtonText_Register">Register</string>
-    <string name="title_activity_login">Login</string>
     <string name="ButtonText_ForgetPassword">Forget Password</string>
     <string name="LabelText_Email">E-mail</string>
     <string name="LabelText_Password">Password</string>
-    <string name="title_activity_register">Register</string>
     <string name="LabelText_Name">Full name</string>
     <string name="LabelText_Confirm">Confirm Password</string>
     <string name="LabelText_passport">Passport No.</string>
@@ -32,7 +39,6 @@
     <string name="LabelText_country">Country</string>
     <string name="LabelText_dob">Date of birth</string>
     <string name="ButtonText_dob">Input</string>
-    <string name="title_activity_home">DroidCare</string>
     <string name="LabelText_gender">Gender</string>
     <string name="dob_field">Pick a date:</string>
 
@@ -64,10 +70,8 @@
     <string name="action_logout">Logout</string>
     <string name="action_overflow">Settings</string>
     <string name="action_EditProfile">Edit Profile</string>
-    <string name="title_activity_edit_profile">Edit Profile</string>
     <string name="LabelText_OldPassword">Old Password</string>
     <string name="update_btn">Update Profile</string>
-    <string name="title_activity_appointment_details">Appointment Details</string>
     <string name="LabelText_Consultant">Consultant</string>
     <string name="LabelText_dateTime">Date and Time</string>
     <string name="LabelText_healthIssue">Health Issue</string>
@@ -79,14 +83,13 @@
     <string name="Button_Cancel_Appointment">Cancel Appointment</string>
     <string name="Button_Accept_Appointment">Accept Appointment</string>
     <string name="Button_Reject_Appointment">Reject Appointment</string>
-    <string name="title_activity_edit_appointment">EditAppointmentActivity</string>
+    
     <string name="Button_Logout">Log out</string>
     <string name="Button_Cancel">Cancel</string>
     <string name="appointment_date_field">Date</string>
     <string name="LabelText_ModeOfNotification">Notification Mode</string>
     <string name="LabelText_SMSNotification">SMS</string>
     <string name="LabelText_EmailNotification">Email</string>
-    <string name="title_activity_forget_password">Forget Password</string>
     <string name="Label_EmailAddress">E-mail Address</string>
     <string name="Label_ForgetPasswordInstruction">Please enter your registered e-mail address.</string>
     <string name="Button_ForgetPassword">Submit</string>
@@ -114,7 +117,7 @@
     <string name="TEST_AppointmentConsultant">Dr. Andrew Tan</string>
     <string name="TEST_AppointmentPatient">Kenrick</string>
     <string name="TEST_AppointmentRemarks">Lalalalalalalalallaksdjalksjdalksjdlkqwjelqkwjelkasjdlkasjd</string>
-    <string name="title_activity_create_appointment">CreateAppointmentActivity</string>
+   
     <string name="Label_ConsultantName">Consultant</string>
     <string name="RadioText_Normal">Normal</string>
     <string name="RadioText_Referral">Referral</string>
