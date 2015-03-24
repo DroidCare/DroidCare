@@ -3,6 +3,7 @@ package com.droidcare.boundary;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -552,6 +553,8 @@ public class CreateAppointmentActivity extends Activity {
 				healthIssue = ((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
 				type = this.type;
 		
+		Date d, timeCheck;
+		
 		// Validity checking
 		if (consultantName.isEmpty()) {
 			valid = 0;
@@ -577,14 +580,28 @@ public class CreateAppointmentActivity extends Activity {
 			valid = 0;
 		}
 		
+		try {
+			d = Global.dateFormat.parse(dateTime);
+			timeCheck = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+			
+			// The appointment must be made 1 day in advance
+			if (d.before(timeCheck) || d.equals(timeCheck)) {
+	    		valid = 0;
+	    		putMessage("Appointment date and time must not be before the current time!");
+	    	}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		
 		// Let the appointment ID be any integer since the appointment list will be re-fetched when the user
 		// goes back to the home activity
         String  referrerName = "",
                 referrerClinic = "",
                 attachment = "",
                 prevId = "";
-        
         int previousId = -1;
+        
+        // Appointment Type dependent checking
 		if (type.equalsIgnoreCase(Appointment.REFERRAL)) {
 			referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString();
 			referrerClinic = ((EditText) findViewById(R.id.Field_AppointmentReferrerClinic)).getText().toString();

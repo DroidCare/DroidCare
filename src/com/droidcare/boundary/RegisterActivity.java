@@ -152,9 +152,7 @@ public class RegisterActivity extends Activity {
         }
         
         try {
-            dateOfBirthFormat.format(dateOfBirthFormat.parse(dateOfBirth));
-            
-            // CHECKING DATE OF BIRTH VALIDITY
+        	// CHECKING DATE OF BIRTH VALIDITY
             Calendar cal = new GregorianCalendar();
             if (dateOfBirthFormat.parse(dateOfBirth).after(cal.getTime())) {
             	putMessage("Please select a valid date of birth!");

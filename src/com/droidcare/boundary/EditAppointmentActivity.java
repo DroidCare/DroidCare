@@ -1,5 +1,6 @@
 package com.droidcare.boundary;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -33,7 +34,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
-
 import static junit.framework.Assert.assertNotNull;
 
 /**
@@ -189,7 +189,8 @@ public class EditAppointmentActivity extends Activity {
 		this.time = dateTime.substring(dateTime.indexOf(" ") + 1);
         ((Button) findViewById(R.id.Field_AppointmentDate)).setText(date);
 		
-		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointmentType);
+		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointment.getType().substring(0, 1).toUpperCase() 
+				  													  + appointment.getType().substring(1));
 		((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).setText(this.appointment.getHealthIssue());
 
 		this.fetchConsultantDetails();
@@ -248,7 +249,6 @@ public class EditAppointmentActivity extends Activity {
 	    /* -------------------------------------------------------------------------- */
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading list of available consultant in your country...", true);
-        Log.d("DEBUGGING", Global.getUserManager().getUser().getCountry());
         new SimpleHttpPost(new Pair<String, String>("location", Global.getUserManager().getUser().getCountry())) {
             private ProgressDialog pd;
             private ArrayList<String> consultantSpinnerData;
@@ -324,7 +324,6 @@ public class EditAppointmentActivity extends Activity {
             
             @Override
             public void onFinish(String responseText) {
-                timeList.add(EditAppointmentActivity.this.time);
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -333,7 +332,13 @@ public class EditAppointmentActivity extends Activity {
                             
                             for (int i = 0; i < time.length(); i++) {
                             	String t = time.getString(i);
-                                timeList.add(t.substring(t.indexOf(" ") + 1));
+                            	String timeData = t.substring(t.indexOf(" ") + 1);
+                            	
+                            	if (!timeData.equalsIgnoreCase(EditAppointmentActivity.this.time)) {
+                            		this.timeList.add(timeData);
+                            	} else {
+                            		this.timeList.add(0, timeData);
+                            	}
                             }
                             break;
                         default:
@@ -425,11 +430,26 @@ public class EditAppointmentActivity extends Activity {
     		   healthIssue = ((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).getText().toString(),
     		   sessionId = Global.getUserManager().getUser().getSessionId();
     	
+    	Date d, timeCheck;
+    	
     	int valid = 1;
     	if (healthIssue.isEmpty()) {
     		valid = 0;
     		putMessage("Health issue must not be empty!");
     	}
+    	
+    	try {
+			d = Global.dateFormat.parse(dateTime);
+			timeCheck = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+			
+			// The appointment must be made at least 1 day in advance
+			if (d.before(timeCheck) || d.equals(timeCheck)) {
+	    		valid = 0;
+	    		putMessage("Appointment date and time must not be before the current time!");
+	    	}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
     	
     	if (valid == 1) {
             ProgressDialog pd = ProgressDialog.show(this, null, "Editing appointment...", true);

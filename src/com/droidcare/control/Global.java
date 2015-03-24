@@ -121,12 +121,41 @@ public class Global {
      */
 	public static SimpleDateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT, Locale.ENGLISH);
 	
+	/**
+	 * An instance of {@link AppSessionManager} which is used globally
+	 */
 	private static AppSessionManager appSessionManager;
+	
+	/**
+	 * An instance of {@link UserManager} which is used globally
+	 */
 	private static UserManager userManager;
+	
+	/**
+	 * An instance of {@link AppointmentManager} which is used globally.
+	 * This variable may be instantiated to {@link PatientAppointmentManager} or {@link ConsultantAppointmentManager}
+	 * depending on the user type.
+	 */
 	private static AppointmentManager appointmentManager;
+	
+	/**
+	 * An instance of {@link LoginManager} which is used globally
+	 */
     private static LoginManager loginManager;
+    
+    /**
+     * An instance of {@link RegisterManager} which is used globally
+     */
     private static RegisterManager registerManager;
+    
+    /**
+     * An instance of {@link ImageManager} which is used globally
+     */
     private static ImageManager imageManager;
+    
+    /**
+     * An instance of {@link AlarmSetter} which is used globally
+     */
     private static AlarmSetter alarmSetter;
 
     /**
