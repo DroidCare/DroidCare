@@ -28,6 +28,9 @@ import org.json.JSONObject;
 
 import static junit.framework.Assert.assertNotNull;
 
+/**
+ * Main Activity after the user has logged in. This is where appointment lists are displayed.
+ */
 public class HomeActivity extends FragmentActivity implements ActionBar.TabListener {
 	private ViewPager viewPager;
 	private HomeTabsPagerAdapter mAdapter;
@@ -207,7 +210,7 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
 		}
 		return super.onKeyDown(keyCode, event);
 	}
-
+    
     private void doLogout() {
         ProgressDialog pd = ProgressDialog.show(this, null, "Logging out ...", true);
 
