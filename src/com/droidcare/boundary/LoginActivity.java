@@ -68,16 +68,16 @@ public class LoginActivity extends Activity {
         String email = emailField.getText().toString();
         String password = passwordField.getText().toString();
 
-        LogManager loginManager = Global.getLogManager();
+        LoginManager loginManager = Global.getLoginManager();
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Authenticating user ...", true);
 
         switch(loginManager.validateForm(email, password)) {
-            case LogManager.VALID_FORM:
-                loginManager.doLoginRequest(email, password, new LogManager.OnFinishTaskListener() {
+            case LoginManager.VALID_FORM:
+                loginManager.doLoginRequest(email, password, new LoginManager.OnFinishTaskListener() {
                     private ProgressDialog pd;
                     private View btn;
-                    public LogManager.OnFinishTaskListener init(View btn, ProgressDialog pd) {
+                    public LoginManager.OnFinishTaskListener init(View btn, ProgressDialog pd) {
                         this.btn = btn;
                         this.pd = pd;
                         return this;
@@ -110,11 +110,11 @@ public class LoginActivity extends Activity {
                     }
                 }.init(view, pd));
                 break;
-            case LogManager.PASSWORD_EMPTY:
+            case LoginManager.PASSWORD_EMPTY:
                 putMessage("Password field is empty!");
-            case LogManager.EMAIL_EMPTY:
+            case LoginManager.EMAIL_EMPTY:
                 putMessage("Email field is empty!");
-            case LogManager.PASSWORD_TOO_SHORT:
+            case LoginManager.PASSWORD_TOO_SHORT:
                 putMessage("Password should be at least 6 characters!");
             default:
                 view.setEnabled(true);
@@ -143,9 +143,9 @@ public class LoginActivity extends Activity {
         ((EditText) findViewById(R.id.password_field)).setText("123456");
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);
-        Global.getLogManager().checkLogin(new LogManager.OnFinishTaskListener() {
+        Global.getLoginManager().checkLogin(new LoginManager.OnFinishTaskListener() {
             private ProgressDialog pd;
-            public LogManager.OnFinishTaskListener init(ProgressDialog pd) {
+            public LoginManager.OnFinishTaskListener init(ProgressDialog pd) {
                 this.pd = pd;
                 return this;
             }

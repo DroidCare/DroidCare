@@ -24,15 +24,26 @@ import java.util.List;
  * Generalized class for sending HTTP POST Request to any URLs.
  */
 public abstract class SimpleHttpPost extends AsyncTask<Void, Void, String> {
+    /**
+     * Connection timeout 10 seconds.
+     */
     public static final int connectionTimeout = 10000;
 
     private String url;
     private Pair<String, String> pairs[];
 
+    /**
+     * Constructor.
+     * @param pairs Optional. Array of key-value pairs
+     */
     public SimpleHttpPost(Pair<String, String>... pairs) {
         this.pairs = pairs;
     }
 
+    /**
+     * Send this request in a background process.
+     * @param url String. Uniform Resource Locator.
+     */
     public void send(String url) {
         this.url = url;
 
@@ -81,5 +92,9 @@ public abstract class SimpleHttpPost extends AsyncTask<Void, Void, String> {
         onFinish(result);
     }
 
+    /**
+     * This abstract method is called in Main UI Thread when this POST request has finished executing.
+     * @param responseText String. Response text.
+     */
     public abstract void onFinish(String responseText);
 }

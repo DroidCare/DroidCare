@@ -7,30 +7,60 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-public class LogManager {
+/**
+ * @author Peter
+ * This singleton class handles all user login and logout request.
+ */
+
+public class LoginManager {
     public static final int EMAIL_EMPTY = 0xA0000001,
                             PASSWORD_EMPTY = 0xA0000002,
                             PASSWORD_TOO_SHORT = 0xA0000003,
                             VALID_FORM = 0xA0000000,
     						PASSWORD_MINIMUM_LENGTH = 6;
 
-    private static LogManager instance = new LogManager();
-
-    public static LogManager getInstance() {
+    private static LoginManager instance = new LoginManager();
+    
+    /**
+     * Obtains the singleton manager.
+     * @return LoginManager.
+     */
+    public static LoginManager getInstance() {
         return instance;
     }
-
+    
+    /**
+     * Validates login form which contains email and password.
+     * @param email Email.
+     * @param password Password.
+     * @return Returns the validation status in integer
+     * (either {@link #EMAIL_EMPTY}, {@link #PASSWORD_EMPTY}, {@link #PASSWORD_MINIMUM_LENGTH}, {@link #PASSWORD_TOO_SHORT}, or {@link #VALID_FORM}
+     */
     public int validateForm(String email, String password) {
         return email == null || email.isEmpty() ? EMAIL_EMPTY
                 : password == null || password.isEmpty() ? PASSWORD_EMPTY
                 : password.length() < PASSWORD_MINIMUM_LENGTH ? PASSWORD_TOO_SHORT
                 : VALID_FORM;
     }
-
+    
+    /**
+     * Interface used to allow the {@link SimpleHttpPost}
+     * to run some code when it has finished executing.
+     */
     public interface OnFinishTaskListener {
+    	/**
+         * This method will be invoked when a {@link SimpleHttpPost} has finished.
+         * @param responseText Response text from HTTP Response.
+         */
         public abstract void onFinishTask(String responseText);
     }
-
+    
+    /**
+     * Send a login request to the server and process the response from the server.
+     * @param email User's email.
+     * @param password User's password.
+     * @param onFinishTaskListener Interface.
+     */
     public void doLoginRequest(String email, String password, OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("email", email)
                 , new Pair<String, String>("password", password)) {
@@ -106,7 +136,11 @@ public class LogManager {
             }
         }.init(onFinishTaskListener).send(Global.USER_LOGIN_URL);
     }
-
+    
+    /**
+     * Send a logout request to the server and process the response from the server.
+     * @param onFinishTaskListener Interface {@link OnFinishTaskListener OnFinishTaskListener}.
+     */
     public void doLogoutRequest(OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("session_id"
                 , Global.getUserManager().getUser().getSessionId())) {
@@ -127,7 +161,11 @@ public class LogManager {
             }
         }.init(onFinishTaskListener).send(Global.USER_LOGOUT_URL);
     }
-
+    
+    /**
+     * Check if a login session exists.
+     * @param onFinishTaskListener Interface.
+     */
     public void checkLogin(OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String>("session_id"
                 , Global.getAppSessionManager().retrieveSessionId())) {
@@ -171,7 +209,12 @@ public class LogManager {
             }
         }.init(onFinishTaskListener).send(Global.USER_URL);
     }
-
+    
+    /**
+     * Send a forget password request to the server and process the response from the server.
+     * @param email Email.
+     * @param onFinishTaskListener Listener.
+     */
     public void forgetPasswordRequest(String email, OnFinishTaskListener onFinishTaskListener) {
         new SimpleHttpPost(new Pair<String, String> ("email", email)) {
             private OnFinishTaskListener listener;
