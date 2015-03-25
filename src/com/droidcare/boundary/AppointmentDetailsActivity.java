@@ -170,6 +170,7 @@ public class AppointmentDetailsActivity extends Activity {
 		Intent intent = new Intent(this, EditAppointmentActivity.class);
 		intent.putExtra("appointment", appointment);
 		startActivity(intent);
+        finish();
 	}
 
 	/**

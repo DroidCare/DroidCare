@@ -119,7 +119,7 @@ public class EditAppointmentActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.edit_appointment_activity);
-		getActionBar().setDisplayHomeAsUpEnabled(true);
+//		getActionBar().setDisplayHomeAsUpEnabled(true);
 		
 		Bundle b = this.getIntent().getExtras();
 		this.appointment = b.getParcelable("appointment");
@@ -324,6 +324,8 @@ public class EditAppointmentActivity extends Activity {
             
             @Override
             public void onFinish(String responseText) {
+//                String currentTime = Global.dateFormat.format(new Date(appointment.getDateTimeMillis()));
+//                timeList.add(currentTime.substring(currentTime.indexOf(" ") + 1));
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
