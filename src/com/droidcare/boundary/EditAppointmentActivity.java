@@ -324,8 +324,7 @@ public class EditAppointmentActivity extends Activity {
             
             @Override
             public void onFinish(String responseText) {
-//                String currentTime = Global.dateFormat.format(new Date(appointment.getDateTimeMillis()));
-//                timeList.add(currentTime.substring(currentTime.indexOf(" ") + 1));
+            	this.timeList.add(EditAppointmentActivity.this.time);
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -336,10 +335,9 @@ public class EditAppointmentActivity extends Activity {
                             	String t = time.getString(i);
                             	String timeData = t.substring(t.indexOf(" ") + 1);
                             	
+                            	// Add only if the time is not the current appointment time
                             	if (!timeData.equalsIgnoreCase(EditAppointmentActivity.this.time)) {
                             		this.timeList.add(timeData);
-                            	} else {
-                            		this.timeList.add(0, timeData);
                             	}
                             }
                             break;
