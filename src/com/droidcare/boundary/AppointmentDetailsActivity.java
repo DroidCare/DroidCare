@@ -19,6 +19,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import com.droidcare.*;
 import com.droidcare.control.*;
@@ -124,6 +125,15 @@ public class AppointmentDetailsActivity extends Activity {
 		} else if (this.appointment.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
 			lReferrerName.setVisibility(View.GONE);
 			lReferrerClinic.setVisibility(View.GONE);
+		}
+		
+		// Edit Appointment can only be done one day in advance
+		long n = (new GregorianCalendar()).getTimeInMillis() + 24 * 60 * 60 * 1000;
+		Date date = new Date(n);
+		Date appointmentDateTime = new Date(this.appointment.getDateTimeMillis());
+		
+		if (appointmentDateTime.before(date)) {
+			((Button) findViewById(R.id.Button_EditAppointment)).setVisibility(View.GONE);
 		}
 	}
 	
