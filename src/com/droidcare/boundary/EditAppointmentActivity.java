@@ -106,7 +106,7 @@ public class EditAppointmentActivity extends Activity {
 	private OnItemSelectedListener onTimeSelectedListener = new OnItemSelectedListener () {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-//			EditAppointmentActivity.this.time = parent.getItemAtPosition(position).toString();
+			EditAppointmentActivity.this.time = parent.getItemAtPosition(position).toString();
 		}
 
 		@Override
@@ -206,7 +206,7 @@ public class EditAppointmentActivity extends Activity {
 			Bitmap imageBitmap = Global.getImageManager().decodeImageBase64(f.getAttachment());
 
 			((ImageView) findViewById(R.id.ImageView_AppointmentAttachment)).setImageBitmap(imageBitmap);
-			((EditText) findViewById(R.id.Field_AppointmentPreviousId)).setText("" + f.getPreviousId());
+			((TextView) findViewById(R.id.Field_AppointmentPreviousId)).setText("" + f.getPreviousId());
 		}
 	}
 	
@@ -425,6 +425,7 @@ public class EditAppointmentActivity extends Activity {
 	 */
     public void onEditAppointment (View v) {
     	// All integers are not empty for sure
+    	this.clearMessages();
     	int id = this.appointment.getId(),
     		patientId = this.appointment.getPatientId(), 
     		consultantId = this.consultantId;

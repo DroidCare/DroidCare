@@ -81,7 +81,7 @@ public class CreateAppointmentActivity extends Activity {
 	 * attachmentImageString = the Base 64 encoded attachment image string
 	 * type = the appointment's type
 	 */
-	private String consultantName = "-", date = "", time = "-", attachmentImageString = "", type = Appointment.NORMAL, previousId = "-";
+	private String consultantName = "-", date = "", time = "-", attachmentImageString = "", type = Appointment.NORMAL, previousId = "-1";
 	
 	/**
 	 * A list of consultant details in the form of {@link ConsultantDetails} objects
@@ -398,6 +398,7 @@ public class CreateAppointmentActivity extends Activity {
 				((LinearLayout) findViewById(R.id.LL_AppointmentPreviousId)).setVisibility(View.GONE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentAttachment)).setVisibility(View.GONE);
 				this.type = Appointment.NORMAL;
+				this.previousId = "-1";
 			}
 			
 			break;
@@ -409,6 +410,7 @@ public class CreateAppointmentActivity extends Activity {
 				((LinearLayout) findViewById(R.id.LL_AppointmentPreviousId)).setVisibility(View.GONE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentAttachment)).setVisibility(View.GONE);
 				this.type = Appointment.REFERRAL;
+				this.previousId = "-1";
 			}
 			
 			break;
@@ -420,6 +422,7 @@ public class CreateAppointmentActivity extends Activity {
 				((LinearLayout) findViewById(R.id.LL_AppointmentPreviousId)).setVisibility(View.VISIBLE);
 				((LinearLayout) findViewById(R.id.LL_AppointmentAttachment)).setVisibility(View.VISIBLE);
 				this.type = Appointment.FOLLOW_UP;
+				this.previousId = "-";
 			}
 			
 			break;
