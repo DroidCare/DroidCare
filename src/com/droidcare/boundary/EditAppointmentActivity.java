@@ -58,7 +58,7 @@ public class EditAppointmentActivity extends Activity {
 	 * date = the selected appointment date
 	 * time = the selected appointment time
 	 */
-	private String consultantName, date, time; 
+	private String consultantName, date, time, originalDate;
 	
 	/**
 	 * A holder for error messages
@@ -88,7 +88,7 @@ public class EditAppointmentActivity extends Activity {
 				
 				// Reset the AppointmentTime spinner selection (to the default one)
 				((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setSelection(0);
-				EditAppointmentActivity.this.time = "";
+//				EditAppointmentActivity.this.time = "";
 			} else {
 				((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setEnabled(false);
 			}
@@ -106,7 +106,7 @@ public class EditAppointmentActivity extends Activity {
 	private OnItemSelectedListener onTimeSelectedListener = new OnItemSelectedListener () {
 		@Override
 		public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-			EditAppointmentActivity.this.time = parent.getItemAtPosition(position).toString();
+//			EditAppointmentActivity.this.time = parent.getItemAtPosition(position).toString();
 		}
 
 		@Override
@@ -185,7 +185,7 @@ public class EditAppointmentActivity extends Activity {
 		this.consultantName = this.appointment.getConsultantName();
 		
 		String dateTime = Global.dateFormat.format(new Date(this.appointment.getDateTimeMillis())); 
-		this.date = dateTime.substring(0, dateTime.indexOf(" "));
+		originalDate = this.date = dateTime.substring(0, dateTime.indexOf(" "));
 		this.time = dateTime.substring(dateTime.indexOf(" ") + 1);
         ((Button) findViewById(R.id.Field_AppointmentDate)).setText(date);
 		
@@ -194,7 +194,7 @@ public class EditAppointmentActivity extends Activity {
 		((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).setText(this.appointment.getHealthIssue());
 
 		this.fetchConsultantDetails();
-		this.fetchConsultantAvailability();
+//		this.fetchConsultantAvailability();
 		
 		if (appointmentType.equalsIgnoreCase(Appointment.REFERRAL)) {
 			ReferralAppointment r = (ReferralAppointment) this.appointment;
@@ -324,7 +324,10 @@ public class EditAppointmentActivity extends Activity {
             
             @Override
             public void onFinish(String responseText) {
-            	this.timeList.add(EditAppointmentActivity.this.time);
+                if(originalDate.equals(date)) {
+                    this.timeList.add(EditAppointmentActivity.this.time);
+                }
+
                 try {
                     JSONObject response = new JSONObject(responseText);
                     switch(response.getInt("status")) {
@@ -405,7 +408,7 @@ public class EditAppointmentActivity extends Activity {
 					
 					// Reset the AppointmentTime spinner selection (to the default one)
 					((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setSelection(0);
-					EditAppointmentActivity.this.time = "";
+//					EditAppointmentActivity.this.time = "";
 				} else {
 					((Spinner) findViewById(R.id.Spinner_AppointmentTime)).setEnabled(false);
 				}
