@@ -614,7 +614,7 @@ public class CreateAppointmentActivity extends Activity {
 			timeCheck = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
 			
 			// The appointment must be made 1 day in advance
-			if (d.before(timeCheck) || d.equals(timeCheck)) {
+			if (d.before(timeCheck)) {
 	    		valid = 0;
 	    		putMessage("Appointment date and time must not be before the current time!");
 	    	}

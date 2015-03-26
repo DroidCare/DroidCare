@@ -441,18 +441,19 @@ public class EditAppointmentActivity extends Activity {
     		putMessage("Health issue must not be empty!");
     	}
     	
-//    	try {
-//			d = Global.dateFormat.parse(dateTime);
-//			timeCheck = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
-//			
-//			// The appointment must be made at least 1 day in advance
-//			if (d.before(timeCheck) || d.equals(timeCheck)) {
-//	    		valid = 0;
-//	    		putMessage("Appointment date and time must not be before the current time!");
-//	    	}
-//		} catch (ParseException e) {
-//			e.printStackTrace();
-//		}
+    	try {
+			d = Global.dateFormat.parse(dateTime);
+			timeCheck = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+			
+			// The appointment must be made at least 1 day in advance
+			// If dateTime is still the same as the original appointment date and time, ignore
+			if (!dateTime.equalsIgnoreCase(originalDate) && d.before(timeCheck)) {
+	    		valid = 0;
+	    		putMessage("Appointment date and time must not be before the current time!");
+	    	}
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
     	
     	if (valid == 1) {
             ProgressDialog pd = ProgressDialog.show(this, null, "Editing appointment...", true);
