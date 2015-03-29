@@ -284,8 +284,7 @@
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:id="@+id/update_messages"
-         >
+            android:id="@+id/update_messages" >
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>

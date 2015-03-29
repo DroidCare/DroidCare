@@ -57,8 +57,11 @@ public class EditAppointmentActivity extends Activity {
 	 * consultantName = the selected consultant's name
 	 * date = the selected appointment date
 	 * time = the selected appointment time
+	 * originalDate = the original appointment's date and time
+	 * referrerName = the referrer name of the appointment (for referral appointment)
+	 * referrerClinic = the referrer clinic of the appointment (for referral appointment)
 	 */
-	private String consultantName, date, time, originalDate;
+	private String consultantName, date, time, originalDate, referrerName, referrerClinic;
 	
 	/**
 	 * A holder for error messages
@@ -187,8 +190,9 @@ public class EditAppointmentActivity extends Activity {
 		String dateTime = Global.dateFormat.format(new Date(this.appointment.getDateTimeMillis())); 
 		originalDate = this.date = dateTime.substring(0, dateTime.indexOf(" "));
 		this.time = dateTime.substring(dateTime.indexOf(" ") + 1);
-        ((Button) findViewById(R.id.Field_AppointmentDate)).setText(date);
 		
+		
+        ((Button) findViewById(R.id.Field_AppointmentDate)).setText(date);
 		((TextView) findViewById(R.id.Field_AppointmentType)).setText(appointment.getType().substring(0, 1).toUpperCase() 
 				  													  + appointment.getType().substring(1));
 		((EditText) findViewById(R.id.Field_AppointmentHealthIssue)).setText(this.appointment.getHealthIssue());
@@ -198,6 +202,8 @@ public class EditAppointmentActivity extends Activity {
 		
 		if (appointmentType.equalsIgnoreCase(Appointment.REFERRAL)) {
 			ReferralAppointment r = (ReferralAppointment) this.appointment;
+			this.referrerName = r.getReferrerName();
+			this.referrerClinic = r.getReferrerClinic();
 			
 			((EditText) findViewById(R.id.Field_AppointmentReferrerName)).setText(r.getReferrerName());
 			((EditText) findViewById(R.id.Field_AppointmentReferrerClinic)).setText(r.getReferrerClinic());
@@ -442,6 +448,14 @@ public class EditAppointmentActivity extends Activity {
     		putMessage("Health issue must not be empty!");
     	}
     	
+    	// Referral Appointment specific field
+    	// If the patient does not want to edit the referrerName and referrerClinic, whatever inside the EditText
+    	// will be the original data ( see setData() )
+    	if (this.appointment.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
+    		referrerName = ((EditText) findViewById(R.id.Field_AppointmentReferrerName)).getText().toString();
+    		referrerClinic = ((EditText) findViewById(R.id.Field_AppointmentReferrerClinic)).getText().toString();
+    	}
+    	
     	try {
 			d = Global.dateFormat.parse(dateTime);
 			timeCheck = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
@@ -459,7 +473,7 @@ public class EditAppointmentActivity extends Activity {
     	if (valid == 1) {
             ProgressDialog pd = ProgressDialog.show(this, null, "Editing appointment...", true);
     		((PatientAppointmentManager) Global.getAppointmentManager()).editAppointment(this.appointment
-                    , patientId , consultantId, dateTime, healthIssue
+                    , patientId , consultantId, dateTime, healthIssue, referrerName, referrerClinic
                     , new PatientAppointmentManager.OnFinishListener() {
                 private ProgressDialog pd;
                 
