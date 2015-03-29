@@ -349,12 +349,34 @@ public abstract class AppointmentManager {
 	}
 	
 	/**
-	 * Set all accepted appointment "ALARM" 
+	 * Set all accepted appointment "ALARM" to remind the patient and consultant for an appointment
+	 * one day in advance.
 	 * @param context the context from which this method is called
 	 */
-	public void setAllAlarms (Context context) {
+	public void setAcceptedAppointmentAlarms (Context context) {
 		for (Appointment a: this.acceptedAppointments) {
-			Global.getAlarmSetter().setAlarm(context, a);
+			Global.getAlarmSetter().setAcceptedAppointmentAlarm(context, a);
+		}
+	}
+	
+	/**
+	 * Set all pending appointment "ALARM" to remind the consultant in case he/she still has
+	 * some pending appointments which are going to due in 2 days.
+	 * @param context the context from which this method is called.
+	 */
+	public void setPendingAppointmentAlarms (Context context) {
+		for (Appointment a: this.pendingAppointments) {
+			Global.getAlarmSetter().setPendingAppointmentAlarm(context, a);
+		}
+	}
+	
+	/**
+	 * Set all missed pending appointment status to finished after the appointment date and time
+	 * @param context the context from which this method is called
+	 */
+	public void updateMissedPendingAppointment (Context context) {
+		for (Appointment a: this.pendingAppointments) { 
+			Global.getAlarmSetter().setMissedPendingAppointmentAlarm(context, a);
 		}
 	}
 	

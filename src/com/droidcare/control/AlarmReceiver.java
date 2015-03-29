@@ -50,79 +50,162 @@ public class AlarmReceiver extends BroadcastReceiver {
 		Bundle data = intent.getExtras();
 		Appointment appointment = data.getParcelable("appointment");
 		boolean notification = data.getBoolean("notification");
+		boolean acceptedAppointment = data.getBoolean("acceptedAppointment");
 		
 		if (appointment != null) {
-			if (notification) {
-				// Regardless of the user's choice of notification, local notification is still shown
-				showLocalNotification(context, appointment);
-				
-				// Notification based on the user's choice
-				// SMS notification is NOT IMPLEMENTED AS FOR NOW
-				String notificationType = Global.getUserManager().getUser().getNotification();
-				if (notificationType.equalsIgnoreCase("email")) {
-					sendEmailNotification(appointment, new OnFinishListener() {
-                        @Override
-                        public void onFinish(String responseText) {
-                            // Do nothing
-                        }
-                    });
-				} else if (notificationType.equalsIgnoreCase("sms")) {
-					sendSMSNotification(context, appointment);
-				} else if (notificationType.equalsIgnoreCase("all")) {
-					sendSMSNotification(context, appointment);
-					sendEmailNotification(appointment, new OnFinishListener() {
-                        @Override
-                        public void onFinish(String responseText) {
-                            // Do nothing
-                        }
-                    });
+			// For Accepted Appointment alarm
+			if (acceptedAppointment) {
+				if (notification) {
+					// Regardless of the user's choice of notification, local notification is still shown
+					showLocalNotification(context, appointment, "Upcoming Appointment:\n" 
+							 									 + appointment.getHealthIssue() + " - "
+							 									 + appointment.getConsultantName() + "\n" 
+							 									 + "Tomorrow, "
+							 									 + Global.dateFormat.format(new Date(appointment.getDateTimeMillis())));
+					
+					String notificationType = Global.getUserManager().getUser().getNotification();
+					if (notificationType.equalsIgnoreCase("email")) {
+						sendEmailNotification(appointment, new OnFinishListener() {
+	                        @Override
+	                        public void onFinish(String responseText) {
+	                            // Do nothing
+	                        }
+	                    });
+					} else if (notificationType.equalsIgnoreCase("sms")) {
+						sendSMSNotification(context, appointment, "Dear " + appointment.getPatientName() + "\n\n"
+								  								   + "You have an appointment tomorrow, " 
+								  								   + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
+								  								   + " with " + appointment.getConsultantName() + ".\n"
+								  								   + "Your health issue: " + appointment.getHealthIssue() + ".\n");
+					} else if (notificationType.equalsIgnoreCase("all")) {
+						sendSMSNotification(context, appointment, "Dear " + appointment.getPatientName() + "\n\n"
+																		  + "You have an appointment tomorrow, " 
+																		  + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
+																		  + " with " + appointment.getConsultantName() + ".\n"
+																		  + "Your health issue: " + appointment.getHealthIssue() + ".\n");
+						
+						sendEmailNotification(appointment, new OnFinishListener() {
+	                        @Override
+	                        public void onFinish(String responseText) {
+	                            // Do nothing
+	                        }
+	                    });
+					}
+				} else {
+					// UPDATE STATUS IN DATABASE
+	                new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
+	                        , new Pair<String, String>("status", Appointment.FINISHED)
+	                        , new Pair<String, String>("remarks", appointment.getRemarks())
+	                        , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
+	                    private Appointment appointment;
+
+	                    public SimpleHttpPost init(Appointment appointment) {
+	                        this.appointment = appointment;
+	                        return this;
+	                    }
+
+	                    @Override
+	                    public void onFinish(String responseText) {
+	                        try {
+	                            JSONObject response = new JSONObject(responseText);
+	                            switch(response.getInt("status")) {
+	                                case 0:
+	                                    appointment.setStatus(Appointment.FINISHED);
+	                                    Global.getAppointmentManager().addFinishedAppointment(appointment);
+	                                    Global.getAppointmentManager().removeAcceptedAppointment(appointment);
+	                                    break;
+	                                default:
+	                                    break;
+	                            }
+	                        // Do nothing on exception
+	                        } catch (JSONException e) {
+	                        }
+	                    }
+	                }.init(appointment).send(Global.APPOINTMENT_STATUS_URL);
 				}
 			} 
-			// ALARM for a just-finished appointment
+			
+			// For Pending Appointment alarm
 			else {
-				// UPDATE STATUS IN DATABASE
-                new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
-                        , new Pair<String, String>("status", Appointment.FINISHED)
-                        , new Pair<String, String>("remarks", appointment.getRemarks())
-                        , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
-                    private Appointment appointment;
+				if (notification) {
+					// Regardless of the user's choice of notification, local notification is still shown
+					showLocalNotification(context, appointment, "You have a pending appointment which is due in 2 days, " 
+							 									 + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
+							 									 + ". Please respond to the appointment request as soon as possible.");
+					
+					String notificationType = Global.getUserManager().getUser().getNotification();
+					if (notificationType.equalsIgnoreCase("email")) {
+						sendEmailNotification(appointment, new OnFinishListener() {
+	                        @Override
+	                        public void onFinish(String responseText) {
+	                            // Do nothing
+	                        }
+	                    });
+					} else if (notificationType.equalsIgnoreCase("sms")) {
+						sendSMSNotification(context, appointment, "Dear " + appointment.getConsultantName() + "\n\n"
+								  								   + "You have a peding appointment which is due in 2 days, " 
+								  								   + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
+								  								   + " with " + appointment.getPatientName() + ".\n"
+								  								   + "Please respond to the appointment request as soon as possible.");
+					} else if (notificationType.equalsIgnoreCase("all")) {
+						sendSMSNotification(context, appointment, "Dear " + appointment.getConsultantName() + "\n\n"
+								   								   + "You have a peding appointment which is due in 2 days, " 
+								   								   + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
+								   								   + " with " + appointment.getPatientName() + ".\n"
+								   								   + "Please respond to the appointment request as soon as possible.");
+						
+						sendEmailNotification(appointment, new OnFinishListener() {
+	                        @Override
+	                        public void onFinish(String responseText) {
+	                            // Do nothing
+	                        }
+	                    });
+					}
+				} else {
+					// UPDATE STATUS IN DATABASE
+	                new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
+	                        , new Pair<String, String>("status", Appointment.FINISHED)
+	                        , new Pair<String, String>("remarks", appointment.getRemarks())
+	                        , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
+	                    private Appointment appointment;
 
-                    public SimpleHttpPost init(Appointment appointment) {
-                        this.appointment = appointment;
-                        return this;
-                    }
+	                    public SimpleHttpPost init(Appointment appointment) {
+	                        this.appointment = appointment;
+	                        return this;
+	                    }
 
-                    @Override
-                    public void onFinish(String responseText) {
-                        try {
-                            JSONObject response = new JSONObject(responseText);
-                            switch(response.getInt("status")) {
-                                case 0:
-                                    appointment.setStatus(Appointment.FINISHED);
-                                    Global.getAppointmentManager().addFinishedAppointment(appointment);
-                                    Global.getAppointmentManager().removeAcceptedAppointment(appointment);
-                                    break;
-                                default:
-                                    break;
-                            }
-                        // Do nothing on exception
-                        } catch (JSONException e) {
-                        }
-                    }
-                }.init(appointment).send(Global.APPOINTMENT_STATUS_URL);
+	                    @Override
+	                    public void onFinish(String responseText) {
+	                        try {
+	                            JSONObject response = new JSONObject(responseText);
+	                            switch(response.getInt("status")) {
+	                                case 0:
+	                                    appointment.setStatus(Appointment.FINISHED);
+	                                    Global.getAppointmentManager().addFinishedAppointment(appointment);
+	                                    Global.getAppointmentManager().removePendingAppointment(appointment);
+	                                    break;
+	                                default:
+	                                    break;
+	                            }
+	                        // Do nothing on exception
+	                        } catch (JSONException e) {
+	                        }
+	                    }
+	                }.init(appointment).send(Global.APPOINTMENT_STATUS_URL);
+				}
 			}
 		} else {
 			Log.d("APPOINTMENT NULL", "THE APPOINTMENT IS NOT RETRIEVED PROPERLY! POSSIBLY BECAUSE OF PARCELABLE!");
 		}
-	}
-	
+	}		
+		
 	/**
 	 * This method is responsible for showing local notification in the user's Android phone.
 	 * 
 	 * @param context		this refers to the {@code context} of the method caller (BroadcastReceiver's context)
 	 * @param appointment	an {@link Appointment} object whose information will be used in the local notification content.
 	 */
-	private void  showLocalNotification (Context context, Appointment appointment) {
+	private void  showLocalNotification (Context context, Appointment appointment, String content) {
 		NotificationManager notificationManager = (NotificationManager) context.getSystemService(Context.NOTIFICATION_SERVICE);
 		Notification.Builder mBuilder = new Notification.Builder(context);
 		int notificationId = appointment.getId();
@@ -136,11 +219,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 		// PLEASE CHANGE THE CONTENT AND LAYOUT OF THE NOTIFICATION
 		// NOTE: WITHOUT icon, the notification will not be shown
 		mBuilder.setContentTitle("DroidCare Appointment Reminder")
-				.setContentText("Upcoming Appointment:\n" 
-								 + appointment.getHealthIssue() + " - "
-								 + appointment.getConsultantName() + "\n" 
-								 + "Tomorrow, "
-								 + Global.dateFormat.format(new Date(appointment.getDateTimeMillis())))
+				.setContentText(content)
 				.setSmallIcon(R.drawable.ic_logo)
 				.setContentIntent(pIntent);
 		
@@ -153,13 +232,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 	 * @param context		the context from which the intent will be called
 	 * @param appointment	a due {@link Appointment} object
 	 */
-	private void sendSMSNotification (Context context, Appointment appointment) {
+	private void sendSMSNotification (Context context, Appointment appointment, String content) {
 			String senderNo = "DroidCare Notification";
-			String content = "Dear " + appointment.getPatientName() + "\n\n"
-							  + "You have an appointment tomorrow, " 
-							  + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
-							  + " with " + appointment.getConsultantName() + ".\n"
-							  + "Your health issue: " + appointment.getHealthIssue() + ".\n";
 			
 			if (!appointment.getRemarks().isEmpty()) {
 				content += "Appointment remarks: " + appointment.getRemarks() + "/n";
@@ -180,8 +254,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 	 * @param appointment	an {@link Appointment} object whose information will be used in the Email notification content.
 	 */
 	private void sendEmailNotification (Appointment appointment, OnFinishListener onFinishListener) {
-        new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
-                , new Pair<String, String>("session_id", Global.getAppSessionManager().retrieveSessionId())) {
+        new SimpleHttpPost( new Pair<String, String>("id", "" + appointment.getId())
+                			, new Pair<String, String>("session_id", Global.getAppSessionManager().retrieveSessionId())) {
             private OnFinishListener listener;
             public SimpleHttpPost init(OnFinishListener listener) {
                 this.listener = listener;
@@ -191,6 +265,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             public void onFinish(String responseText) {
                 listener.onFinish(responseText);
             }
-        }.init(onFinishListener).send(Global.APPOINTMENT_NOTIFY_REMINDER_URL);
+        }.init(onFinishListener).send(Global.APPOINTMENT_NOTIFY_URL);
 	}
 }

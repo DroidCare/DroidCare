@@ -88,8 +88,8 @@ public class Global {
     /**
      * Extension of {@link Global#BASE_URL}. Contains: <b><u>https://dc-kenrick95.rhcloud.com/appointment/notify</u></b>
      */
-    public static String APPOINTMENT_NOTIFY_REMINDER_URL = APPOINTMENT_URL + "notify";
-
+    public static String APPOINTMENT_NOTIFY_URL = APPOINTMENT_URL + "notify";
+    
     /**
      * Extension of {@link Global#BASE_URL}. Contains: <b><u>https://dc-kenrick95.rhcloud.com/appointment/timeslot</u></b>
      */

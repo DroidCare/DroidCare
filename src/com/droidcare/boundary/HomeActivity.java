@@ -81,7 +81,16 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
                     JSONObject response = new JSONObject(responseText);
                     switch (response.getInt("status")) {
                         case 0:
-                            Global.getAppointmentManager().setAllAlarms(HomeActivity.this);
+                            Global.getAppointmentManager().setAcceptedAppointmentAlarms(HomeActivity.this);
+                            Global.getAppointmentManager().updateMissedPendingAppointment(HomeActivity.this);
+                            
+                            // Only called by the CONSULTANT because if the PATIENT also sets the alarm,
+                            // the CONSULTANT may get a lot of email and the PATIENT may get local and/or SMS
+                            // notification
+                            if (Global.getUserManager().getUser().getType().equalsIgnoreCase("consultant")) {
+                            	Global.getAppointmentManager().setPendingAppointmentAlarms(HomeActivity.this);
+                            }
+                            
                             break;
                         default:
                             break;
