@@ -83,11 +83,11 @@ public class PatientAppointmentManager extends AppointmentManager {
     	
     	// If that kind of appointment DOES NOT have any one of the attributes above,
     	// send a blank String to the server
-    	if (appointment.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
-    		ReferralAppointment r = (ReferralAppointment) appointment;
-    		referrerName = r.getReferrerName();
-    		referrerClinic = r.getReferrerClinic();
-    	}
+    	//if (appointment.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
+    	//	ReferralAppointment r = (ReferralAppointment) appointment;
+    	//	referrerName = r.getReferrerName();
+    	//	referrerClinic = r.getReferrerClinic();
+    	//}
 
         new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
                 , new Pair<String, String>("patient_id", "" + patientId)

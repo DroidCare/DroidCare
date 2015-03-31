@@ -126,7 +126,7 @@ public class EditProfileActivity extends Activity {
         	}
         }
         
-        if (new_pw.length() < RegisterManager.PASSWORD_MINIMUM_LENGTH) {
+        if (!new_pw.isEmpty() && new_pw.length() < RegisterManager.PASSWORD_MINIMUM_LENGTH) {
         	valid = 0;
         	putMessage("The password must be at least 6 characters!");
         }
