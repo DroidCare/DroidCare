@@ -109,9 +109,10 @@ public class EditProfileActivity extends Activity {
             putMessage("You must provide your old password!");
         }
         
+        
+        
         if (!new_pw.isEmpty() && !new_cpw.isEmpty()) {
             if(!new_pw.equals(new_cpw)) {
-                Log.d("DEBUGGING", "" + new_pw + ", " + new_cpw);
                 valid = 0;
                 putMessage("New password and confirm password mismatch!");
             } else {
@@ -122,11 +123,11 @@ public class EditProfileActivity extends Activity {
         } else {
         	if (!new_pw.equals(new_cpw)) {
         		valid = 0;
-        		putMessage("New password and confirm password mistmatch!");
+        		putMessage("New password and confirm password mismatch!");
         	}
         }
         
-        if (new_pw.length() < RegisterManager.PASSWORD_MINIMUM_LENGTH) {
+        if (!new_pw.isEmpty() && new_pw.length() < RegisterManager.PASSWORD_MINIMUM_LENGTH) {
         	valid = 0;
         	putMessage("The password must be at least 6 characters!");
         }
