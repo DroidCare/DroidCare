@@ -100,6 +100,7 @@ public class LoginManager {
                                                 String email = params.getString("email"),
                                                         fullName = params.getString("full_name"),
                                                         address = params.getString("address"),
+                                                        phoneNumber = params.getString("phone_number"),
                                                         country = params.getString("location"),
                                                         passportNumber = params.getString("passport_number"),
                                                         nationality = params.getString("nationality"),
@@ -107,7 +108,7 @@ public class LoginManager {
                                                         type = params.getString("type"),
                                                         gender = params.getString("gender");
 
-                                                Global.getUserManager().createUser(id, email, fullName, address, country, gender
+                                                Global.getUserManager().createUser(id, email, fullName, address, phoneNumber, country, gender
                                                         , passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
                                                         .setSessionId(Global.getAppSessionManager().retrieveSessionId());
                                                 break;
@@ -188,6 +189,7 @@ public class LoginManager {
                             String	email = params.getString("email"),
                                     fullName = params.getString("full_name"),
                                     address = params.getString("address"),
+                                    phoneNumber = params.getString("phone_number"),
                                     country = params.getString("location"),
                                     passportNumber = params.getString("passport_number"),
                                     nationality = params.getString("nationality"),
@@ -195,7 +197,7 @@ public class LoginManager {
                                     type = params.getString("type"),
                                     gender = params.getString("gender");
 
-                            Global.getUserManager().createUser(id, email, fullName, address, country
+                            Global.getUserManager().createUser(id, email, fullName, address, phoneNumber, country
                                     , gender, passportNumber, nationality, dateOfBirth, type, params.getString("notification"))
                                     .setSessionId(Global.getAppSessionManager().retrieveSessionId());
                             break;

@@ -37,6 +37,7 @@ public class RegisterManager {
      * @param passportNumber			the new user's passport number
      * @param fullName					the new user's full name
      * @param address					the new user's address
+     * @param phoneNumber				the new user's phone number
      * @param country					the new user's country
      * @param email						the new user's email
      * @param dateOfBirth				the new user's date of birth
@@ -49,6 +50,7 @@ public class RegisterManager {
     public void registerUser(	String passportNumber
     							, String fullName
     							, String address
+    							, String phoneNumber
     							, String country
     							, String email
     							, String dateOfBirth
@@ -61,6 +63,7 @@ public class RegisterManager {
         new SimpleHttpPost(new Pair<String, String>("passport_number", passportNumber)
                 , new Pair<String, String>("full_name", fullName)
                 , new Pair<String, String>("address", address)
+                , new Pair<String, String>("phone_number", phoneNumber)
                 , new Pair<String, String>("location", country)
                 , new Pair<String, String>("email", email)
                 , new Pair<String, String>("date_of_birth", dateOfBirth)

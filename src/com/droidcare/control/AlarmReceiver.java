@@ -127,6 +127,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 			
 			// For Pending Appointment alarm
 			else {
+				Log.d("PENDING APPOINTMENT ALARM", "INSIDE");
 				if (notification) {
 					// Regardless of the user's choice of notification, local notification is still shown
 					showLocalNotification(context, appointment, "You have a pending appointment which is due in 2 days, " 
@@ -143,13 +144,13 @@ public class AlarmReceiver extends BroadcastReceiver {
 	                    });
 					} else if (notificationType.equalsIgnoreCase("sms")) {
 						sendSMSNotification(context, appointment, "Dear " + appointment.getConsultantName() + "\n\n"
-								  								   + "You have a peding appointment which is due in 2 days, " 
+								  								   + "You have a pending appointment which is due in 2 days, " 
 								  								   + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
 								  								   + " with " + appointment.getPatientName() + ".\n"
 								  								   + "Please respond to the appointment request as soon as possible.");
 					} else if (notificationType.equalsIgnoreCase("all")) {
 						sendSMSNotification(context, appointment, "Dear " + appointment.getConsultantName() + "\n\n"
-								   								   + "You have a peding appointment which is due in 2 days, " 
+								   								   + "You have a pending appointment which is due in 2 days, " 
 								   								   + Global.dateFormat.format(new Date(appointment.getDateTimeMillis()))
 								   								   + " with " + appointment.getPatientName() + ".\n"
 								   								   + "Please respond to the appointment request as soon as possible.");
@@ -183,8 +184,11 @@ public class AlarmReceiver extends BroadcastReceiver {
 	                                    appointment.setStatus(Appointment.FINISHED);
 	                                    Global.getAppointmentManager().addFinishedAppointment(appointment);
 	                                    Global.getAppointmentManager().removePendingAppointment(appointment);
+	                                    Log.d("REMOVE PENDING TO FINISH", "REMOVED");
+	                                    
 	                                    break;
 	                                default:
+	                                	Log.d("REMOVE PENDING TO FINISH", "FAILED");
 	                                    break;
 	                            }
 	                        // Do nothing on exception

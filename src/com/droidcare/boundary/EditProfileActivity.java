@@ -99,6 +99,7 @@ public class EditProfileActivity extends Activity {
                 new_cpw = ((EditText) findViewById(R.id.confirm_field)).getText().toString(),
                 passportNumber = ((EditText) findViewById(R.id.passport_field)).getText().toString(),
                 address = ((EditText) findViewById(R.id.address_field)).getText().toString(),
+                phoneNumber = ((EditText) findViewById(R.id.phone_number_field)).getText().toString(),
                 country = ((Spinner) findViewById(R.id.country_field)).getSelectedItem().toString(),
                 nationality = ((Spinner) findViewById(R.id.nationality_field)).getSelectedItem().toString(),
                 password = old_pw;
@@ -108,8 +109,6 @@ public class EditProfileActivity extends Activity {
             valid = 0;
             putMessage("You must provide your old password!");
         }
-        
-        
         
         if (!new_pw.isEmpty() && !new_cpw.isEmpty()) {
             if(!new_pw.equals(new_cpw)) {
@@ -135,7 +134,12 @@ public class EditProfileActivity extends Activity {
         if (passportNumber.isEmpty()) {
             valid = 0;
             putMessage("Passport number must not be empty!");
-        } 
+        }
+        
+        if (phoneNumber.isEmpty()) {
+        	valid = 0;
+        	putMessage("Phone number must not be empty!");
+        }
         
         if (address.isEmpty()) {
             valid = 0;
@@ -178,7 +182,7 @@ public class EditProfileActivity extends Activity {
                 Log.d("DEBUGGING", "notification = " + notificationTypeString);
                 ProgressDialog pd = ProgressDialog.show(this, null, "Updating profile ...", true);
 
-                Global.getUserManager().editProfile(password, address, country, passportNumber
+                Global.getUserManager().editProfile(password, address, phoneNumber, country, passportNumber
                         , nationality, notificationTypeString, new UserManager.OnFinishListener() {
                     private ProgressDialog pd;
                     public UserManager.OnFinishListener init(ProgressDialog pd) {

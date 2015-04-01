@@ -72,13 +72,33 @@
 	            android:drawableLeft="@drawable/address"/>
         </LinearLayout>
         
+        <LinearLayout
+            android:id="@+id/phone_number_layout"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="5dp"
+            android:orientation="vertical"
+            android:layout_below="@+id/address_layout" >
+            <EditText 
+	            android:id="@+id/phone_number_field"
+	            android:inputType="phone"
+	            android:layout_width="match_parent"
+	            android:layout_height="wrap_content"
+	            android:background="@drawable/edittext_top_bg"
+	            android:padding="10dp"
+	            android:layout_marginBottom="10dp"
+	            android:hint="@string/LabelText_phone_number"
+	            android:textColorHint="#B5B5B5"
+	            android:drawableLeft="@drawable/address"/>
+        </LinearLayout>
+        
        <LinearLayout
            	android:id="@+id/country_layout"
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal" 
             android:layout_marginBottom="15dp"
-            android:layout_below="@+id/address_layout">
+            android:layout_below="@+id/phone_number_layout">
             <TextView
                 android:id="@+id/country_label"
                 android:layout_width="125dp"

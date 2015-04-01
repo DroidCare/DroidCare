@@ -9,6 +9,7 @@ public class User{
 	private String	email,
 					fullName,
 					address,
+					phoneNumber,
 					country,
 					passportNumber,
 					nationality,
@@ -29,6 +30,7 @@ public class User{
      * @param email Email.
      * @param fullName Full name.
      * @param address Full address.
+     * @param phoneNumber the user's phone number.
      * @param country Current location (country).
      * @param gender Gender.
      * @param passportNumber Passport number.
@@ -37,13 +39,14 @@ public class User{
      * @param type Type.
      * @param notification Notification preferences.
      */
-	public User(int id, String email, String fullName, String address, String country
+	public User(int id, String email, String fullName, String address, String phoneNumber, String country
 			, String gender, String passportNumber, String nationality
 			, String dateOfBirth, String type, String notification){
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
+		this.phoneNumber = phoneNumber;
 		this.country = country;
 		this.gender = gender;
 		this.passportNumber = passportNumber;
@@ -60,6 +63,7 @@ public class User{
      * @param email Email.
      * @param fullName Full name.
      * @param address Full address.
+     * @param phoneNumber the user's phone number.
      * @param country Current location (country).
      * @param gender Gender.
      * @param passportNumber Passport number.
@@ -68,13 +72,14 @@ public class User{
      * @param type Type.
      * @param notification Notification preferences.
      */
-	public void setData(int id, String email, String fullName, String address, String country
+	public void setData(int id, String email, String fullName, String address, String phoneNumber, String country
 			, String gender, String passportNumber, String nationality
 			, String dateOfBirth, String type, String notification){
 		this.id = id;
 		this.email = email;
 		this.fullName = fullName;
 		this.address = address;
+		this.phoneNumber = phoneNumber;
 		this.country = country;
 		this.gender = gender;
 		this.passportNumber = passportNumber;
@@ -94,6 +99,15 @@ public class User{
      */
 	public void setAddress(String address){
 		this.address = address;
+	}
+	
+	/**
+	 * Change the phone number of the user. <br /><br />
+	 * <p style="color:red;">Most attributes such as email, full name, gender, date of birth, type, are immutable!</p>
+     * @param phoneNumber String. New phone number of the user.
+	 */
+	public void setPhoneNumbr(String phoneNumber) {
+		this.phoneNumber = phoneNumber;
 	}
 
     /**
@@ -171,6 +185,14 @@ public class User{
      */
 	public String getAddress(){
 		return address;
+	}
+	
+	/**
+	 * Returns the phone number of the user.
+	 * @return String. Phone number.
+	 */
+	public String getPhoneNumber() {
+		return phoneNumber;
 	}
 
     /**

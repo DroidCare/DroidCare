@@ -71,6 +71,7 @@ public class UserManager {
      * @param email				the user's email
      * @param fullName			the user's full name
      * @param address			the user's address
+     * @param phoneNumber		the user's phone number
      * @param country			the user's country
      * @param gender			the user's gender
      * @param passportNumber	the user's passport number
@@ -80,11 +81,11 @@ public class UserManager {
      * @param notification		the user's notification means preferences
      * @return					the created {@link User} object
      */
-    public User createUser(int id, String email, String fullName, String address, String country
+    public User createUser(int id, String email, String fullName, String address, String phoneNumber, String country
             , String gender, String passportNumber, String nationality
             , String dateOfBirth, String type, String notification) {
 
-        return user = new User(id, email, fullName, address, country
+        return user = new User(id, email, fullName, address, phoneNumber, country
                 , gender, passportNumber, nationality, dateOfBirth, type
                 , notification);
     }
@@ -93,19 +94,21 @@ public class UserManager {
      * Edit the profile information of the current application user
      * @param password					the user's new password
      * @param address					the user's new address
+     * @param phoneNumber				the user's phone number
      * @param country					the user's new country
      * @param passportNumber			the user's new passport number
      * @param nationality				the user's new nationality
      * @param notificationTypeString	the user's new notification means preferences
      * @param onFinishListener			an instance of OnFinishListener determining what to do after the user's profile is updated
      */
-    public void editProfile(String password, String address, String country, String passportNumber
+    public void editProfile(String password, String address, String phoneNumber, String country, String passportNumber
             , String nationality, String notificationTypeString, OnFinishListener onFinishListener) {
         new SimpleHttpPost(new Pair<String, String>("id", "" + user.getId())
                 , new Pair<String, String>("email", user.getEmail())
                 , new Pair<String, String>("password", password)
                 , new Pair<String, String>("full_name", user.getFullName())
                 , new Pair<String, String>("address", address)
+                , new Pair<String, String>("phone_number", phoneNumber)
                 , new Pair<String, String>("location", country)
                 , new Pair<String, String>("gender", user.getGender())
                 , new Pair<String, String>("passport_number", passportNumber)
@@ -115,6 +118,7 @@ public class UserManager {
                 , new Pair<String, String>("session_id", user.getSessionId())) {
             private OnFinishListener listener;
             private String  address,
+            				phoneNumber,
             				country,
                             passportNumber,
                             nationality,
@@ -122,6 +126,7 @@ public class UserManager {
 
             public SimpleHttpPost init(OnFinishListener listener
                     , String address
+                    , String phoneNumber
                     , String country
                     , String passportNumber
                     , String nationality
@@ -129,6 +134,7 @@ public class UserManager {
             	
                 this.listener = listener;
                 this.address = address;
+                this.phoneNumber = phoneNumber;
                 this.country = country;
                 this.passportNumber = passportNumber;
                 this.nationality = nationality;
@@ -145,6 +151,7 @@ public class UserManager {
                     switch(response.getInt("status")) {
                         case 0:
                             user.setAddress(address);
+                            user.setPhoneNumbr(phoneNumber);
                             user.setNationality(nationality);
                             user.setPassportNumber(passportNumber);
                             user.setNotification(notification);
@@ -157,7 +164,7 @@ public class UserManager {
 
                 listener.onFinish(responseText);
             }
-        }.init(onFinishListener, address, country, passportNumber
+        }.init(onFinishListener, address, phoneNumber, country, passportNumber
                 , nationality, notificationTypeString).send(Global.USER_UPDATE_URL);
     }
 }

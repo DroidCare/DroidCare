@@ -116,7 +116,8 @@
     <string name="TEST_AppointmentHealthIssue">Dental problem asdhjasgdajhsgdajhsgdajhsgdajhsgdajhsdgajhsd</string>
     <string name="TEST_AppointmentConsultant">Dr. Andrew Tan</string>
     <string name="TEST_AppointmentPatient">Kenrick</string>
-    <string name="TEST_AppointmentRemarks">Lalalalalalalalallaksdjalksjdalksjdlkqwjelqkwjelkasjdlkasjd</string>
+    <string name="TEST_AppointmentRemarks">Test</string>
+    <string name="LabelText_phone_number">Phone Number</string>
    
     <string name="Label_ConsultantName">Consultant</string>
     <string name="RadioText_Normal">Normal</string>

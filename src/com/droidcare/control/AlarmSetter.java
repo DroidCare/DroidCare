@@ -54,7 +54,7 @@ public class AlarmSetter {
 		
 		// Use the same alarmId and the FLAG_CANCEL_CURRENT to overwrite the old PendingIntent
 		PendingIntent oneDayNotificationSender = PendingIntent.getBroadcast(context.getApplicationContext(), oneDayNotificationId, oneDayNotificationIntent, PendingIntent.FLAG_CANCEL_CURRENT);
-		PendingIntent setStatusOnFinish = PendingIntent.getBroadcast(context, setStatusOnFinishId, setStatusOnFinishIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent setStatusOnFinish = PendingIntent.getBroadcast(context.getApplicationContext(), setStatusOnFinishId, setStatusOnFinishIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 		
 		// Set when the PendingIntent should be executed
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
@@ -104,7 +104,7 @@ public class AlarmSetter {
 		setStatusOnFinishIntent.putExtra("acceptedAppointment", false);
 		
 		int setStatusId = appointment.getId() + 1000;
-		PendingIntent setStatusOnFinish = PendingIntent.getBroadcast(context, setStatusId, setStatusOnFinishIntent, PendingIntent.FLAG_CANCEL_CURRENT);
+		PendingIntent setStatusOnFinish = PendingIntent.getBroadcast(context.getApplicationContext(), setStatusId, setStatusOnFinishIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 		
 		// Set when the PendingIntent should be executed
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
