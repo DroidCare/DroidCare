@@ -274,6 +274,7 @@ public class EditProfileActivity extends Activity {
         ((EditText) findViewById(R.id.passport_field)).setText(user.getPassportNumber());
         ((TextView) findViewById(R.id.name_field)).setText(user.getFullName());
         ((EditText) findViewById(R.id.address_field)).setText(user.getAddress());
+        ((EditText) findViewById(R.id.phone_number_field)).setText(user.getPhoneNumber());
         ((TextView) findViewById(R.id.email_field)).setText(user.getEmail());
         ((TextView) findViewById(R.id.dob_field)).setText(user.getDateOfBirth());
         ((TextView) findViewById(R.id.gender_field)).setText(user.getGender());
