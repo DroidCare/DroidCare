@@ -64,7 +64,7 @@
             android:layout_marginBottom="10dp"
             android:hint="@string/LabelText_phone_number"
             android:textColorHint="#B5B5B5"
-            android:drawableLeft="@drawable/address"/>
+            android:drawableLeft="@drawable/ic_phone"/>
 		
 		<LinearLayout
             android:layout_width="fill_parent"

@@ -1,4 +1,4 @@
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -8,6 +8,10 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.droidcare.boundary.TitleActivity" >
    
+    <RelativeLayout
+    	android:layout_width="match_parent"
+		android:layout_height="wrap_content"
+		android:orientation="vertical"   >
 
     <ImageView
         android:id="@+id/droidcare_logo"
@@ -40,5 +44,5 @@
         android:background="@drawable/button_default_bg"
         android:onClick="gotoRegisterActivity"
         android:text="@string/ButtonText_Register" />
-
-</RelativeLayout>
+	</RelativeLayout>
+</ScrollView>
