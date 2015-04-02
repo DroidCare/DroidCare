@@ -139,8 +139,8 @@ public class LoginActivity extends Activity {
 
         loginMessages = (LinearLayout) findViewById(R.id.login_messages);
 
-        ((EditText) findViewById(R.id.email_field)).setText("kenrick95@gmail.com");
-        ((EditText) findViewById(R.id.password_field)).setText("123456");
+        //((EditText) findViewById(R.id.email_field)).setText("kenrick95@gmail.com");
+        //((EditText) findViewById(R.id.password_field)).setText("123456");
 
         ProgressDialog pd = ProgressDialog.show(this, null, "Loading ...", true);
         Global.getLoginManager().checkLogin(new LoginManager.OnFinishTaskListener() {

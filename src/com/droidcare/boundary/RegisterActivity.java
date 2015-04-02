@@ -30,6 +30,7 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.Locale;
+import java.util.TimeZone;
 
 /**
  * 
@@ -160,9 +161,24 @@ public class RegisterActivity extends Activity {
         try {
         	// CHECKING DATE OF BIRTH VALIDITY
             Calendar cal = new GregorianCalendar();
-            if (dateOfBirthFormat.parse(dateOfBirth).after(cal.getTime())) {
+            TimeZone t = TimeZone.getTimeZone("GMT+8");
+            cal.setTimeZone(t);
+            
+            Calendar dob = new GregorianCalendar();
+            dob.setTimeZone(t);
+            dob.setTime(dateOfBirthFormat.parse(dateOfBirth));
+            
+            if (dob.get(Calendar.YEAR) > cal.get(Calendar.YEAR)) {
             	putMessage("Please select a valid date of birth!");
             	valid = 0;
+            } else if (dob.get(Calendar.YEAR) == cal.get(Calendar.YEAR)) {
+            	if (dob.get(Calendar.MONTH) > cal.get(Calendar.MONTH)) {
+            		putMessage("Please select a valid date of birth!");
+            		valid = 0;
+            	} else if (dob.get(Calendar.MONTH) == cal.get(Calendar.MONTH) && dob.get(Calendar.DAY_OF_MONTH) >= dob.get(Calendar.DAY_OF_MONTH)) {
+            		putMessage("Please select a valid date of birth!");
+            		valid = 0;
+            	}
             }
         } catch (ParseException e) {
             putMessage("Please select your date of birth!");

@@ -9,6 +9,7 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
+import java.util.TimeZone;
 
 import com.droidcare.R;
 import com.droidcare.control.AppointmentManager;
@@ -613,14 +614,19 @@ public class CreateAppointmentActivity extends Activity {
 		}
 		
 		try {
-			d = Global.dateFormat.parse(dateTime);
-			timeCheck = new Date(System.currentTimeMillis() + 24 * 60 * 60 * 1000);
+			Calendar cal = new GregorianCalendar();
+            TimeZone t = TimeZone.getTimeZone("GMT+8");
+            cal.setTimeZone(t);
+            cal.setTimeInMillis(cal.getTimeInMillis() + 24 * 3600 * 1000);
+            
+            Calendar dateTimeCal = new GregorianCalendar();
+            dateTimeCal.setTimeZone(t);
+            dateTimeCal.setTime(Global.dateFormat.parse(dateTime));
 			
-			// The appointment must be made 1 day in advance
-			if (d.before(timeCheck)) {
-	    		valid = 0;
-	    		putMessage("Appointment date and time must not be before the current time!");
-	    	}
+            if (dateTimeCal.before(cal)) {
+            	valid = 0;
+	    		putMessage("Appointment must be made at least 1 day in advance!");
+            }
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}

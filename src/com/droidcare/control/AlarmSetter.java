@@ -1,5 +1,10 @@
 package com.droidcare.control;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.Locale;
+import java.util.TimeZone;
+
 import com.droidcare.*;
 import com.droidcare.control.*;
 import com.droidcare.boundary.*;
@@ -9,6 +14,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.util.Log;
 
 /**
  * @author Edwin Candinegara
@@ -59,11 +65,20 @@ public class AlarmSetter {
 		// Set when the PendingIntent should be executed
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		
-		// Set alarm 1 DAY BEFORE THE APPOINTMENT -> change necessarily
-		am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() - 24 * 3600 * 1000, oneDayNotificationSender);
+		Calendar cal = new GregorianCalendar();
+		cal.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 		
-		// Set the appointment to FINISHED after 30 minutes of the appointment time
-		am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() + 1800 * 1000, setStatusOnFinish);
+		// Must check this, if not the notification will be called again and again (behavior of the alarm manager probably)
+		if (appointment.getDateTimeMillis() - 24 * 3600 * 1000 >= cal.getTimeInMillis()) {
+			// Set alarm 1 DAY BEFORE THE APPOINTMENT -> change necessarily
+			am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() - 24 * 3600 * 1000, oneDayNotificationSender);
+		}
+		
+		// Prevent multiple notification
+		if (appointment.getDateTimeMillis() + 1800 * 1000 >= cal.getTimeInMillis()) {
+			// Set the appointment to FINISHED after 30 minutes of the appointment time
+			am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() + 1800 * 1000, setStatusOnFinish);
+		}
 	}
 
 	/**
@@ -87,8 +102,13 @@ public class AlarmSetter {
 		// Set when the PendingIntent should be executed
 		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
 		
-		// Set alarm 2 DAYS BEFORE THE APPOINTMENT -> change necessarily
-		am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() - 2 * 24 * 3600 * 1000, twoDaysNotificationSender);
+		Calendar cal = new GregorianCalendar();
+		cal.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		
+		if (appointment.getDateTimeMillis() - 2 * 24 * 3600 * 1000 >= cal.getTimeInMillis()) {
+			// Set alarm 2 DAYS BEFORE THE APPOINTMENT -> change necessarily
+			am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() - 2 * 24 * 3600 * 1000, twoDaysNotificationSender);
+		}
 	}
 	
 	/**
@@ -106,8 +126,13 @@ public class AlarmSetter {
 		int setStatusId = appointment.getId() + 1000;
 		PendingIntent setStatusOnFinish = PendingIntent.getBroadcast(context.getApplicationContext(), setStatusId, setStatusOnFinishIntent, PendingIntent.FLAG_CANCEL_CURRENT);
 		
-		// Set when the PendingIntent should be executed
-		AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-		am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() + 1000, setStatusOnFinish);
+		Calendar cal = new GregorianCalendar();
+		cal.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+		
+		if (appointment.getDateTimeMillis() + 1000 >= cal.getTimeInMillis()) {
+			// Set when the PendingIntent should be executed
+			AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+			am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() + 1000, setStatusOnFinish);
+		}
 	}
 }

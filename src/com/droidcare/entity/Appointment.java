@@ -2,6 +2,7 @@ package com.droidcare.entity;
 
 import java.text.ParseException;
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.TimeZone;
 
@@ -93,7 +94,13 @@ public class Appointment implements Parcelable, Comparable<Appointment> {
 		this.remarks 		= remarks;
 		
 		try {
-			this.dateTimeMillis = Global.dateFormat.parse(dateTime).getTime();
+			Calendar c = new GregorianCalendar();
+			c.setTime(Global.dateFormat.parse(dateTime));
+			c.setTimeZone(TimeZone.getTimeZone("GMT+8"));
+			
+			this.dateTimeMillis = c.getTimeInMillis();
+			Log.d("APPOINTMENT DATE TIME", this.dateTimeMillis + "    " + dateTime);
+			//this.dateTimeMillis = Global.dateFormat.parse(dateTime).getTime();
 		} catch (ParseException e) {
 			e.printStackTrace();
 			
