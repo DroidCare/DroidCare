@@ -10,6 +10,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.LinearLayout;
@@ -254,8 +255,8 @@ public class EditProfileActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
-
-        updateMessages = (LinearLayout) findViewById(R.id.update_messages);
+		
+        updateMessages = (LinearLayout) findViewById(R.id.LL_EditProfileMessages);
 
         nationalitySpinner = new HashMap<String, Integer>();
         nationalitySpinner.put("Indonesian", 1);
