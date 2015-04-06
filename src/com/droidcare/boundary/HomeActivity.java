@@ -2,7 +2,6 @@ package com.droidcare.boundary;
 
 import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
 import android.app.ActionBar;

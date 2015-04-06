@@ -3,14 +3,10 @@ package com.droidcare.control;
 import java.io.ByteArrayOutputStream;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 /**
  * 

@@ -1,14 +1,9 @@
 package com.droidcare.control;
 
 import java.text.SimpleDateFormat;
-import java.util.HashMap;
 import java.util.Locale;
 
-import org.json.JSONException;
-import org.json.JSONObject;
-
 import android.content.Context;
-import android.content.SharedPreferences;
 
 /**
  * Contains global constants used in the app.

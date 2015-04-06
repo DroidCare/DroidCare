@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 import com.droidcare.*;
-import com.droidcare.control.*;
 import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
@@ -62,10 +61,10 @@ public class AppointmentListAdapter extends ArrayAdapter<Appointment> {
 	@Override
 	public View getView (int position, View convertView, ViewGroup parent) {
 		// Getting the corresponding appointment based on the position on the list
-		Appointment appointment = (Appointment) getItem(position);
+		Appointment appointment = getItem(position);
 		
 		ViewHolder holder = null;
-		LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Activity.LAYOUT_INFLATER_SERVICE);
+		LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 		
 		if (convertView == null) {
 			// The view layout for each list item
