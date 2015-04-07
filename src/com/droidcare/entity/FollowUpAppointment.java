@@ -2,11 +2,7 @@ package com.droidcare.entity;
 
 import java.util.Date;
 
-import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
-import com.droidcare.entity.*;
-
 import android.os.Parcel;
 import android.os.Parcelable;
 
@@ -113,10 +109,12 @@ public class FollowUpAppointment extends Appointment {
 	}
 	
 	public static final Parcelable.Creator<FollowUpAppointment> CREATOR = new Parcelable.Creator<FollowUpAppointment> () {
+		@Override
 		public FollowUpAppointment createFromParcel (Parcel in) {
 			return new FollowUpAppointment(in);
 		}
 		
+		@Override
 		public FollowUpAppointment[] newArray (int size) {
 			return new FollowUpAppointment[size];
 		}

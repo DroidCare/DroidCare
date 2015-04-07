@@ -270,10 +270,12 @@ public class Appointment implements Parcelable, Comparable<Appointment> {
 	}
 	
 	public static final Parcelable.Creator<Appointment> CREATOR = new Parcelable.Creator<Appointment> () {
+		@Override
 		public Appointment createFromParcel (Parcel in) {
 			return new Appointment(in);
 		}
 		
+		@Override
 		public Appointment[] newArray (int size) {
 			return new Appointment[size];
 		}

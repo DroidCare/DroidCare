@@ -23,7 +23,6 @@ import java.util.GregorianCalendar;
 
 import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
 import org.json.JSONException;

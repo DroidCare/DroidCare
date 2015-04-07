@@ -1,14 +1,8 @@
 package com.droidcare.control;
 
-import com.droidcare.*;
-import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
-import android.content.Context;
 import android.util.Pair;
-import android.widget.Toast;
-
 import org.json.JSONException;
 import org.json.JSONObject;
 
