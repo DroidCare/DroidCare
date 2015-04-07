@@ -2,23 +2,16 @@ package com.droidcare.control;
 
 import java.util.Calendar;
 import java.util.GregorianCalendar;
-import java.util.Locale;
 import java.util.TimeZone;
-
-import com.droidcare.*;
-import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
-import android.util.Log;
 
 /**
- * @author Edwin Candinegara
  * Sets the notification "ALARM" depending on the date of each appointment.
+ * @author Edwin Candinegara
  */
 
 public class AlarmSetter {
