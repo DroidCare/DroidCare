@@ -64,6 +64,7 @@ public class AlarmSetter {
 		// Must check this, if not the notification will be called again and again (behavior of the alarm manager probably)
 		if (appointment.getDateTimeMillis() - 24 * 3600 * 1000 >= cal.getTimeInMillis()) {
 			// Set alarm 1 DAY BEFORE THE APPOINTMENT -> change necessarily
+			System.out.println(System.currentTimeMillis() + "   " + appointment.getDateTimeMillis() + "    " + (appointment.getDateTimeMillis() - 24 * 3600 * 1000) + "    " + cal.getTimeInMillis());
 			am.set(AlarmManager.RTC_WAKEUP, appointment.getDateTimeMillis() - 24 * 3600 * 1000, oneDayNotificationSender);
 		}
 		
@@ -105,7 +106,7 @@ public class AlarmSetter {
 	}
 	
 	/**
-	 * Sets the appointment status to FINISHED if the appointment date and time has passed and it is neither
+	 * Sets the appointment status to CANCELLED if the appointment date and time has passed and it is neither
 	 * accepted nor rejected by the consultant.
 	 * @param context		{@link Context} object from which this method is called
 	 * @param appointment	an {@link Appointment} object which will be passed to the {@link PendingIntent} object for the "ALARM"

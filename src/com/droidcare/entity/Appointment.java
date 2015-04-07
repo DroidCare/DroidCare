@@ -137,9 +137,11 @@ public class Appointment implements Parcelable, Comparable<Appointment> {
 		try {
 			Calendar c = new GregorianCalendar();
 			c.setTime(Global.dateFormat.parse(dateTime));
+			System.out.println("dateTime" + "   " + Global.dateFormat.parse(dateTime).getTime());
 			c.setTimeZone(TimeZone.getTimeZone("GMT+8"));
 			
 			this.dateTimeMillis = c.getTimeInMillis();
+			System.out.println("APPOINTMENT DATE TIME MILLIS: " + this.dateTimeMillis);
 			Log.d("APPOINTMENT DATE TIME", this.dateTimeMillis + "    " + dateTime);
 			//this.dateTimeMillis = Global.dateFormat.parse(dateTime).getTime();
 		} catch (ParseException e) {

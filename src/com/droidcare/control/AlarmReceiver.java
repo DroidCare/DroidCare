@@ -160,9 +160,8 @@ public class AlarmReceiver extends BroadcastReceiver {
 					}
 				} else {
 					// UPDATE STATUS IN DATABASE
-	                new SimpleHttpPost(new Pair<String, String>("id", "" + appointment.getId())
-	                        , new Pair<String, String>("status", Appointment.FINISHED)
-	                        , new Pair<String, String>("remarks", appointment.getRemarks())
+	                new SimpleHttpPost(
+	                		  new Pair<String, String>("id", "" + appointment.getId())
 	                        , new Pair<String, String>("session_id", Global.getUserManager().getUser().getSessionId())) {
 	                    private Appointment appointment;
 
@@ -177,7 +176,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 	                            JSONObject response = new JSONObject(responseText);
 	                            switch(response.getInt("status")) {
 	                                case 0:
-	                                    appointment.setStatus(Appointment.FINISHED);
 	                                    Global.getAppointmentManager().addFinishedAppointment(appointment);
 	                                    Global.getAppointmentManager().removePendingAppointment(appointment);
 	                                    Log.d("REMOVE PENDING TO FINISH", "REMOVED");
@@ -191,7 +189,7 @@ public class AlarmReceiver extends BroadcastReceiver {
 	                        } catch (JSONException e) {
 	                        }
 	                    }
-	                }.init(appointment).send(Global.APPOINTMENT_STATUS_URL);
+	                }.init(appointment).send(Global.APPOINTMENT_CANCEL_URL);
 				}
 			}
 		} else {
