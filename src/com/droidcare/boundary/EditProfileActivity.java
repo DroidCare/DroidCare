@@ -249,8 +249,8 @@ public class EditProfileActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_edit_profile);
-		
-        updateMessages = (LinearLayout) findViewById(R.id.LL_EditProfileMessages);
+
+        updateMessages = (LinearLayout) findViewById(R.id.update_messages);
 
         nationalitySpinner = new HashMap<String, Integer>();
         nationalitySpinner.put("Indonesian", 1);
