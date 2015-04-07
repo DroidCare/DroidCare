@@ -21,10 +21,8 @@ import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
 /**
- * 
- * @author Edwin Candinegara
  * Activity handling forget password
- *
+ * @author Edwin Candinegara
  */
 
 public class ForgetPasswordActivity extends Activity {

@@ -11,8 +11,8 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 /**
- * @author Edwin Candinegara
  * Stores detailed information of a follow-up appointment
+ * @author Edwin Candinegara
  */
 
 public class FollowUpAppointment extends Appointment {

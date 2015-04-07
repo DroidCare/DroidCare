@@ -14,10 +14,8 @@ import com.droidcare.entity.*;
 import java.util.HashMap;
 
 /**
- * 
- * @author Edwin Candinegara
  * Manages the current user of the application.
- *
+ * @author Edwin Candinegara
  */
 
 public class UserManager {

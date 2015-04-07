@@ -12,8 +12,8 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
- * @author Edwin Candinegara
  * Sets the notification "ALARM" depending on the date of each appointment.
+ * @author Edwin Candinegara
  */
 
 public class AlarmSetter {

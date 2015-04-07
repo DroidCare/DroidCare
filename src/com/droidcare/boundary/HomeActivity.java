@@ -30,6 +30,7 @@ import static junit.framework.Assert.assertNotNull;
 
 /**
  * Main Activity after the user has logged in. This is where appointment lists are displayed.
+ * @author Edwin Candinegara
  */
 public class HomeActivity extends FragmentActivity implements ActionBar.TabListener {
 	private ViewPager viewPager;

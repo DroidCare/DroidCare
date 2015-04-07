@@ -33,10 +33,8 @@ import java.util.Locale;
 import java.util.TimeZone;
 
 /**
- * 
- * @author Edwin Candinegara
  * Activity handling user registration.
- * 
+ * @author Edwin Candinegara 
  */
 
 public class RegisterActivity extends Activity {

@@ -13,8 +13,21 @@ import android.support.v4.app.ListFragment;
 import android.view.View;
 import android.widget.ListView;
 
+/**
+ * This class is a list fragment subclass which holds and shows all appointments with the "Rejected" status.
+ * Clicking on one item of this list will bring User to the corresponding details of the appointment.
+ * @author Edwin Candinegara
+ */
+
 public class RejectedAppointmentList extends ListFragment {
+	/**
+	 * A list of rejected appointments retrieved from {@link AppointmentManager}
+	 */
 	private ArrayList<Appointment> rejectedAppointmentList;
+	
+	/**
+	 * The list adapter to display the appointments to the list fragment
+	 */
 	private AppointmentListAdapter mAdapter;
 	
 	@Override

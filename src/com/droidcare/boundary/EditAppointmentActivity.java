@@ -40,10 +40,8 @@ import android.widget.AdapterView.OnItemSelectedListener;
 import static junit.framework.Assert.assertNotNull;
 
 /**
- * 
- * @author Edwin Candinegara
  * Display user interface for modifying a pending appointment.
- *
+ * @author Edwin Candinegara
  */
 public class EditAppointmentActivity extends Activity {
 	/**

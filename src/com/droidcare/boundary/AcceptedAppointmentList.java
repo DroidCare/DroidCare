@@ -15,16 +15,20 @@ import com.droidcare.entity.*;
 import android.widget.ListView;
 
 /**
- * 
- * @author Edwin Candinegara
- * 
  * This class is a list fragment subclass which holds and shows all appointments with the "Accepted" status.
  * Clicking on one item of this list will bring User to the corresponding details of the appointment.
- *
+ * @author Edwin Candinegara
  */
 
 public class AcceptedAppointmentList extends ListFragment {
+	/**
+	 * A list of accepted appointments retrieved from {@link AppointmentManager}
+	 */
 	private ArrayList<Appointment> acceptedAppointmentList;
+	
+	/**
+	 * The list adapter to display the appointments to the list fragment
+	 */
 	private AppointmentListAdapter mAdapter;
 	
 	@Override

@@ -13,10 +13,9 @@ import android.util.DisplayMetrics;
 import android.util.Log;
 
 /**
- * 
- * @author Edwin Candinegara
  * Encodes an image {@link Bitmap} object into a Base64 encoded String and decodes a Base64 encoded String into
  * an image {@link Bitmap} object.
+ * @author Edwin Candinegara
  */
 
 public class ImageManager {

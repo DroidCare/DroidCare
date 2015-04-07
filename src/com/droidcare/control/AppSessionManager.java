@@ -4,10 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 
 /**
- * 
- * @author Edwin Candinegara
  * Handles and manages the user's current app session.
- *
+ * @author Edwin Candinegara
  */
 
 public class AppSessionManager {

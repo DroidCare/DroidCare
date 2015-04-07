@@ -18,9 +18,8 @@ import android.util.Log;
 import android.util.Pair;
 
 /**
- * 
- * @author Edwin Candinegara
  * Fetches, stores and manages a list of {@link Appointment} objects.
+ * @author Edwin Candinegara
  */
 
 public abstract class AppointmentManager {

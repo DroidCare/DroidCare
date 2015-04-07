@@ -29,10 +29,8 @@ import com.droidcare.entity.*;
 import java.util.HashMap;
 
 /**
- * 
- * @author Edwin Candinegara
  * Activity handling edit profile.
- *
+ * @author Edwin Candinegara
  */
 
 public class EditProfileActivity extends Activity {

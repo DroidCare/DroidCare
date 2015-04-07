@@ -31,6 +31,11 @@ import org.json.JSONObject;
 
 import static junit.framework.Assert.assertTrue;
 
+/**
+ * Displays the appointment details.
+ * @author Edwin Candinegara
+ */
+
 public class AppointmentDetailsActivity extends Activity {
 	/**
 	 * The {@link Appointment} object to be displayed

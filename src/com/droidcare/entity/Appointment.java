@@ -18,9 +18,9 @@ import android.util.Log;
  */
 
 /**
- * @author Edwin Candinegara
  * Stores a normal appointment detailed information. This class is also a base class for {@link FollowUpAppointment} and
  * {@link ReferralAppointment} class.
+ * @author Edwin Candinegara
  */
 
 public class Appointment implements Parcelable, Comparable<Appointment> {

@@ -12,6 +12,7 @@ import android.content.SharedPreferences;
 
 /**
  * Contains global constants used in the app.
+ * @author Edwin Candinegara
  */
 public class Global {
 

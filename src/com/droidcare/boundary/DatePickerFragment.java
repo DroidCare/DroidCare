@@ -8,10 +8,8 @@ import android.os.Bundle;
 import android.app.DatePickerDialog;
 
 /**
- * 
- * @author Edwin Candinegara
  * Defines the date picker fragment.
- *
+ * @author Edwin Candinegara
  */
 
 public abstract class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {

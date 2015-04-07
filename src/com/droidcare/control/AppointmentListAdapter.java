@@ -20,12 +20,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * 
- * @author Edwin Candinegara
- * 
  * This adapter class is responsible for retrieving data from an ArrayList object
  * and transforming the data into items inside the ListFragment
- *
+ * @author Edwin Candinegara
  */
 
 public class AppointmentListAdapter extends ArrayAdapter<Appointment> {

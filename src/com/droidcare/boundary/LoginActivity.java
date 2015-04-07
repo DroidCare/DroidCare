@@ -23,10 +23,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
- * 
- * @author Edwin Candinegara
  * Activity handling login.
- *
+ * @author Edwin Candinegara
  */
 
 public class LoginActivity extends Activity {

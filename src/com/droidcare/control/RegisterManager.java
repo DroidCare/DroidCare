@@ -3,10 +3,8 @@ package com.droidcare.control;
 import android.util.Pair;
 
 /**
- * 
- * @author Edwin Candinegara
  * Contains the logic for registering a new patient user.
- *
+ * @author Edwin Candinegara
  */
 
 public class RegisterManager {

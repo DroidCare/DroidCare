@@ -2,6 +2,7 @@ package com.droidcare.entity;
 
 /**
  * An entity class which contains user details.
+ * @author Edwin Candinegara
  */
 public class User{
 	private int		id;

@@ -54,10 +54,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
- * @author Edwin Candinegara
  * Display user interface for creating a new appointment.
- *
+ * @author Edwin Candinegara
  */
 public class CreateAppointmentActivity extends Activity {
 	/**

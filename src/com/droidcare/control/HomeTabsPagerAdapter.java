@@ -11,12 +11,9 @@ import android.support.v4.app.FragmentPagerAdapter;
 import android.util.Log;
 
 /**
- * 
- * @author Edwin Candinegara
- * 
  * This class is responsible for handling switching between tabs and determines what
  * to be displayed inside the selected tabs
- *
+ * @author Edwin Candinegara
  */
 
 

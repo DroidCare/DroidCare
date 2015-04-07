@@ -13,11 +13,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
- * @author Edwin Candinegara
  * A subclass of {@link AppointmentManager}. Instantiated only when the user is a consultant. This class
  * is responsible for accepting and rejecting pending appointment.
- *
+ * @author Edwin Candinegara
  */
 
 public class ConsultantAppointmentManager extends AppointmentManager {

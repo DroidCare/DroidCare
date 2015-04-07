@@ -15,9 +15,8 @@ import android.view.MenuItem;
 import android.view.View;
 
 /**
- * 
- * @author Edwin Candinegara
  * Activity which is shown when the user opens the application.
+ * @author Edwin Candinegara
  */
 
 public class TitleActivity extends Activity {

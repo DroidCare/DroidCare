@@ -15,10 +15,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
- * @author Edwin Candinegara
  * Responsible for creating, modifying, and cancelling the patient's {@link Appointment} objects.
- *
+ * @author Edwin Candinegara
  */
 
 public class PatientAppointmentManager extends AppointmentManager {

@@ -8,8 +8,8 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * @author Peter
  * This singleton class handles all user login and logout request.
+ * @author Edwin Candinegara
  */
 
 public class LoginManager {

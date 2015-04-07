@@ -27,12 +27,9 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 /**
- * 
- * @author Edwin Candinegara
- * 
  * Receives "ALARM" broadcasts for notification purpose (the type of notification
  * depends on the user's choice).
- *
+ * @author Edwin Candinegara
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
