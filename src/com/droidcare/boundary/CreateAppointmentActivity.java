@@ -485,7 +485,6 @@ public class CreateAppointmentActivity extends Activity {
 	/**
 	 * Handle the result from {@link #onSelectImage(View)}
 	 */
-	@Override
 	public void onActivityResult (int requestCode, int resultCode, Intent data) {
 		super.onActivityResult(requestCode, resultCode, data);
 		if (resultCode == RESULT_OK && requestCode == SELECT_PICTURE) {
