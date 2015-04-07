@@ -2,7 +2,9 @@ package com.droidcare.boundary;
 
 import java.util.ArrayList;
 
+import com.droidcare.*;
 import com.droidcare.control.*;
+import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
 import android.content.Intent;
@@ -36,9 +38,9 @@ public class RejectedAppointmentList extends ListFragment {
 		if (a.getType().equalsIgnoreCase(Appointment.NORMAL)) {
 			intent.putExtra("appointment", a);
 		} else if (a.getType().equalsIgnoreCase(Appointment.REFERRAL)) {
-			intent.putExtra("appointment", a);
+			intent.putExtra("appointment", (ReferralAppointment) a);
 		} else if (a.getType().equalsIgnoreCase(Appointment.FOLLOW_UP)) {
-			intent.putExtra("appointment", a);
+			intent.putExtra("appointment", (FollowUpAppointment) a);
 		}
 		
 		startActivity(intent);

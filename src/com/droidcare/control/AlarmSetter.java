@@ -1,4 +1,7 @@
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> ccce732d62eb431df5d3ec25efe5bd62dfba5b7d
 package com.droidcare.control;
 
 import java.util.Calendar;
@@ -18,6 +21,7 @@ import android.content.Intent;
 import android.util.Log;
 
 /**
+<<<<<<< HEAD
  * Sets the notification "ALARM" depending on the date of each appointment.
  * @author Edwin Candinegara
  */
@@ -152,6 +156,8 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
+=======
+>>>>>>> ccce732d62eb431df5d3ec25efe5bd62dfba5b7d
  * @author Edwin Candinegara
  * Sets the notification "ALARM" depending on the date of each appointment.
  */
@@ -271,4 +277,7 @@ public class AlarmSetter {
 		}
 	}
 }
+<<<<<<< HEAD
 >>>>>>> branch 'master' of git@github.com:DroidCare/DroidCare.git
+=======
+>>>>>>> ccce732d62eb431df5d3ec25efe5bd62dfba5b7d

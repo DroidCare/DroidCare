@@ -1,5 +1,6 @@
 package com.droidcare.control;
 
+import android.util.Log;
 import android.util.Pair;
 
 import org.json.JSONArray;
