@@ -6,22 +6,17 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
-
 import android.app.Activity;
 import android.app.DialogFragment;
 import android.app.ProgressDialog;
 import android.graphics.Bitmap;
 import android.os.Bundle;
-import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,7 +32,6 @@ import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemSelectedListener;
-import static junit.framework.Assert.assertNotNull;
 
 /**
  * Display user interface for modifying a pending appointment.
@@ -55,14 +49,34 @@ public class EditAppointmentActivity extends Activity {
 	private int consultantId;
 	
 	/**
-	 * consultantName = the selected consultant's name
-	 * date = the selected appointment date
-	 * time = the selected appointment time
-	 * originalDate = the original appointment's date and time
-	 * referrerName = the referrer name of the appointment (for referral appointment)
-	 * referrerClinic = the referrer clinic of the appointment (for referral appointment)
+	 * The selected consultant's name
 	 */
-	private String consultantName, date, time, originalDate, referrerName, referrerClinic;
+	private String consultantName;
+	
+	/**
+	 * The selected appointment date
+	 */
+	private String date;
+	
+	/**
+	 * The selected appointment time
+	 */
+	private String time;
+	
+	/**
+	 * The original appointment's date and time
+	 */
+	private String originalDate;
+	
+	/**
+	 * The referrer name of the appointment (for referral appointment)
+	 */
+	private String referrerName;
+	
+	/**
+	 * The referrer clinic of the appointment (for referral appointment)
+	 */
+	private String referrerClinic;
 	
 	/**
 	 * A holder for error messages

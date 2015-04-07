@@ -1,8 +1,6 @@
 package com.droidcare.control;
 
-import android.util.Log;
 import android.util.Pair;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -18,7 +16,10 @@ public class LoginManager {
                             PASSWORD_TOO_SHORT = 0xA0000003,
                             VALID_FORM = 0xA0000000,
     						PASSWORD_MINIMUM_LENGTH = 6;
-
+    
+    /**
+     * An instance of {@link LoginManager}.
+     */
     private static LoginManager instance = new LoginManager();
     
     /**

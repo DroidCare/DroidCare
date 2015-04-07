@@ -3,14 +3,10 @@ package com.droidcare.control;
 import java.io.ByteArrayOutputStream;
 
 import android.content.Context;
-import android.content.res.Resources;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.graphics.Canvas;
-import android.graphics.Matrix;
 import android.util.Base64;
 import android.util.DisplayMetrics;
-import android.util.Log;
 
 /**
  * Encodes an image {@link Bitmap} object into a Base64 encoded String and decodes a Base64 encoded String into
@@ -23,7 +19,6 @@ public class ImageManager {
 	 * An instance of {@link ImageManager}. Use this to promote singleton design pattern.
 	 */
 	private static ImageManager instance = new ImageManager();
-    private static Context context;
     private static float MAX_DIMENS;
 
     /**
@@ -39,7 +34,6 @@ public class ImageManager {
      * @param context Application context.
      */
     public static void init(Context context) {
-        ImageManager.context = context;
         MAX_DIMENS = convertDpToPixel(180f, context);
     }
 

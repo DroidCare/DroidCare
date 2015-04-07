@@ -15,16 +15,11 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
-import com.droidcare.entity.*;
-
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -39,11 +34,14 @@ import java.util.TimeZone;
 
 public class RegisterActivity extends Activity {
 	/**
-	 * Constants defining the user notification preferences.
-	 * SMS_NOTIFICATION = user prefers SMS
-	 * EMAIL_NOTIFICATION = user prefers Email 
+	 * Constants defining that the user prefers SMS notification 
 	 */
-    private static final int SMS_NOTIFICATION = 1, EMAIL_NOTIFICATION = 2;
+    private static final int SMS_NOTIFICATION = 1;
+    
+    /**
+     * Constants defining that the user prefers Email notification
+     */
+    private static final int EMAIL_NOTIFICATION = 2;
     
     /**
 	 * Stores what is/are the preferred notification type/s in the form of int

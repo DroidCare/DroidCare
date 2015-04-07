@@ -58,7 +58,11 @@ public class UserManager {
 	public void removeUser() {
 		user = null;
 	}
-
+	
+	/**
+     * Interface used to allow the {@link SimpleHttpPost}
+     * to run some code when it has finished executing.
+     */
     public interface OnFinishListener {
         public abstract void onFinish(String responseText);
     }

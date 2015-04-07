@@ -3,9 +3,7 @@ package com.droidcare.control;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
-
 import com.droidcare.entity.*;
-
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;

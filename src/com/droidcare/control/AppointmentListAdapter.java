@@ -1,15 +1,9 @@
 package com.droidcare.control;
 
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 import java.util.List;
-
 import com.droidcare.*;
-import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
-
 import android.app.Activity;
 import android.content.Context;
 import android.view.LayoutInflater;

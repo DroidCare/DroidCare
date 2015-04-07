@@ -1,10 +1,6 @@
 package com.droidcare.control;
 
-import java.io.ByteArrayOutputStream;
-import java.lang.reflect.Method;
-import java.util.Calendar;
 import java.util.Date;
-import java.util.GregorianCalendar;
 
 import com.droidcare.*;
 import com.droidcare.boundary.*;
@@ -19,7 +15,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.telephony.PhoneNumberUtils;
 import android.util.Log;
 import android.util.Pair;
 
@@ -33,6 +28,10 @@ import org.json.JSONObject;
  */
 
 public class AlarmReceiver extends BroadcastReceiver {
+	/**
+     * Interface used to allow the {@link SimpleHttpPost}
+     * to run some code when it has finished executing.
+     */
     public interface OnFinishListener {
         public abstract void onFinish(String responseText);
     }

@@ -3,12 +3,8 @@ package com.droidcare.boundary;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
-import com.droidcare.entity.*;
-
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Intent;

@@ -17,19 +17,13 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import java.util.Date;
 import java.util.GregorianCalendar;
-
 import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static junit.framework.Assert.assertTrue;
 
 /**
  * Displays the appointment details.

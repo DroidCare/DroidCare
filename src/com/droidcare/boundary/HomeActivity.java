@@ -2,43 +2,48 @@ package com.droidcare.boundary;
 
 import com.droidcare.*;
 import com.droidcare.control.*;
-import com.droidcare.boundary.*;
-import com.droidcare.entity.*;
-
 import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.app.FragmentTransaction;
 import android.app.ActionBar.Tab;
 import android.app.ProgressDialog;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.KeyEvent;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.view.ViewPager;
 import android.view.Window;
-
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import static junit.framework.Assert.assertNotNull;
 
 /**
  * Main Activity after the user has logged in. This is where appointment lists are displayed.
  * @author Edwin Candinegara
  */
 public class HomeActivity extends FragmentActivity implements ActionBar.TabListener {
+	/**
+	 * Holds the tab and list fragment
+	 */
 	private ViewPager viewPager;
-	private HomeTabsPagerAdapter mAdapter;
-	private ActionBar actionBar;
-	private String[] tabs = {"Accepted", "Pending", "Rejected", "Finished"};
 	
-	private User user;
+	/**
+	 * Adapter for the appointment tabs
+	 */
+	private HomeTabsPagerAdapter mAdapter;
+	
+	/**
+	 * The activity action bar
+	 */
+	private ActionBar actionBar;
+	
+	/**
+	 * An array of String determining the name of each tabs
+	 */
+	private String[] tabs = {"Accepted", "Pending", "Rejected", "Finished"};
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -96,8 +101,6 @@ public class HomeActivity extends FragmentActivity implements ActionBar.TabListe
                         default:
                             break;
                     }
-
-                    user = Global.getUserManager().getUser();
 
                     // List Fragment Initialization
                     viewPager = (ViewPager) findViewById(R.id.pager);

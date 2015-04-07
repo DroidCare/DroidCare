@@ -1,13 +1,8 @@
 package com.droidcare.control;
 
-import com.droidcare.*;
-import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
-import android.content.Context;
 import android.util.Pair;
-import android.widget.Toast;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -25,7 +20,11 @@ public class ConsultantAppointmentManager extends AppointmentManager {
 	public ConsultantAppointmentManager () {
 		super();
 	}
-
+	
+	/**
+     * Interface used to allow the {@link SimpleHttpPost}
+     * to run some code when it has finished executing.
+     */
     public interface OnFinishListener {
         public abstract void onFinish(String responseText);
     }

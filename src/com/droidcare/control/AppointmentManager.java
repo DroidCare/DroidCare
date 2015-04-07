@@ -1,20 +1,14 @@
 package com.droidcare.control;
 
 import java.util.ArrayList;
-import java.util.Collections;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.droidcare.*;
-import com.droidcare.control.*;
-import com.droidcare.boundary.*;
 import com.droidcare.entity.*;
 
-import android.app.ProgressDialog;
 import android.content.Context;
-import android.util.Log;
 import android.util.Pair;
 
 /**
@@ -23,7 +17,10 @@ import android.util.Pair;
  */
 
 public abstract class AppointmentManager {
-	
+	/**
+     * Interface used to allow the {@link SimpleHttpPost}
+     * to run some code when it has finished executing.
+     */
     public interface OnFinishListener {
     	/**
     	 * Declaration of onFinish method signature.

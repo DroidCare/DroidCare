@@ -25,27 +25,53 @@ import android.util.Log;
 
 public class Appointment implements Parcelable, Comparable<Appointment> {
 	/**
-	 * Appointment status.
+	 * Constant defining "PENDING" status.
 	 */
-	public static final String	PENDING 	= "pending",
-								ACCEPTED 	= "accepted",
-								REJECTED 	= "rejected",
-								FINISHED 	= "finished";
+	public static final String PENDING = "pending";
 	
 	/**
-	 * Appointment type.
+	 * Constant defining "ACCEPTED" status.
 	 */
-	public static final String	FOLLOW_UP 	= "follow-up",
-								REFERRAL 	= "referral",
-								NORMAL 		= "normal";
+	public static final String ACCEPTED = "accepted";
+	
 	/**
-	 * id = ID of this {@link Appointment} object.
-	 * patientId = ID of the current {@link User} object.
-	 * consultantId = ID of the consultant.
+	 * Constant defining "REJECTED" status.
 	 */
-	private int	id,
-				patientId,
-				consultantId;
+	public static final String REJECTED = "rejected";
+	
+	/**
+	 * Constant defining "FINISHED" status.
+	 */
+	public static final String FINISHED = "finished";
+	
+	/**
+	 * Constant defining "FOLLOW-UP" appointment type
+	 */
+	public static final String FOLLOW_UP = "follow-up";
+	
+	/**
+	 * Constant defining "REFERRAL" appointment type
+	 */
+	public static final String REFERRAL = "referral";
+	
+	/**
+	 * Constant defining "NORMAL" appointment type
+	 */
+	public static final String NORMAL = "normal";
+	/**
+	 * ID of this {@link Appointment} object.
+	 */
+	private int	id;
+	
+	/**
+	 * ID of the current {@link User} object.
+	 */
+	private int	patientId;
+	
+	/**
+	 * ID of the consultant. 
+	 */
+	private int	consultantId;
 				
 	/**
 	 * The appointment's date and time in milliseconds.
@@ -53,19 +79,34 @@ public class Appointment implements Parcelable, Comparable<Appointment> {
 	private long dateTimeMillis;
 
 	/**
-	 * patientName = name of the patient.
-	 * consultantName = name of the consultant.
-	 * healthIssue = the patient's health issue.
-	 * remarks = any additional information
-	 * type = the appointment's type.
-	 * status = the current status of this {@link Appointment} object.
+	 * name of the patient.
 	 */
-	private String	patientName,
-					consultantName,
-					healthIssue,
-					remarks,
-					type,
-					status;
+	private String patientName;
+	
+	/**
+	 * name of the consultant.
+	 */
+	private String consultantName;
+	
+	/**
+	 * the patient's health issue.
+	 */
+	private String healthIssue;
+	
+	/**
+	 * any additional information
+	 */
+	private String remarks;
+	
+	/**
+	 * the appointment's type.
+	 */
+	private String type;
+	
+	/**
+	 * the current status of this {@link Appointment} object.
+	 */
+	private String status;
 	
 	/**
 	 * Constructs an {@link Appointment} object.

@@ -8,18 +8,12 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.HashMap;
 import java.util.TimeZone;
-
 import com.droidcare.R;
-import com.droidcare.control.AppointmentManager;
 import com.droidcare.control.Global;
 import com.droidcare.control.PatientAppointmentManager;
 import com.droidcare.control.SimpleHttpPost;
 import com.droidcare.entity.Appointment;
-import com.droidcare.entity.FollowUpAppointment;
-import com.droidcare.entity.ReferralAppointment;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DialogFragment;
@@ -30,7 +24,6 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.Bundle;
-import android.provider.MediaStore;
 import android.util.Log;
 import android.util.Pair;
 import android.view.Menu;
@@ -48,7 +41,6 @@ import android.widget.LinearLayout;
 import android.widget.RadioButton;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -74,13 +66,34 @@ public class CreateAppointmentActivity extends Activity {
 	private int consultantId = -1; // Keep track of the consultant id
 	
 	/**
-	 * consultantName = the selected consultant's name
-	 * date = the selected appointment date
-	 * time = the selected appointment time
-	 * attachmentImageString = the Base 64 encoded attachment image string
-	 * type = the appointment's type
+	 * The selected consultant's name
 	 */
-	private String consultantName = "-", date = "", time = "-", attachmentImageString = "", type = Appointment.NORMAL, previousId = "-1";
+	private String consultantName = "-";
+	
+	/**
+	 * The selected appointment date
+	 */
+	private String date = "";
+	
+	/**
+	 * The selected appointment time
+	 */
+	private String time = "-";
+	
+	/**
+	 * The Base 64 encoded attachment image string
+	 */
+	private String attachmentImageString = "";
+	
+	/**
+	 * The appointment's type
+	 */
+	private String type = Appointment.NORMAL;
+	
+	/**
+	 * The appointment's previous ID (for follow-up appointment)
+	 */
+	private String previousId = "-1";
 	
 	/**
 	 * A list of consultant details in the form of {@link ConsultantDetails} objects

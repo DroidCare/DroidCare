@@ -5,20 +5,70 @@ package com.droidcare.entity;
  * @author Edwin Candinegara
  */
 public class User{
-	private int		id;
+	/**
+	 * The user's ID
+	 */
+	private int	id;
 	
-	private String	email,
-					fullName,
-					address,
-					phoneNumber,
-					country,
-					passportNumber,
-					nationality,
-					dateOfBirth,
-					type,
-					sessionId,
-                    gender,
-                    notification;
+	/**
+	 * The user's email
+	 */
+	private String email;
+	
+	/**
+	 * The user's full name
+	 */
+	private String fullName;
+	
+	/**
+	 * The user's address
+	 */
+	private String address;
+	
+	/**
+	 * The user's phone number
+	 */
+	private String phoneNumber;
+	
+	/**
+	 * The user's country
+	 */
+	private String country;
+	
+	/**
+	 * The user's passport number
+	 */
+	private String passportNumber;
+	
+	/**
+	 * The user's nationality
+	 */
+	private String nationality;
+	
+	/**
+	 * The user's date of birth
+	 */
+	private String dateOfBirth;
+	
+	/**
+	 * The user's type
+	 */
+	private String type;
+	
+	/**
+	 * The user's session ID
+	 */
+	private String sessionId;
+	
+	/**
+	 * The user's gender
+	 */
+	private String gender;
+	
+	/**
+	 * The user's notification preferences
+	 */
+	private String notification;
 
     /**
      * An empty constructor.
@@ -27,18 +77,18 @@ public class User{
 
     /**
      * Constructor.
-     * @param id Unique ID of user.
-     * @param email Email.
-     * @param fullName Full name.
-     * @param address Full address.
-     * @param phoneNumber the user's phone number.
-     * @param country Current location (country).
-     * @param gender Gender.
-     * @param passportNumber Passport number.
-     * @param nationality Nationality.
-     * @param dateOfBirth Date of birth.
-     * @param type Type.
-     * @param notification Notification preferences.
+     * @param id 				unique ID of user.
+     * @param email 			user's email.
+     * @param fullName 			user's full name.
+     * @param address 			user's full address.
+     * @param phoneNumber 		user's phone number.
+     * @param country 			user's current location (country).
+     * @param gender 			user's gender.
+     * @param passportNumber 	user's passport number.
+     * @param nationality 		user's nationality.
+     * @param dateOfBirth 		user's date of birth.
+     * @param type 				user's type.
+     * @param notification 		user's notification preferences.
      */
 	public User(int id, String email, String fullName, String address, String phoneNumber, String country
 			, String gender, String passportNumber, String nationality

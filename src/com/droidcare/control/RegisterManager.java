@@ -25,7 +25,11 @@ public class RegisterManager {
     public static RegisterManager getInstance() {
         return instance;
     }
-
+    
+    /**
+     * Interface used to allow the {@link SimpleHttpPost}
+     * to run some code when it has finished executing.
+     */
     public interface OnFinishTaskListener {
         public abstract void onFinishTask(String responseText);
     }
