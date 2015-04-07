@@ -13,6 +13,7 @@ import android.os.Parcelable;
 /**
  * Stores detailed information of a referral appointment
  * @author Edwin Candinegara
+ * @see Parcelable
  */
 
 public class ReferralAppointment extends Appointment {

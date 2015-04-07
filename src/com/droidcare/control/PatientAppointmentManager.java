@@ -9,7 +9,7 @@ import org.json.JSONObject;
 
 /**
  * Responsible for creating, modifying, and cancelling the patient's {@link Appointment} objects.
- * @author Edwin Candinegara
+ * @author Stephanie
  */
 
 public class PatientAppointmentManager extends AppointmentManager {

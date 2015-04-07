@@ -26,7 +26,7 @@ import java.util.HashMap;
 
 /**
  * Activity handling edit profile.
- * @author Edwin Candinegara
+ * @author Peter
  */
 
 public class EditProfileActivity extends Activity {

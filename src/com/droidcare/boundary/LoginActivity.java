@@ -20,7 +20,7 @@ import android.widget.TextView;
 
 /**
  * Activity handling login.
- * @author Edwin Candinegara
+ * @author Peter
  */
 
 public class LoginActivity extends Activity {

@@ -16,7 +16,7 @@ import com.droidcare.control.*;
 
 /**
  * Activity handling forget password
- * @author Edwin Candinegara
+ * @author Peter
  */
 
 public class ForgetPasswordActivity extends Activity {

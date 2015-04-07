@@ -9,7 +9,7 @@ import android.app.DatePickerDialog;
 
 /**
  * Defines the date picker fragment.
- * @author Edwin Candinegara
+ * @author Stephanie
  */
 
 public abstract class DatePickerFragment extends DialogFragment implements DatePickerDialog.OnDateSetListener {

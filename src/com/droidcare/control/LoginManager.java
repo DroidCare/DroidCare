@@ -7,7 +7,7 @@ import org.json.JSONObject;
 
 /**
  * This singleton class handles all user login and logout request.
- * @author Edwin Candinegara
+ * @author Peter
  */
 
 public class LoginManager {

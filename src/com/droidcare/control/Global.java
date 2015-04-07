@@ -6,7 +6,7 @@ import android.content.Context;
 
 /**
  * Contains global constants used in the app.
- * @author Edwin Candinegara
+ * @author Peter
  */
 public class Global {
 

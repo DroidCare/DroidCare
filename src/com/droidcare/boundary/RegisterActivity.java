@@ -29,7 +29,7 @@ import java.util.TimeZone;
 
 /**
  * Activity handling user registration.
- * @author Edwin Candinegara 
+ * @author Peter
  */
 
 public class RegisterActivity extends Activity {

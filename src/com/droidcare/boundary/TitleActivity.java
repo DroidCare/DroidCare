@@ -13,7 +13,7 @@ import android.view.View;
 
 /**
  * Activity which is shown when the user opens the application.
- * @author Edwin Candinegara
+ * @author Stephanie
  */
 
 public class TitleActivity extends Activity {

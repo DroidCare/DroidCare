@@ -4,7 +4,7 @@ import android.util.Pair;
 
 /**
  * Contains the logic for registering a new patient user.
- * @author Edwin Candinegara
+ * @author Peter
  */
 
 public class RegisterManager {

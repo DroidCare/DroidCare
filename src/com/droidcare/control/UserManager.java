@@ -15,7 +15,7 @@ import java.util.HashMap;
 
 /**
  * Manages the current user of the application.
- * @author Edwin Candinegara
+ * @author Peter
  */
 
 public class UserManager {

@@ -13,7 +13,7 @@ import android.util.Log;
 /**
  * This class is responsible for handling switching between tabs and determines what
  * to be displayed inside the selected tabs
- * @author Edwin Candinegara
+ * @author Stephanie
  */
 
 

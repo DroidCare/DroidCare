@@ -22,7 +22,7 @@ import java.util.List;
 
 /**
  * Generalized class for sending HTTP POST Request to any URLs.
- * @author Edwin Candinegara
+ * @author Peter
  */
 public abstract class SimpleHttpPost extends AsyncTask<Void, Void, String> {
     /**
