@@ -12,6 +12,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical" >
+        
+        <LinearLayout
+            android:id="@+id/LL_EditProfileMessages"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginBottom="20dp" >
+
+        </LinearLayout>
 
        <LinearLayout
             android:layout_width="fill_parent"
@@ -19,7 +28,7 @@
             android:layout_marginBottom="5dp"
             android:orientation="vertical"
             android:id="@+id/passport_layout"
-            android:layout_below="@+id/passport_layout" >
+            android:layout_below="@id/LL_EditProfileMessages" >
 
             <EditText 
 	            android:id="@+id/passport_field"
@@ -298,13 +307,6 @@
 	            style="@style/DefaultButtonText"
 	            android:background="@drawable/button_default_bg"
 	        />
-        </LinearLayout>
-
-        <LinearLayout
-            android:layout_width="fill_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:id="@+id/update_messages" >
         </LinearLayout>
     </RelativeLayout>
 </ScrollView>
